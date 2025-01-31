@@ -7,14 +7,19 @@ export default function Burger() {
       nav = document.querySelector("#temp-nav");
     }
     const isNavHidden = nav.classList.contains("top-[-100%]");
-    const hideNav = "top-[-100%]";
-    const showNav = ["top-21", "bottom-0"];
+    const hideNav = ["top-[-100%]"];
+    const showNav = [
+      "top-21",
+      "bottom-0",
+      "pointer-events-auto",
+      "visibility:visible",
+    ];
     if (isNavHidden) {
-      nav.classList.remove(hideNav);
+      nav.classList.remove(...hideNav);
       nav.classList.add(...showNav);
     } else {
       nav.classList.remove(...showNav);
-      nav.classList.add(hideNav);
+      nav.classList.add(...hideNav);
     }
   }
   return (
