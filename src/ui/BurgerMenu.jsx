@@ -1,0 +1,28 @@
+import { NavLink } from "react-router-dom";
+import Burger from "./Burger";
+
+export default function BurgerMenu() {
+  // kada burger menu predje odredjenu sirinu stavi display: none;
+
+  return (
+    <>
+      <Burger />
+      <nav className="bg-main-color-shade text-secondary-color absolute top-[-100%] right-0 left-0 w-screen transition-all duration-300 ease-in-out sm:hidden">
+        <ul className="text-main-color-tint flex h-full w-full flex-col items-center justify-center gap-3.5 text-2xl">
+          <li>
+            <NavLink to="/shop">Shop</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart">Cart</NavLink>
+          </li>
+          <li>
+            <NavLink to="/settings">Settings</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </>
+  );
+}
