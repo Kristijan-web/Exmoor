@@ -7,7 +7,7 @@ export default function Burger() {
       nav = document.querySelector("#temp-nav");
     }
     const isNavHidden = nav.classList.contains("top-[-100%]");
-    const hideNav = ["top-[-100%]"];
+    const hideNav = ["top-[-100%]", "pointer-events-none", "visibility-hidden"];
     const showNav = [
       "top-21",
       "bottom-0",
