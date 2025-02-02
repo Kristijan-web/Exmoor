@@ -12,10 +12,15 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   --color-main-color-tint: var(--color-netural-500);
   --color-secondary-color: var(--color-slate-100);
   --padding-x-horizontal: 0% 7% 0% 7%;
+  --height-thumbnail: calc(100vh - 84px);
 }
 @layer base {
   body {
     font-family: "Roboto";
+    color: var(--color-main-color-shade);
+  }
+  h2 {
+    @apply text-5xl;
   }
   .active {
     @apply underline underline-offset-8;

@@ -3,7 +3,7 @@ import BurgerMenu from "./BurgerMenu";
 
 export default function Header() {
   return (
-    <header className="p-x-horizontal bg-main-color-shade z-5 flex h-21 items-center justify-between">
+    <header className="p-x-horizontal bg-main-color-shade z-5 flex h-21 items-center justify-between gap-4">
       <img
         className="w-40"
         src="/public/Images/logo-no-background.png"
@@ -27,7 +27,7 @@ export default function Header() {
             <NavLink to="/settings">Settings</NavLink>
           </li>
           <li>
-            <NavLink to="/settings">Sign up</NavLink>
+            <NavLink to="/signup">Sign up</NavLink>
           </li>
         </ul>
       </nav>

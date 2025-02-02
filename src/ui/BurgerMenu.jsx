@@ -30,7 +30,7 @@ export default function BurgerMenu() {
             <NavLink to="/settings">Settings</NavLink>
           </li>
           <li>
-            <NavLink to="/settings">Sign up</NavLink>
+            <NavLink to="/signup">Sign up</NavLink>
           </li>
         </ul>
       </nav>

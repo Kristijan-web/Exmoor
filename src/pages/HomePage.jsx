@@ -1,3 +1,5 @@
+import HomeDisplay from "../features/HomeDisplay/HomeDisplay";
+
 export default function HomePage() {
-  return <div className="text-main-color">Home</div>;
+  return <HomeDisplay />;
 }
