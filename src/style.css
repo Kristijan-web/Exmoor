@@ -22,7 +22,22 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   h2 {
     @apply text-5xl;
   }
+  h3 {
+    @apply text-4xl;
+  }
   .active {
     @apply underline underline-offset-8;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply border-main-color-shade text-secondary-color bg-main-color-shade inline-block cursor-pointer rounded-sm border px-6 py-3;
+  }
+  .btn:hover {
+    @apply shadow-md;
+  }
+  .btn:active {
+    @apply text-main-color-shade border-main-color-shade bg-secondary-color;
   }
 }

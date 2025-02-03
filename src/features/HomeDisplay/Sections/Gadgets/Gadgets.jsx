@@ -4,7 +4,7 @@ export default function Gadgets() {
   // na samom vrhu div ce imati sirinu i margin-x auto, a div unutar njega ce imati paddng sa leve i desne strane
   return (
     <>
-      <section className="mx-auto max-w-6xl text-center">
+      <section className="mx-auto mb-24 max-w-6xl text-center">
         <div className="mx-auto mb-24">
           <h2>Be Your Own Inspiration</h2>
         </div>
