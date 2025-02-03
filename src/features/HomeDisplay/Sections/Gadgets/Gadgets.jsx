@@ -8,26 +8,26 @@ export default function Gadgets() {
         <div className="mx-auto mb-24">
           <h2>Be Your Own Inspiration</h2>
         </div>
-        <div className="grid items-center justify-items-center gap-12 px-8 lg:grid-cols-4">
+        <div className="grid items-center justify-items-center gap-12 px-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <span className="text-5xl">
               <ion-icon name="shield-checkmark-outline"></ion-icon>
             </span>
             <p className="text-xl font-semibold">Quality</p>
             <p className="text-main-color-shade">
-              Is quality imporant to you? Do you want only the best, well we
-              only make the best
+              Looking for unmatched quality? We deliver excellence without
+              compromise.
             </p>
           </div>
           <div>
             <icon></icon>
             <span className="text-5xl">
-              <ion-icon name="color-wand-outline"></ion-icon>
+              <ion-icon name="time-outline"></ion-icon>
             </span>
-            <p className="text-xl font-semibold">Design</p>
+            <p className="text-xl font-semibold">Timeless</p>
             <p>
-              Is quality imporant to you? Do you want only the best, well we
-              only make the best
+              Want a fragrance that lasts? Enjoy long-lasting scents that
+              captivate all day.
             </p>
           </div>
           <div>
@@ -36,8 +36,8 @@ export default function Gadgets() {
             </span>
             <p className="text-xl font-semibold">Cost</p>
             <p>
-              Is quality imporant to you? Do you want only the best, well we
-              only make the best
+              Cost matters, but so does quality, get the best without
+              overspending or settling.
             </p>
           </div>
           <div>
@@ -47,8 +47,8 @@ export default function Gadgets() {
             </p>
             <p className="text-xl font-semibold">Recycble</p>
             <p>
-              Is quality imporant to you? Do you want only the best, well we
-              only make the best
+              Care about sustainability? Choose recyclable products that make a
+              difference.
             </p>
           </div>
         </div>
