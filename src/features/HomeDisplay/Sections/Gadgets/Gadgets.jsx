@@ -20,7 +20,6 @@ export default function Gadgets() {
             </p>
           </div>
           <div>
-            <icon></icon>
             <span className="text-5xl">
               <ion-icon name="time-outline"></ion-icon>
             </span>
@@ -41,7 +40,6 @@ export default function Gadgets() {
             </p>
           </div>
           <div>
-            <icon></icon>
             <p className="text-5xl">
               <ion-icon name="leaf-outline"></ion-icon>
             </p>

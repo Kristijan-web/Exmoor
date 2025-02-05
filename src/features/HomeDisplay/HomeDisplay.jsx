@@ -1,3 +1,4 @@
+import AboutProducts from "./Sections/AboutProducts/AboutProducts";
 import AboutUs from "./Sections/AboutUs/AboutUs";
 import Gadgets from "./Sections/Gadgets/Gadgets";
 import Thumbnail from "./Sections/Thumbnail/Thumbnail";
@@ -8,6 +9,7 @@ export default function HomeDisplay() {
       <Thumbnail />
       <Gadgets />
       <AboutUs />
+      <AboutProducts />
     </>
   );
 }
