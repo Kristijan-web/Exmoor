@@ -8,7 +8,7 @@ export default function Gadgets() {
         <div className="mx-auto mb-24">
           <h2>Be Your Own Inspiration</h2>
         </div>
-        <div className="grid items-center justify-items-center gap-12 px-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid items-center justify-items-center gap-12 px-7 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <span className="text-5xl">
               <ion-icon name="shield-checkmark-outline"></ion-icon>
