@@ -47,7 +47,7 @@ export default function Reviews() {
         <div className="bg-main-color-shade text-secondary-color relative flex flex-col items-center justify-center gap-8 rounded-sm p-9">
           <p className="mt-8 text-center text-xl lg:text-start">
             Heard about Exmoor from my friend, one of his best advices ever.
-            Exmoor is the only fragrance for me.
+            Exmoor is the only fragrance for me. #ExmoorFan
           </p>
           <b className="text-2xl">Paul</b>
           <img
