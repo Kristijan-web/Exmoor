@@ -19,7 +19,7 @@ export default function AboutUs() {
         <div className="hidden lg:flex lg:w-[50%] lg:justify-center">
           <img
             className="inline-block w-[72%] rounded-full"
-            src="/Images/AboutUs/about-us.webp"
+            src="/Images/HomePage/AboutUs/about-us.webp"
           />
         </div>
       </div>

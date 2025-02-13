@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-black">
+    <footer className="bg-main-color-shade">
       <div className="mx-auto grid max-w-7xl grid-cols-12 items-start justify-items-center gap-10 p-15">
         <div className="text-secondary-color col-span-full justify-self-start sm:col-start-1 sm:col-end-6 md:col-start-1 md:col-end-4">
           <h4 className="mb-4 text-2xl font-semibold">Popular Links</h4>

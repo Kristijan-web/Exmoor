@@ -10,7 +10,7 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 /* za padding-x koristi p-7 */
 
 @theme inline {
-  --color-main-color-shade: var(--color-neutral-900);
+  --color-main-color-shade: var(--color-neutral-950);
   --color-main-color-tint: var(--color-neutral-500);
   --color-secondary-color: var(--color-slate-100);
   --padding-x-horizontal: 0% 7% 0% 7%;
@@ -47,18 +47,23 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   }
   .gradient_image_man {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-      url(/Images/AboutProducts/teest2.jpg);
+      url(/Images/HomePage/AboutProducts/teest2.jpg);
   }
   .gradient_image_woman {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-      url(/Images/AboutProducts/teest.jpg);
+      url(/Images/HomePage/AboutProducts/teest.jpg);
   }
   .gradient_image_home {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-      url(/Images/AboutProducts/peti_1.webp);
+      url(/Images/HomePage/AboutProducts/peti_1.webp);
   }
   .grid-reviewers {
     display: grid;
     grid-template-columns: 410px 3.5fr 5fr;
+  }
+  /* ovo je gradiant za thumbnail sliku na shop page-u */
+  .gradient_image_shop {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url(/Images/ShopPage/Thumbnail/thumbnail.jpg);
   }
 }

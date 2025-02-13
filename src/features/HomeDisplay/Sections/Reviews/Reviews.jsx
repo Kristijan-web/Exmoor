@@ -18,12 +18,12 @@ export default function Reviews() {
           <b className="text-2xl">Rodrigo</b>
           <img
             className="w-40"
-            src="Images/Reviewers/five-star.png"
+            src="Images/HomePage/Reviewers/five-star.png"
             alt="star_rating"
           />
           <img
             className="absolute top-[-60px] left-[50%] w-20 translate-x-[-50%] transform rounded-full"
-            src="/Images/Reviewers/model-1.png"
+            src="/Images/HomePage/Reviewers/model-1.png"
             alt="reviewer_image"
           />
         </div>
@@ -35,12 +35,12 @@ export default function Reviews() {
           <b className="text-2xl">Nicolas</b>
           <img
             className="w-40"
-            src="Images/Reviewers/five-star.png"
+            src="Images/HomePage/Reviewers/five-star.png"
             alt="star_rating"
           />
           <img
             className="absolute top-[-60px] left-[50%] w-20 translate-x-[-50%] transform rounded-full"
-            src="/Images/Reviewers/model-2.png"
+            src="/Images/HomePage/Reviewers/model-2.png"
             alt="reviewer_image"
           />
         </div>
@@ -52,12 +52,12 @@ export default function Reviews() {
           <b className="text-2xl">Paul</b>
           <img
             className="w-40"
-            src="Images/Reviewers/five-star.png"
+            src="Images/HomePage/Reviewers/five-star.png"
             alt="star_rating"
           />
           <img
             className="absolute top-[-60px] left-[50%] w-20 translate-x-[-50%] transform rounded-full"
-            src="/Images/Reviewers/model-3.png"
+            src="/Images/HomePage/Reviewers/model-3.png"
             alt="reviewer_image"
           />
         </div>
