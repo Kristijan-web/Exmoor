@@ -7,6 +7,8 @@
 
 spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 
+/* za padding-x koristi p-7 */
+
 @theme inline {
   --color-main-color-shade: var(--color-neutral-900);
   --color-main-color-tint: var(--color-neutral-500);

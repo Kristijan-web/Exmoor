@@ -28,14 +28,14 @@ export default function Footer() {
         </div>
         <div className="text-secondary-color col-span-full flex flex-col gap-4 justify-self-start text-xl sm:col-start-6 sm:col-end-13 md:col-start-4 md:col-end-9">
           <h4 className="text-2xl font-semibold">Contact us</h4>
-          <address>
-            <p>Zdravka Celara 1, Novi grad, Beograd</p>
+          <address className="w-50 sm:w-full">
+            <p className="break-words">Zdravka Celara 1, Novi grad, Beograd</p>
           </address>
           <a className="block" href="tel:111-222-333">
             +111 222-333
           </a>
           <a className="block" href="mailto:kristijanstojanovic8@gmail.com">
-            kristijanstojanovic8@gmail.com
+            exmoor23@gmail.com
           </a>
           <p>RSS & SITEMAP</p>
         </div>
