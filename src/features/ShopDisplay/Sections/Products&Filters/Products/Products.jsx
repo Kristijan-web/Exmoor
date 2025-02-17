@@ -1,13 +1,17 @@
+import ProductItem from "./ProductItem";
+
 export default function Products() {
   return (
-    <div className="col-span-full mt-20 justify-self-center">
-      <div className="w-50">
-        <img
-          className="w-100"
-          src="/Images/ShopPage/Products/shop-item-1.jpg"
-          alt="zara perfume"
-        />
-      </div>
+    <div className="col-span-full mt-20 grid grid-cols-1 gap-5 justify-self-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
     </div>
   );
 }
