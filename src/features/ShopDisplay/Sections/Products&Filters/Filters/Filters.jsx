@@ -1,4 +1,4 @@
-import Price from "./FilterParts/Price";
+import DualPriceRangeSlider from "./FilterParts/DualPriceRangeSlider";
 
 export default function Filters() {
   return (
@@ -38,7 +38,43 @@ export default function Filters() {
           </div>
         </div>
         <div>
-          <Price />
+          <DualPriceRangeSlider min={0} max={100} step={1} />
+        </div>
+        <div>
+          <p className="mb-3">Pol</p>
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-4">
+              <input type="checkbox" />
+              <span>Muski</span>
+            </div>
+            <div className="flex gap-4">
+              <input type="checkbox" />
+              <span>Zenski</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="mb-3">Kategorija parfema</p>
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-4">
+              <input type="checkbox" />
+              <span>Toaletna voda</span>
+            </div>
+            <div className="flex gap-4">
+              <input type="checkbox" />
+              <span>Parfemska voda</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p className="mb-3">Na popustu</p>
+          <div>
+            <div className="flex gap-4">
+              <input type="checkbox" />
+              <p>Da</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
