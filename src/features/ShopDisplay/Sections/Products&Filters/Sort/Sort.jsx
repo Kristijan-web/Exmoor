@@ -7,8 +7,12 @@ export default function Sort() {
           <ion-icon name="chevron-down-outline"></ion-icon>
         </span>
       </div>
-      <div className="hidden px-5 lg:block">
-        <p className="text-end text-xl">Sortiraj</p>
+      <div className="hidden px-5 lg:flex lg:items-center lg:justify-end lg:gap-3">
+        <p className="text-end text-xl">Sortiraj prema:</p>
+        <select className="border-none bg-stone-300 px-2 py-4">
+          <option>Najvisoj ceni</option>
+          <option>Najnizoj ceni</option>
+        </select>
       </div>
     </div>
   );
