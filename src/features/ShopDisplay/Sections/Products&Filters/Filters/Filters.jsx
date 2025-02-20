@@ -2,7 +2,7 @@ import DualPriceRangeSlider from "./FilterParts/DualPriceRangeSlider";
 
 export default function Filters() {
   return (
-    <div className="cursor-poiner bg-main-color-shade text-secondary-color lg:text-main-color-shade col-start-1 col-end-7 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:border-1 lg:border-black lg:bg-white lg:p-5 lg:py-4">
+    <div className="cursor-poiner bg-main-color-shade text-secondary-color lg:text-main-color-shade k lg:shadow-my-shadow col-start-1 col-end-7 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:bg-white lg:p-5 lg:py-4">
       <div className="flex items-center justify-between px-4 lg:hidden">
         <span>Filters</span>
         <span>
@@ -11,29 +11,29 @@ export default function Filters() {
       </div>
       <div className="hidden lg:flex lg:flex-col lg:gap-9">
         <h3 className="mb-6 text-center text-xl">Filtriraj parfeme</h3>
-        <div className="border-b-1 border-black">
-          <p className="mb-3">Proizvodjac</p>
+        <div>
+          <p className="mb-4 text-xl">Proizvodjac</p>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex gap-4">
-                <input type="checkbox" />
+                <input type="checkbox" className="w-4" />
                 <span>Zara</span>
               </div>
-              <span>15</span>
+              <span className="text-main-color-shade/70">15</span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex gap-4">
-                <input type="checkbox" />
+                <input type="checkbox" className="w-4" />
                 <span>Calvin Klein</span>
               </div>
-              <span>5</span>
+              <span className="text-main-color-shade/70">5</span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex gap-4">
-                <input type="checkbox" />
+                <input type="checkbox" className="w-4" />
                 <span>Dior</span>
               </div>
-              <span>7</span>
+              <span className="text-main-color-shade/70">7</span>
             </div>
           </div>
         </div>
@@ -41,37 +41,37 @@ export default function Filters() {
           <DualPriceRangeSlider min={0} max={100} step={1} />
         </div>
         <div>
-          <p className="mb-3">Pol</p>
+          <p className="mb-4 text-xl">Pol</p>
           <div className="flex flex-col gap-3">
             <div className="flex gap-4">
-              <input type="checkbox" />
+              <input type="checkbox" className="w-4" />
               <span>Muski</span>
             </div>
             <div className="flex gap-4">
-              <input type="checkbox" />
+              <input type="checkbox" className="w-4" />
               <span>Zenski</span>
             </div>
           </div>
         </div>
         <div>
-          <p className="mb-3">Kategorija parfema</p>
+          <p className="mb-4 text-xl">Kategorija parfema</p>
           <div className="flex flex-col gap-3">
             <div className="flex gap-4">
-              <input type="checkbox" />
+              <input type="checkbox" className="w-4" />
               <span>Toaletna voda</span>
             </div>
             <div className="flex gap-4">
-              <input type="checkbox" />
+              <input type="checkbox" className="w-4" />
               <span>Parfemska voda</span>
             </div>
           </div>
         </div>
 
         <div>
-          <p className="mb-3">Na popustu</p>
+          <p className="mb-4 text-xl">Na popustu</p>
           <div>
             <div className="flex gap-4">
-              <input type="checkbox" />
+              <input type="checkbox" className="w-4" />
               <p>Da</p>
             </div>
           </div>

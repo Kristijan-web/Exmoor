@@ -25,8 +25,8 @@ export default function DualPriceRangeSlider({ min, max }) {
   };
 
   return (
-    <div className="relative mx-auto max-w-xl border-b-2 border-black">
-      <h1>Price</h1>
+    <div className="relative mx-auto max-w-xl">
+      <h1 className="text-xl">Price</h1>
       <input
         type="range"
         min={min}
