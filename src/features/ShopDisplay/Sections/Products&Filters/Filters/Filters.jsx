@@ -1,3 +1,4 @@
+import Checkbox from "./Checkbox";
 import DualPriceRangeSlider from "./FilterParts/DualPriceRangeSlider";
 
 export default function Filters() {
@@ -15,24 +16,21 @@ export default function Filters() {
           <p className="mb-4 text-xl">Proizvodjac</p>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <div className="flex gap-4">
-                <input type="checkbox" className="w-4" />
+              <Checkbox>
                 <span>Zara</span>
-              </div>
+              </Checkbox>
               <span className="text-main-color-shade/70">15</span>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex gap-4">
-                <input type="checkbox" className="w-4" />
+              <Checkbox>
                 <span>Calvin Klein</span>
-              </div>
+              </Checkbox>
               <span className="text-main-color-shade/70">5</span>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex gap-4">
-                <input type="checkbox" className="w-4" />
+              <Checkbox>
                 <span>Dior</span>
-              </div>
+              </Checkbox>
               <span className="text-main-color-shade/70">7</span>
             </div>
           </div>
@@ -43,26 +41,35 @@ export default function Filters() {
         <div>
           <p className="mb-4 text-xl">Pol</p>
           <div className="flex flex-col gap-3">
-            <div className="flex gap-4">
-              <input type="checkbox" className="w-4" />
-              <span>Muski</span>
+            <div className="flex items-center justify-between">
+              <Checkbox>
+                <span>Muski</span>
+              </Checkbox>
+              <span className="text-main-color-shade/70">15</span>
             </div>
-            <div className="flex gap-4">
-              <input type="checkbox" className="w-4" />
-              <span>Zenski</span>
+            <div className="flex items-center justify-between">
+              <Checkbox>
+                <span>Zenski</span>
+              </Checkbox>
+              <span className="text-main-color-shade/70">3</span>
             </div>
           </div>
         </div>
         <div>
           <p className="mb-4 text-xl">Kategorija parfema</p>
           <div className="flex flex-col gap-3">
-            <div className="flex gap-4">
-              <input type="checkbox" className="w-4" />
-              <span>Toaletna voda</span>
+            <div className="flex items-center justify-between">
+              <Checkbox>
+                <span>Toaletna voda</span>
+              </Checkbox>
+
+              <span className="text-main-color-shade/70">18</span>
             </div>
-            <div className="flex gap-4">
-              <input type="checkbox" className="w-4" />
-              <span>Parfemska voda</span>
+            <div className="flex items-center justify-between">
+              <Checkbox>
+                <span>Parfemska voda</span>
+              </Checkbox>
+              <span>9</span>
             </div>
           </div>
         </div>
@@ -70,10 +77,9 @@ export default function Filters() {
         <div>
           <p className="mb-4 text-xl">Na popustu</p>
           <div>
-            <div className="flex gap-4">
-              <input type="checkbox" className="w-4" />
-              <p>Da</p>
-            </div>
+            <Checkbox>
+              <span>Da</span>
+            </Checkbox>
           </div>
         </div>
       </div>

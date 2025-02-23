@@ -57,6 +57,11 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 }
 
 @layer components {
+  .testic {
+    background-color: red;
+    -webkit-appearance: none;
+    border: 2px solid black;
+  }
   .btn {
     @apply border-main-color-shade text-secondary-color bg-main-color-shade inline-block cursor-pointer rounded-sm border px-6 py-3;
   }
