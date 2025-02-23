@@ -1,3 +1,5 @@
+import ContactDisplay from "../features/ContactDisplay/ContactDisplay";
+
 export default function ContactPage() {
-  return <div>Contact</div>;
+  return <ContactDisplay />;
 }
