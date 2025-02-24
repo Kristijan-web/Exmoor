@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* - Main color  neutral-950*/
+/*  text-netural-900 */
+
+/* font-size 10/12/14/16/18/20/24/30/36/44/52/62/74/86/98
+
+spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
+
+/* za padding-x koristi p-7 */
+
+@theme inline {
+  --color-main-color-shade: var(--color-neutral-950);
+  --color-main-color-tint: var(--color-neutral-500);
+  --color-secondary-color: var(--color-slate-100);
+  --padding-x-horizontal: 0% 7% 0% 7%;
+  --height-thumbnail: calc(100vh - 84px);
+  /* boje za reviews sekciju */
+  --color-first-review: rgb(240, 240, 240);
+  --color-second-review: rgb(220, 220, 220);
+  --shadow-my-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+@layer base {
+  body {
+    font-family: "Roboto";
+    color: var(--color-main-color-shade);
+  }
+  h2 {
+    @apply text-5xl;
+  }
+  h3 {
+    @apply text-4xl;
+  }
+  .active {
+    @apply underline underline-offset-8;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background-color: hsl(var(--primary));
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background-color: hsl(var(--primary));
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+}
+
+@layer components {
+  .testic {
+    background-color: red;
+    -webkit-appearance: none;
+    border: 2px solid black;
+  }
+  .btn {
+    @apply border-main-color-shade text-secondary-color bg-main-color-shade inline-block cursor-pointer rounded-sm border px-6 py-3;
+  }
+  .btn:hover {
+    @apply shadow-md;
+  }
+  .btn:active {
+    @apply text-main-color-shade border-main-color-shade bg-secondary-color;
+  }
+  .gradient_image_man {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url(/Images/HomePage/AboutProducts/teest2.jpg);
+  }
+  .gradient_image_woman {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url(/Images/HomePage/AboutProducts/teest.jpg);
+  }
+  .gradient_image_home {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url(/Images/HomePage/AboutProducts/peti_1.webp);
+  }
+  .grid-reviewers {
+    display: grid;
+    grid-template-columns: 410px 3.5fr 5fr;
+  }
+  /* ovo je gradiant za thumbnail sliku na shop page-u */
+  .gradient_image_shop {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url(/Images/ShopPage/Thumbnail/thumbnail.jpg);
+  }
+}
