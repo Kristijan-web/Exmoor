@@ -36,7 +36,7 @@ export default function Filters() {
           </div>
         </div>
         <div>
-          <DualPriceRangeSlider min={0} max={100} step={1} />
+          <DualPriceRangeSlider min={0} max={100} />
         </div>
         <div>
           <p className="mb-4 text-xl">Pol</p>

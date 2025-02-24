@@ -1,3 +1,9 @@
+import FormLayout from "./Sections/Form/FormLayout";
+
 export default function ContactDisplay() {
-  return <div>Hello</div>;
+  return (
+    <>
+      <FormLayout />
+    </>
+  );
 }
