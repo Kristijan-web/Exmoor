@@ -5,7 +5,7 @@ export default function Form() {
     <section className="mt-20 mb-8">
       <div className="mx-auto max-w-3xl px-7">
         <form
-          className="flex flex-col justify-start gap-5 bg-[#F3F3F3] p-7"
+          className="flex flex-col justify-start gap-5 rounded-xs bg-[#F3F3F3] p-7"
           aria-labelledby="contact-form-heading"
         >
           <h1 className="text-center text-2xl">Kontakt</h1>
