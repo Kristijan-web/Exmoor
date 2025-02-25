@@ -7,6 +7,7 @@ export default function Filters() {
       <div className="flex items-center justify-between px-4 lg:hidden">
         <span>Filters</span>
         <span>
+          {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
           <ion-icon name="chevron-down-outline"></ion-icon>
         </span>
       </div>

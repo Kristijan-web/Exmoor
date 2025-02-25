@@ -1,6 +1,6 @@
 export default function Gadgets() {
   return (
-    <section className="mb-20">
+    <section className="mb-24">
       <div className="mx-auto grid max-w-3xl grid-cols-12 gap-6 px-7">
         <div className="col-span-full flex flex-col items-center justify-center gap-1 lg:col-start-1 lg:col-end-7">
           <span className="text-3xl">

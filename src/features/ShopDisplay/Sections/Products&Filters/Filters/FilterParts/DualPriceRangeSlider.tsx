@@ -1,62 +1,87 @@
 import { useState } from "react";
-type DualPriceRangeSliderProps = {
-  min: number;
-  max: number;
-};
 
-export default function DualPriceRangeSlider({
-  min,
-  max,
-}: DualPriceRangeSliderProps) {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
+const DualRangeSlider = () => {
+  const [minValue, setMinValue] = useState(20);
+  const [maxValue, setMaxValue] = useState(80);
+  const minAllowed = 0;
+  const maxAllowed = 100;
 
+  // Upravlja promenom minimalnog slajdera
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(Number(e.target.value), maxVal - 1);
-    setMinVal(value);
+    const newMinVal = parseInt(e.target.value);
+    if (newMinVal < maxValue) {
+      setMinValue(newMinVal);
+    }
   };
 
+  // Upravlja promenom maksimalnog slajdera
   const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(Number(e.target.value), minVal + 1);
-    setMaxVal(value);
+    const newMaxVal = parseInt(e.target.value);
+    if (newMaxVal > minValue) {
+      setMaxValue(newMaxVal);
+    }
   };
+
+  // Izračunava poziciju za popunjeni deo trake
+  const leftPosition = (minValue / maxAllowed) * 100;
+  const rightPosition = 100 - (maxValue / maxAllowed) * 100;
 
   return (
-    <div className="relative mx-auto max-w-xl">
-      <h1 className="text-xl">Price</h1>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={minVal}
-        onChange={handleMinChange}
-        className="pointer-events-none absolute -top-1 z-10 h-1 w-full appearance-none bg-transparent"
-        style={{ zIndex: minVal > max - 100 ? 10 : 5 }}
-      />
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={maxVal}
-        onChange={handleMaxChange}
-        className="pointer-events-none absolute -top-1 z-10 h-1 w-full appearance-none bg-transparent"
-        style={{ zIndex: 5 }}
-      />
-
-      <div className="relative h-1 rounded-full bg-gray-300">
-        <div
-          className="absolute h-1 rounded-full bg-blue-500"
-          style={{
-            left: `${((minVal - min) / (max - min)) * 100}%`,
-            right: `${100 - ((maxVal - min) / (max - min)) * 100}%`,
-          }}
-        ></div>
+    <div className="mx-auto w-full max-w-md rounded-lg bg-white">
+      <div className="mb-8 text-center">
+        <h2 className="text-xl font-bold text-gray-800">Dual Range Slider</h2>
+        <p className="mt-2 text-lg text-gray-600">
+          Izabrani raspon:{" "}
+          <span className="font-semibold text-blue-600">
+            {minValue} - {maxValue}
+          </span>
+        </p>
       </div>
 
-      <div className="mt-2 flex justify-between text-sm text-gray-600">
-        <span>{minVal}</span>
-        <span>{maxVal}</span>
+      <div className="relative pt-6 pb-6">
+        {/* Glavni kontejner za slider */}
+        <div className="relative h-2 w-full rounded-full bg-gray-200">
+          {/* Popunjena linija između dva indikatora */}
+          <div
+            className="absolute h-full rounded-full bg-blue-500"
+            style={{
+              left: `${leftPosition}%`,
+              right: `${rightPosition}%`,
+            }}
+          ></div>
+        </div>
+
+        {/* Kontrole za min i max vrednosti */}
+        <div className="relative">
+          {/* Min indikator */}
+          <input
+            type="range"
+            min={minAllowed}
+            max={maxAllowed}
+            value={minValue}
+            onChange={handleMinChange}
+            className="pointer-events-none absolute top-0 left-0 -mt-6 w-full appearance-none bg-transparent"
+            style={{ zIndex: 3, height: "20px" }}
+          />
+
+          {/* Max indikator */}
+          <input
+            type="range"
+            min={minAllowed}
+            max={maxAllowed}
+            value={maxValue}
+            onChange={handleMaxChange}
+            className="pointer-events-none absolute top-0 left-0 -mt-6 w-full appearance-none bg-transparent"
+            style={{ zIndex: 4, height: "20px" }}
+          />
+        </div>
+      </div>
+      <div className="mt-2 flex justify-between">
+        <div className="text-sm font-medium text-gray-500">{minAllowed}</div>
+        <div className="text-sm font-medium text-gray-500">{maxAllowed}</div>
       </div>
     </div>
   );
-}
+};
+
+export default DualRangeSlider;
