@@ -57,11 +57,6 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 }
 
 @layer components {
-  .testic {
-    background-color: red;
-    -webkit-appearance: none;
-    border: 2px solid black;
-  }
   .btn {
     @apply border-main-color-shade text-secondary-color bg-main-color-shade inline-block cursor-pointer rounded-sm border px-6 py-3;
   }
@@ -72,15 +67,18 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
     @apply text-main-color-shade border-main-color-shade bg-secondary-color;
   }
   .gradient_image_man {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
       url(/Images/HomePage/AboutProducts/teest2.jpg);
   }
   .gradient_image_woman {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
       url(/Images/HomePage/AboutProducts/teest.jpg);
   }
   .gradient_image_home {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
       url(/Images/HomePage/AboutProducts/peti_1.webp);
   }
   .grid-reviewers {
@@ -89,7 +87,8 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   }
   /* ovo je gradiant za thumbnail sliku na shop page-u */
   .gradient_image_shop {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
       url(/Images/ShopPage/Thumbnail/thumbnail.jpg);
   }
 }
