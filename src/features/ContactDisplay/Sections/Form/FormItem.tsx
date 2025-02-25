@@ -38,7 +38,7 @@ export default function FormItem() {
         <textarea
           maxLength={250}
           placeholder="Unesite razlog"
-          className="h-20 w-full rounded-xs bg-white p-3"
+          className="h-40 w-full rounded-xs bg-white p-3 lg:h-20"
         ></textarea>
       </div>
       <button type="submit" className="btn lg:w-30">
