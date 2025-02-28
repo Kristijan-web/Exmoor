@@ -44,9 +44,13 @@ export default function Footer() {
             Socials
           </h4>
           <div className="text-secondary-color flex gap-6 text-4xl">
+            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
             <ion-icon name="logo-instagram"></ion-icon>
+            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
             <ion-icon name="mail-outline"></ion-icon>
+            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
             <ion-icon name="logo-youtube"></ion-icon>
+            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
             <ion-icon name="logo-github"></ion-icon>
           </div>
         </div>

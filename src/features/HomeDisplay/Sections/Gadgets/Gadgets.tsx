@@ -11,6 +11,7 @@ export default function Gadgets() {
         <div className="grid items-center justify-items-center gap-12 px-7 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <span className="text-5xl">
+              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
               <ion-icon name="shield-checkmark-outline"></ion-icon>
             </span>
             <p className="text-xl font-semibold">Quality</p>
@@ -21,6 +22,7 @@ export default function Gadgets() {
           </div>
           <div>
             <span className="text-5xl">
+              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
               <ion-icon name="time-outline"></ion-icon>
             </span>
             <p className="text-xl font-semibold">Timeless</p>
@@ -31,6 +33,7 @@ export default function Gadgets() {
           </div>
           <div>
             <span className="text-5xl">
+              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
               <ion-icon name="wallet-outline"></ion-icon>
             </span>
             <p className="text-xl font-semibold">Cost</p>
@@ -41,6 +44,7 @@ export default function Gadgets() {
           </div>
           <div>
             <p className="text-5xl">
+              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
               <ion-icon name="leaf-outline"></ion-icon>
             </p>
             <p className="text-xl font-semibold">Recycble</p>
