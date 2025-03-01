@@ -70,6 +70,18 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   }
 }
 
+@layer utilities {
+  .no-spinner::-webkit-inner-spin-button,
+  .no-spinner::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .no-spinner {
+    -moz-appearance: textfield;
+  }
+}
+
 @layer components {
   .btn {
     @apply border-main-color-shade text-secondary-color bg-main-color-shade inline-block cursor-pointer rounded-sm border px-6 py-3;
