@@ -1,42 +1,55 @@
 export default function Burger() {
-  function handleClick() {
-    let nav = document.querySelector("#temp-nav");
-    if (!nav) {
-      const createNavID = document.querySelector("nav");
-      if (createNavID === null) {
-        console.error("Failed to create nav");
-        return;
-      }
-      createNavID.id = "temp-nav";
-      nav = document.querySelector("#temp-nav");
+  function createBurgerIDOnburgerNavElement() {
+    const navElement = document.querySelector("nav");
+    if (navElement === null) {
+      console.error("Failed to create nav");
+      return;
     }
-    const isNavHidden = nav?.classList.contains("top-[-100%]");
-    const hideNav = ["top-[-100%]", "pointer-events-none", "visibility-hidden"];
-    const showNav = [
+    navElement.id = "burger-nav";
+    return document.querySelector("#burger-nav");
+  }
+
+  // funkcija ispod pokrece ostale
+  function handleBurgerClick() {
+    const burgerNav = document.querySelector("#burger-nav");
+
+    if (!burgerNav) {
+      return createBurgerIDOnburgerNavElement();
+    }
+
+    const isBurgerHidden = burgerNav?.classList.contains("top-[-100%]");
+    const hideBurger = [
+      "top-[-100%]",
+      "pointer-events-none",
+      "visibility-hidden",
+    ];
+    const showBurger = [
       "top-21",
       "bottom-0",
       "pointer-events-auto",
       "visibility:visible",
     ];
-    if (isNavHidden) {
-      if (nav === null) {
-        console.error("nav element ne postoji");
+
+    if (isBurgerHidden) {
+      if (burgerNav === null) {
+        console.error("burgerNav element ne postoji");
         return;
       }
-      nav.classList.remove(...hideNav);
-      nav.classList.add(...showNav);
+      burgerNav.classList.remove(...hideBurger);
+      burgerNav.classList.add(...showBurger);
     } else {
-      if (nav === null) {
-        console.error("nav element ne postoji");
+      if (burgerNav === null) {
+        console.error("burgerNav element ne postoji");
         return;
       }
-      nav.classList.remove(...showNav);
-      nav.classList.add(...hideNav);
+      burgerNav.classList.remove(...showBurger);
+      burgerNav.classList.add(...hideBurger);
     }
   }
+
   return (
     <span
-      onClick={() => handleClick()}
+      onClick={() => handleBurgerClick()}
       className="text-secondary-color z-5 cursor-pointer sm:hidden"
     >
       {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
