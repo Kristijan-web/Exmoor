@@ -19,6 +19,8 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   --color-first-review: rgb(240, 240, 240);
   --color-second-review: rgb(220, 220, 220);
   --shadow-my-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  /* nova secondary boja */
+  --color-secondary-new: #f3f3f3;
 }
 @layer base {
   body {
