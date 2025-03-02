@@ -9,19 +9,31 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 
 /* za padding-x koristi p-7 */
 
+/* Koristi @theme inline za overridovanje tailwind klasa */
+
 @theme inline {
+  /* property ispod treba da ide u @layer utilities */
   --color-main-color-shade: var(--color-neutral-950);
+  /* className='text-main-color-shade' */
+  /* property ispod treba da ide u @layer utilities */
   --color-main-color-tint: var(--color-neutral-500);
   --color-secondary-color: var(--color-slate-100);
+  /* property ispod treba da ide u @layer utilities */
   --padding-x-horizontal: 0% 7% 0% 7%;
+  /* property ispod treba da ide u @layer utilities */
   --height-thumbnail: calc(100vh - 84px);
   /* boje za reviews sekciju */
+  /* property ispod treba da ide u @layer utilities */
   --color-first-review: rgb(240, 240, 240);
   --color-second-review: rgb(220, 220, 220);
+  /* property ispod treba da ide u @layer utilities */
   --shadow-my-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
   /* nova secondary boja */
+  /* property ispod treba da ide u @layer utilities */
   --color-secondary-new: #f3f3f3;
+  /* property ispod treba da ide u @layer utilities */
 }
+/* Koristi @layer base za definisanje globalnih pravila */
 @layer base {
   body {
     font-family: "Roboto";
@@ -69,7 +81,7 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 }
-
+/* Koristi @layer utilities za dodavanje novih utility klasa */
 @layer utilities {
   .no-spinner::-webkit-inner-spin-button,
   .no-spinner::-webkit-outer-spin-button {
@@ -82,6 +94,7 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   }
 }
 
+/* Koristi components za dodavanje skupa utility klasa */
 @layer components {
   .btn {
     @apply border-main-color-shade text-secondary-color bg-main-color-shade inline-block cursor-pointer rounded-sm border px-6 py-3;

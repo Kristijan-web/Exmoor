@@ -1,3 +1,5 @@
+import SignUserLayout from "../features/SignUser/SignUserLayout";
+
 export default function SignUpPage() {
-  return <div>Sign up</div>;
+  return <SignUserLayout />;
 }
