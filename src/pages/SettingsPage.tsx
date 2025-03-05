@@ -1,3 +1,5 @@
+import SettingsDisplay from "../features/SettingsDisplay/SettingsDisplay";
+
 export default function SettingsPage() {
-  return <div>Settings</div>;
+  return <SettingsDisplay />;
 }
