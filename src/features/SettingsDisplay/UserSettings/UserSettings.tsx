@@ -1,10 +1,10 @@
 export default function UserSettings() {
   return (
-    <section className="hidden lg:col-start-5 lg:col-end-13 lg:inline-block xl:col-start-4 2xl:col-start-3">
-      <div className="mx-auto h-full max-w-4xl p-7">
+    <section className="col-span-full hidden lg:col-start-5 lg:col-end-13 lg:inline-block xl:col-start-4 2xl:col-start-3">
+      <div className="mx-auto h-full max-w-4xl sm:p-7">
         <form className="bg-secondary-new flex h-full flex-col items-start justify-start gap-5 p-12">
           <h3 className="mb-10">Vase postavke</h3>
-          <div className="grid w-full grid-cols-2 gap-15">
+          <div className="grid-cols-1s grid w-full gap-15 sm:grid-cols-2">
             <div className="items-star flex flex-col gap-2">
               <label htmlFor="username">Ime i prezime</label>
               <input
