@@ -1,8 +1,8 @@
 export default function OtherSettings() {
   return (
-    <section className="col-start-4 col-end-15 mt-15">
-      <div className="mx-auto max-w-4xl px-7">
-        <form className="bg-secondary-new flex flex-col items-start justify-start gap-5 p-12">
+    <section className="hidden lg:col-start-5 lg:col-end-13 lg:inline-block xl:col-start-4 2xl:col-start-3">
+      <div className="mx-auto h-full max-w-4xl p-7">
+        <form className="bg-secondary-new flex h-full flex-col items-start justify-start gap-5 p-12">
           <h3 className="mb-10">Vase postavke</h3>
           <div className="grid w-full grid-cols-2 gap-15">
             <div className="items-star flex flex-col gap-2">
@@ -10,7 +10,7 @@ export default function OtherSettings() {
               <input
                 id="username"
                 type="text"
-                className="h-10 rounded-xs border-none bg-white p-3"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
             </div>
             <div className="items-star flex flex-col gap-2">
@@ -18,7 +18,7 @@ export default function OtherSettings() {
               <input
                 id="email"
                 type="text"
-                className="h-10 rounded-xs border-none bg-white p-3"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
             </div>
             <div className="items-star flex flex-col gap-2">
@@ -26,7 +26,7 @@ export default function OtherSettings() {
               <input
                 id="city"
                 type="text"
-                className="h-10 rounded-xs border-none bg-white p-3"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
             </div>
             <div className="items-star flex flex-col gap-2">
@@ -34,7 +34,7 @@ export default function OtherSettings() {
               <input
                 id="postalCode"
                 type="text"
-                className="h-10 rounded-xs border-none bg-white p-3"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
             </div>
             <div className="items-star flex flex-col gap-2">
@@ -42,7 +42,7 @@ export default function OtherSettings() {
               <input
                 id="address"
                 type="text"
-                className="h-10 rounded-xs border-none bg-white p-3"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
             </div>
             <div className="items-star flex flex-col gap-2">
@@ -50,13 +50,10 @@ export default function OtherSettings() {
               <input
                 id="phone"
                 type="text"
-                className="h-10 rounded-xs border-none bg-white p-3"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            <div className="flex items-center justify-start gap-5 text-center">
-              <button className="btn flex h-10 w-25 items-center justify-center">
-                Odustani
-              </button>
+            <div className="col-span-full flex items-center justify-start text-center">
               <button className="btn flex h-10 w-25 items-center justify-center">
                 Potvrdi
               </button>

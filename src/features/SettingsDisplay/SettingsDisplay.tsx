@@ -4,7 +4,7 @@ import SettingsMenu from "./SettingsMenu/SettingsMenu";
 
 export default function SettingsDisplay() {
   return (
-    <div className="grid grid-cols-15">
+    <div className="grid grid-cols-12">
       <SettingsMenu />
       <OtherSettings />
       {/* <PasswordDisplay /> */}
