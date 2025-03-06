@@ -24,7 +24,7 @@ export default function Header() {
             <NavLink to="/korpa">Cart</NavLink>
           </li>
           <li>
-            <NavLink to="/settings">Settings</NavLink>
+            <NavLink to="/podesavanja">Settings</NavLink>
           </li>
           <li>
             <NavLink to="/signup">Sign up</NavLink>

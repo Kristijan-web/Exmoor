@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
@@ -8,6 +8,7 @@ import ContactPage from "./pages/ContactPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/SignUpPage";
+import UserSettings from "./features/SettingsDisplay/UserSettings/UserSettings";
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,18 @@ const router = createBrowserRouter([
         element: <ContactPage />,
       },
       {
-        path: "/settings",
+        path: "/podesavanja",
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="postavke" replace />,
+          },
+          {
+            path: "postavke",
+            element: <UserSettings />,
+          },
+        ],
       },
       {
         path: "/signup",

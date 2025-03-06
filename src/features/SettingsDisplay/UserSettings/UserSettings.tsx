@@ -1,4 +1,4 @@
-export default function OtherSettings() {
+export default function UserSettings() {
   return (
     <section className="hidden lg:col-start-5 lg:col-end-13 lg:inline-block xl:col-start-4 2xl:col-start-3">
       <div className="mx-auto h-full max-w-4xl p-7">

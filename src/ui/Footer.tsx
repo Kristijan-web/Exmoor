@@ -21,7 +21,7 @@ export default function Footer() {
                 <NavLink to="/korpa">Cart</NavLink>
               </li>
               <li>
-                <NavLink to="/settings">Settings</NavLink>
+                <NavLink to="/podesavanja">Settings</NavLink>
               </li>
             </ul>
           </nav>
