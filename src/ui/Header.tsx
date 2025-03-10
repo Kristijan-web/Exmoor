@@ -1,12 +1,51 @@
 import { NavLink } from "react-router-dom";
 import BurgerMenu from "./BurgerMenu";
+import { useHeader } from "../contexts/GlobalContexts/HeaderContext";
+import { useEffect, useRef, useState } from "react";
 
+//Gleda se da li element preseče viewport
 export default function Header() {
+  const headerContext = useHeader();
+  const headerElement = useRef(null);
+  const [intersecting, setIntersecting] = useState(true);
+
+  if (!headerContext) {
+    throw new Error("Nije povezan context u root-u");
+  }
+
+  const { interceptingElement } = headerContext;
+
+  useEffect(
+    function checkForIntersecting() {
+      if (interceptingElement) {
+        function intersection(entries: IntersectionObserverEntry[]): void {
+          if (!entries[0].isIntersecting) {
+            console.log("test");
+            setIntersecting(() => false);
+          } else {
+            setIntersecting(() => true);
+          }
+          // u entries[0].target se nalazi intersectingElement
+        }
+        const obsOptions = {
+          root: null,
+          threshold: 0,
+          rootMargin: "-84px",
+        };
+        const observer = new IntersectionObserver(intersection, obsOptions);
+        observer.observe(interceptingElement);
+      }
+    },
+    [interceptingElement],
+  );
   return (
-    <header className="p-x-horizontal bg-main-color-shade z-5 flex h-21 items-center justify-between gap-4">
+    <header
+      ref={headerElement}
+      className={`${!intersecting && "sticky top-0"} p-x-horizontal bg-main-color-shade z-5 flex h-21 items-center justify-between gap-4`}
+    >
       <img
         className="w-40"
-        src="/public/Images/logo-no-background.png"
+        src="/Images/logo-no-background.png"
         alt="exmoor logo"
       />
       <nav className="hidden sm:block">
