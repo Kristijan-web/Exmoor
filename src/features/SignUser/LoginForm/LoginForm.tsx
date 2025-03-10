@@ -23,6 +23,7 @@ export default function LoginForm({
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="login-email"
               type="email"
+              autoComplete="email"
               placeholder="Enter your email"
             />
           </div>
@@ -37,6 +38,7 @@ export default function LoginForm({
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="login-password"
               type="password"
+              autoComplete="current-password"
               placeholder="Enter your password"
             />
           </div>
@@ -44,10 +46,13 @@ export default function LoginForm({
             <div className="flex items-center">
               <input
                 type="checkbox"
-                id="remember"
+                id="remember-me"
                 className="h-4 w-4 text-blue-500"
               />
-              <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 text-sm text-gray-600"
+              >
                 Remember me
               </label>
             </div>

@@ -3,7 +3,6 @@ import BurgerMenu from "./BurgerMenu";
 import { useHeader } from "../contexts/GlobalContexts/HeaderContext";
 import { useEffect, useRef, useState } from "react";
 
-//Gleda se da li element preseče viewport
 export default function Header() {
   const headerContext = useHeader();
   const headerElement = useRef(null);
@@ -25,7 +24,6 @@ export default function Header() {
           } else {
             setIntersecting(() => true);
           }
-          // u entries[0].target se nalazi intersectingElement
         }
         const obsOptions = {
           root: null,

@@ -23,6 +23,7 @@ export default function RegisterForm({
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-name"
               type="text"
+              autoComplete="username"
               placeholder="Enter your full name"
             />
           </div>
@@ -37,6 +38,7 @@ export default function RegisterForm({
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-email"
               type="email"
+              autoComplete="email"
               placeholder="Enter your email"
             />
           </div>
@@ -52,6 +54,7 @@ export default function RegisterForm({
               id="register-password"
               type="password"
               placeholder="Create a password"
+              autoComplete="current-password"
             />
           </div>
           <div className="flex items-center">
