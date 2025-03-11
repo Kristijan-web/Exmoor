@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import BurgerMenu from "./BurgerMenu";
-import { useHeader } from "../contexts/GlobalContexts/HeaderContext";
+import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { useEffect, useRef, useState } from "react";
+import BurgerMenu from "./BurgerMenu";
 
 export default function Header() {
   const headerContext = useHeader();
@@ -19,7 +19,6 @@ export default function Header() {
       if (interceptingElement) {
         function intersection(entries: IntersectionObserverEntry[]): void {
           if (!entries[0].isIntersecting) {
-            console.log("test");
             setIntersecting(() => false);
           } else {
             setIntersecting(() => true);

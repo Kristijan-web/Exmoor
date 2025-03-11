@@ -1,4 +1,6 @@
-// Ovaj context se koristi na stranicama kojima je potreban navigation sticky, to jest kad se izadje iz elementa prikazuje se navigacija
+// Used in pages:
+// - HomePage -> thumbnail
+// - ShopPage -> thumbnail
 import { createContext, ReactNode, useContext, useReducer } from "react";
 
 type DOMElement = {
@@ -7,22 +9,22 @@ type DOMElement = {
 
 type Action =
   | { type: "setInterceptingElement"; payload: HTMLElement | null }
-  | { type: "toggleBurgerMenu"; payload: boolean };
+  | { type: "isBurgerOpen"; payload: boolean };
 
 type State = {
   interceptingElement: HTMLElement | null;
-  isBurgerMenuActive: boolean;
+  isBurgerMenuOpen: boolean;
 };
 const initialState: State = {
   interceptingElement: null,
-  isBurgerMenuActive: false,
+  isBurgerMenuOpen: false,
 };
 
 // ovo (null) je pocetna vrednost
 const HeaderContext = createContext<{
   interceptingElement: HTMLElement | null;
   dispatch: (action: Action) => void;
-  isBurgerMenuActive: boolean;
+  isBurgerMenuOpen: boolean;
 } | null>(null);
 
 // kada se prosledjue action to je obicno objekat koji sadrzi 2 property-a. payload i type
@@ -31,21 +33,21 @@ function reducer(state: State, action: Action) {
     case "setInterceptingElement": {
       return { ...state, interceptingElement: action.payload };
     }
-    case "toggleBurgerMenu": {
-      return { ...state, isBurgerMenuActive: !state.isBurgerMenuActive };
+    case "isBurgerOpen": {
+      return { ...state, isBurgerMenuOpen: !state.isBurgerMenuOpen };
     }
     default:
       return state;
   }
 }
 export default function HeaderProvider({ children }: DOMElement) {
-  const [{ interceptingElement, isBurgerMenuActive }, dispatch] = useReducer(
+  const [{ interceptingElement, isBurgerMenuOpen }, dispatch] = useReducer(
     reducer,
     initialState,
   );
   return (
     <HeaderContext.Provider
-      value={{ interceptingElement, dispatch, isBurgerMenuActive }}
+      value={{ interceptingElement, dispatch, isBurgerMenuOpen }}
     >
       {children}
     </HeaderContext.Provider>

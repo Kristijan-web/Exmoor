@@ -5,7 +5,7 @@ export default function Thumbnail() {
   const headerContext = useHeader();
   const intersectionElement = useRef(null);
   if (!headerContext) {
-    throw new Error("Nije povezan context u root-u");
+    throw new Error("Context is not setup correctly");
   }
   const { dispatch } = headerContext;
   useEffect(
