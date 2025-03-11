@@ -1,35 +1,46 @@
 import { NavLink } from "react-router-dom";
 import Burger from "./Burger";
+import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
+import { useEffect, useRef } from "react";
 
 export default function BurgerMenu() {
-  // Napravi da svaki put kada se stranica promeni da se restartuju klase na header-u
-  // Mozda ovo moze koriscenjem useNavigaiton i useEffect-a
+  const headerContext = useHeader();
+  const burgerElement = useRef(null);
+  if (!headerContext) throw new Error("Context isn't setup");
+  const { dispatch } = headerContext;
+  useEffect(
+    function sendBurgerNavToGlobal() {
+      dispatch({ type: "setBurgerElement", payload: burgerElement });
+    },
+    [burgerElement],
+  );
 
   return (
     <>
       <Burger />
       <nav
+        ref={burgerElement}
         id="burger-nav"
         className="visibility-hidden bg-main-color-shade text-secondary-color pointer-events-none absolute top-[-100%] right-0 left-0 hidden w-screen transition-all duration-300 ease-in-out"
       >
         <ul className="text-secondary-color flex h-full w-full flex-col items-center justify-center gap-3.5 text-2xl">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">Pocetna</NavLink>
           </li>
           <li>
             <NavLink to="/shop">Shop</NavLink>
           </li>
           <li>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/contact">Kontakt</NavLink>
           </li>
           <li>
-            <NavLink to="/korpa">Cart</NavLink>
+            <NavLink to="/korpa">Korpa</NavLink>
           </li>
           <li>
-            <NavLink to="/podesavanja">Settings</NavLink>
+            <NavLink to="/podesavanja">Podesavanja</NavLink>
           </li>
           <li>
-            <NavLink to="/signup">Sign up</NavLink>
+            <NavLink to="/signup">Prijava</NavLink>
           </li>
         </ul>
       </nav>

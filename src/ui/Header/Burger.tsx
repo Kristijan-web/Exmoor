@@ -3,41 +3,36 @@ import { useLocation } from "react-router-dom";
 import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 
 export default function Burger() {
-  // Pri promeni stranice resetuje se css za burger navigaciju kako bi se samo pokazao logo i burger
-  const headerContext = useHeader();
-  if (!headerContext) {
-    throw new Error("Context nije prikljucen");
-  }
-  const { dispatch } = headerContext;
   const URL = useLocation();
+  const headerContext =
+    useHeader() ||
+    (function () {
+      throw new Error("Context doesn't exist");
+    })();
+  const { dispatch, burgerNavElement: burgerNav } = headerContext;
+
   useEffect(
     function resetNavBurgerCssOnURLChange() {
-      const burgerNav = document.querySelector("#burger-nav");
-      if (!burgerNav) {
-        throw new Error("Burger nav doesn't eixst");
+      if (burgerNav) {
+        const hideBurgerTailwind = [
+          "top-[-100%]",
+          "pointer-events-none",
+          "visibility-hidden",
+          "hidden",
+        ];
+        console.log("EEE");
+        dispatch({ type: "isBurgerOpen", payload: false });
+        document.body.style.overflow = ""; // Enables page scroller
+        burgerNav?.current?.classList.add(...hideBurgerTailwind);
       }
-      const hideBurgerTailwind = [
-        "top-[-100%]",
-        "pointer-events-none",
-        "visibility-hidden",
-        "hidden",
-      ];
-      dispatch({ type: "isBurgerOpen", payload: false });
-      document.body.style.overflow = "";
-      burgerNav.classList.add(...hideBurgerTailwind);
     },
     [URL.pathname],
   );
-  // end
 
-  // funkcija ispod pokrece ostale
   function handleBurgerClick() {
-    const burgerNav = document.querySelector("#burger-nav");
-
     if (!burgerNav) {
       throw new Error("There is no navigation with burger-nav id");
     }
-
     const hideBurgerTailwind = [
       "top-[-100%]",
       "pointer-events-none",
@@ -52,19 +47,19 @@ export default function Burger() {
       "fixed",
     ];
 
-    const isBurgerHidden = burgerNav?.classList.contains("top-[-100%]");
+    const isBurgerHidden =
+      burgerNav?.current?.classList.contains("top-[-100%]");
 
     if (isBurgerHidden) {
-      // zasta bese koristim ovaj dispatch
       dispatch({ type: "isBurgerOpen", payload: true });
-      document.body.style.overflow = "hidden";
-      burgerNav.classList.remove(...hideBurgerTailwind);
-      burgerNav.classList.add(...showBurgerTailwind);
+      document.body.style.overflow = "hidden"; // Disables page scroller
+      burgerNav?.current?.classList.remove(...hideBurgerTailwind);
+      burgerNav?.current?.classList.add(...showBurgerTailwind);
     } else {
       dispatch({ type: "isBurgerOpen", payload: false });
-      document.body.style.overflow = "";
-      burgerNav.classList.remove(...showBurgerTailwind);
-      burgerNav.classList.add(...hideBurgerTailwind);
+      document.body.style.overflow = ""; // Enables page scroller
+      burgerNav?.current?.classList.remove(...showBurgerTailwind);
+      burgerNav?.current?.classList.add(...hideBurgerTailwind);
     }
   }
 

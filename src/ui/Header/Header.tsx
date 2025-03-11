@@ -9,13 +9,13 @@ export default function Header() {
   const [intersecting, setIntersecting] = useState(true);
 
   if (!headerContext) {
-    throw new Error("Nije povezan context u root-u");
+    throw new Error("Context isn't setup ");
   }
 
   const { interceptingElement } = headerContext;
 
   useEffect(
-    function checkForIntersecting() {
+    function checkForStickyNavigation() {
       if (interceptingElement) {
         function intersection(entries: IntersectionObserverEntry[]): void {
           if (!entries[0].isIntersecting) {

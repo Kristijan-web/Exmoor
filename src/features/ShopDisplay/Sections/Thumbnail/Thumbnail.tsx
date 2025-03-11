@@ -15,8 +15,6 @@ export default function Thumbnail() {
     },
     [dispatch],
   );
-  // Kada je burger menu prikazan treba ukloniti css klase
-
   return (
     <section
       ref={intersectionElement}
