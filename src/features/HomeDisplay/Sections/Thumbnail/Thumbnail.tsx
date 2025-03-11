@@ -11,7 +11,7 @@ export default function Thumbnail() {
   useEffect(
     function setIntersectionElement() {
       dispatch({
-        type: "setinterceptingElement",
+        type: "setInterceptingElement",
         payload: intersectionElement.current,
       });
     },
