@@ -9,19 +9,23 @@ export default function Footer() {
           <nav>
             <ul className="flex flex-col gap-4 text-xl">
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink to="/">Pocetna</NavLink>
               </li>
               <li>
                 <NavLink to="/shop">Shop</NavLink>
               </li>
               <li>
-                <NavLink to="/contact">Contact</NavLink>
+                <NavLink to="/contact">Kontakt</NavLink>
+              </li>
+              <li className="flex cursor-pointer items-center gap-2">
+                <span className="flex items-center justify-center text-2xl">
+                  {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
+                  <ion-icon name="cart-outline"></ion-icon>
+                </span>
+                <span>Korpa</span>
               </li>
               <li>
-                <NavLink to="/korpa">Cart</NavLink>
-              </li>
-              <li>
-                <NavLink to="/podesavanja">Settings</NavLink>
+                <NavLink to="/podesavanja">Podesavanja</NavLink>
               </li>
             </ul>
           </nav>

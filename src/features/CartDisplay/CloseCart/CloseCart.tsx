@@ -1,5 +1,8 @@
+import useCartData from "../../../hooks/useCartData";
+
 export default function CloseCart() {
   //kada se klikne na x treba da se ukloni clasa show
+  const { dispatch } = useCartData();
 
   function handleCloseCart() {
     const cartSection = document.querySelector(".cart");
@@ -13,6 +16,7 @@ export default function CloseCart() {
     ];
 
     cartSection?.classList.add(...hideCart);
+    dispatch({ type: "closeCart", payload: false });
   }
 
   return (

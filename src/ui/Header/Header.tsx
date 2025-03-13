@@ -2,17 +2,25 @@ import { NavLink } from "react-router-dom";
 import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { useEffect, useRef, useState } from "react";
 import BurgerMenu from "./BurgerMenu";
+import { useCart } from "../../contexts/GlobalContexts/CartContext";
 
 export default function Header() {
   const headerContext = useHeader();
+  const cartContext = useCart();
   const headerElement = useRef(null);
   const [intersecting, setIntersecting] = useState(true);
 
-  if (!headerContext) {
+  if (!headerContext || !cartContext) {
     throw new Error("Context isn't setup ");
   }
 
   const { interceptingElement } = headerContext;
+  const { dispatch } = cartContext;
+
+  function showCart() {
+    console.log("hello");
+    dispatch({ type: "openCart", payload: true });
+  }
 
   useEffect(
     function checkForStickyNavigation() {
@@ -35,6 +43,7 @@ export default function Header() {
     },
     [interceptingElement],
   );
+
   return (
     <header
       ref={headerElement}
@@ -56,8 +65,15 @@ export default function Header() {
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
-          <li>
-            <NavLink to="/korpa">Cart</NavLink>
+          <li
+            onClick={() => showCart()}
+            className="flex cursor-pointer items-center gap-2"
+          >
+            <span className="flex items-center justify-center text-2xl">
+              {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
+              <ion-icon name="cart-outline"></ion-icon>
+            </span>
+            <span>Korpa</span>
           </li>
           <li>
             <NavLink to="/podesavanja">Settings</NavLink>
