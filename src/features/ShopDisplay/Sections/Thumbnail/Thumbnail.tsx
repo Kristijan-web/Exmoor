@@ -2,10 +2,8 @@ import { useEffect, useRef } from "react";
 import { useHeader } from "../../../../contexts/GlobalContexts/HeaderContext";
 
 export default function Thumbnail() {
-  const headerContext = useHeader();
+  const { dispatch, isBurgerMenuOpen } = useHeader();
   const intersectionElement = useRef(null);
-  if (!headerContext) throw new Error("global context nije postavljen");
-  const { dispatch, isBurgerMenuOpen } = headerContext;
   useEffect(
     function setIntersectionElement() {
       dispatch({

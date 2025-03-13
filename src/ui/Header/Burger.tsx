@@ -4,12 +4,7 @@ import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 
 export default function Burger() {
   const URL = useLocation();
-  const headerContext =
-    useHeader() ||
-    (function () {
-      throw new Error("Context doesn't exist");
-    })();
-  const { dispatch, burgerNavElement: burgerNav } = headerContext;
+  const { dispatch, burgerNavElement: burgerNav } = useHeader();
 
   useEffect(
     function resetNavBurgerCssOnURLChange() {
@@ -20,7 +15,6 @@ export default function Burger() {
           "visibility-hidden",
           "hidden",
         ];
-        console.log("EEE");
         dispatch({ type: "isBurgerOpen", payload: false });
         document.body.style.overflow = ""; // Enables page scroller
         burgerNav?.current?.classList.add(...hideBurgerTailwind);

@@ -1,8 +1,8 @@
-import useCartData from "../../../hooks/useCartData";
+import { useCart } from "../../../contexts/GlobalContexts/CartContext";
 
 export default function CloseCart() {
   //kada se klikne na x treba da se ukloni clasa show
-  const { dispatch } = useCartData();
+  const { dispatch } = useCart();
 
   function handleCloseCart() {
     const cartSection = document.querySelector(".cart");

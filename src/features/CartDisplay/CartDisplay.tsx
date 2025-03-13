@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import CartItem from "./CartItemDisplay/CartItem";
+import CartItem from "./CartItem/CartItem";
 import TotalPrice from "./TotalPrice/TotalPrice";
 import CloseCart from "./CloseCart/CloseCart";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";

@@ -5,20 +5,12 @@ import BurgerMenu from "./BurgerMenu";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
 
 export default function Header() {
-  const headerContext = useHeader();
-  const cartContext = useCart();
+  const { interceptingElement } = useHeader();
+  const { dispatch } = useCart();
   const headerElement = useRef(null);
   const [intersecting, setIntersecting] = useState(true);
 
-  if (!headerContext || !cartContext) {
-    throw new Error("Context isn't setup ");
-  }
-
-  const { interceptingElement } = headerContext;
-  const { dispatch } = cartContext;
-
   function showCart() {
-    console.log("hello");
     dispatch({ type: "openCart", payload: true });
   }
 

@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { useCart } from "../contexts/GlobalContexts/CartContext";
 
 export default function Footer() {
+  const { dispatch } = useCart();
+  function showCart() {
+    dispatch({ type: "openCart", payload: true });
+  }
+
   return (
     <footer className="bg-main-color-shade">
       <div className="mx-auto grid max-w-7xl grid-cols-12 items-start justify-items-center gap-10 p-15">
@@ -17,7 +23,10 @@ export default function Footer() {
               <li>
                 <NavLink to="/contact">Kontakt</NavLink>
               </li>
-              <li className="flex cursor-pointer items-center gap-2">
+              <li
+                onClick={showCart}
+                className="flex cursor-pointer items-center gap-2"
+              >
                 <span className="flex items-center justify-center text-2xl">
                   {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
                   <ion-icon name="cart-outline"></ion-icon>

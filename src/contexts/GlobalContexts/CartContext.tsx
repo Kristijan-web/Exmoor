@@ -1,3 +1,9 @@
+// Used in components:
+// - CartDisplay -> CloseCart -> CloseCart.tsx
+// - Footer.tsx
+// - Header.tsx
+// - AppLayout.tsx
+
 import { createContext, ReactNode, useContext, useReducer } from "react";
 
 type Props = {
@@ -45,6 +51,7 @@ export default function CartProvider({ children }: Props) {
 
 export function useCart() {
   const x = useContext(CartContext);
-  if (x === undefined) throw new Error("Context is not setup correctly");
+  if (x === undefined || x === null)
+    throw new Error("Cart context is not setup correctly");
   return x;
 }

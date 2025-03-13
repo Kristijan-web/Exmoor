@@ -4,6 +4,9 @@
 // Used in pages:
 // - HomePage -> thumbnail
 // - ShopPage -> thumbnail
+// - Header.tsx
+// - Burger.tsx
+// - BurgerMenu.tsx
 import {
   createContext,
   ReactNode,
@@ -76,8 +79,8 @@ export default function HeaderProvider({ children }: DOMElement) {
 
 export function useHeader() {
   const headerData = useContext(HeaderContext);
-  if (headerData === undefined) {
-    throw new Error("Componenta nije pretplacena na context");
+  if (headerData === undefined || headerData === null) {
+    throw new Error("Header context not setup correctly");
   }
   return headerData;
 }

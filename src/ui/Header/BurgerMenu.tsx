@@ -4,10 +4,8 @@ import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { useEffect, useRef } from "react";
 
 export default function BurgerMenu() {
-  const headerContext = useHeader();
+  const { dispatch } = useHeader();
   const burgerElement = useRef(null);
-  if (!headerContext) throw new Error("Context isn't setup");
-  const { dispatch } = headerContext;
   useEffect(
     function sendBurgerNavToGlobal() {
       dispatch({ type: "setBurgerElement", payload: burgerElement });

@@ -2,12 +2,9 @@ import { useEffect, useRef } from "react";
 import { useHeader } from "../../../../contexts/GlobalContexts/HeaderContext";
 
 export default function Thumbnail() {
-  const headerContext = useHeader();
+  const { dispatch } = useHeader();
   const intersectionElement = useRef(null);
-  if (!headerContext) {
-    throw new Error("Context is not setup correctly");
-  }
-  const { dispatch } = headerContext;
+
   useEffect(
     function setIntersectionElement() {
       dispatch({
