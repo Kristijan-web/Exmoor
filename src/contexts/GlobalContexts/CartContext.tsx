@@ -3,6 +3,7 @@
 // - Footer.tsx
 // - Header.tsx
 // - AppLayout.tsx
+// - BurgerMenu.tsx
 
 import { createContext, ReactNode, useContext, useReducer } from "react";
 

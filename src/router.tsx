@@ -3,7 +3,6 @@ import AppLayout from "./ui/AppLayout";
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
-import CartPage from "./pages/CartPage";
 import ContactPage from "./pages/ContactPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -26,10 +25,7 @@ const router = createBrowserRouter([
         path: "/shop/:id",
         element: <ProductDetailsPage />,
       },
-      {
-        path: "/korpa",
-        element: <CartPage />,
-      },
+
       {
         path: "/contact",
         element: <ContactPage />,

@@ -2,16 +2,21 @@ import { NavLink } from "react-router-dom";
 import Burger from "./Burger";
 import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { useEffect, useRef } from "react";
+import { useCart } from "../../contexts/GlobalContexts/CartContext";
 
 export default function BurgerMenu() {
   const { dispatch } = useHeader();
+  const { dispatch: dispatchCart } = useCart();
   const burgerElement = useRef(null);
   useEffect(
-    function sendBurgerNavToGlobal() {
+    function sendBurgerNavToGlobalForStickyNavigation() {
       dispatch({ type: "setBurgerElement", payload: burgerElement });
     },
     [burgerElement],
   );
+  function showCart() {
+    dispatchCart({ type: "openCart", payload: true });
+  }
 
   return (
     <>
@@ -31,8 +36,15 @@ export default function BurgerMenu() {
           <li>
             <NavLink to="/contact">Kontakt</NavLink>
           </li>
-          <li>
-            <NavLink to="/korpa">Korpa</NavLink>
+          <li
+            onClick={showCart}
+            className="flex cursor-pointer items-center gap-2"
+          >
+            <span className="flex items-center justify-center text-2xl">
+              {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
+              <ion-icon name="cart-outline"></ion-icon>
+            </span>
+            <span>Korpa</span>
           </li>
           <li>
             <NavLink to="/podesavanja">Podesavanja</NavLink>
