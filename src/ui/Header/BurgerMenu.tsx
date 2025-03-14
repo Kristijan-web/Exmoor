@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 import Burger from "./Burger";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
 
 export default function BurgerMenu() {
   const { dispatch: dispatchCart } = useCart();
+  const [showBurgerIcon, setShowBurgerIcon] = useState(true);
   const burgerNav = useRef<HTMLElement | null>(null);
 
   function showCart(e: React.MouseEvent<HTMLElement>) {
@@ -22,14 +23,17 @@ export default function BurgerMenu() {
     if (burgerNav) {
       burgerNav?.current?.classList?.add(...hideBurgerTailwind);
       document.body.style.overflow = ""; // enables page scroller
+      setShowBurgerIcon(true);
     }
   }
 
-  // kada se klikne na link gase se css klase
-
   return (
     <>
-      <Burger burgerNav={burgerNav} />
+      <Burger
+        burgerNav={burgerNav}
+        showBurgerIcon={showBurgerIcon}
+        setShowBurgerIcon={setShowBurgerIcon}
+      />
       <nav
         ref={burgerNav}
         id="burger-nav"
