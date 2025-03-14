@@ -1,19 +1,12 @@
 import { NavLink } from "react-router-dom";
 import Burger from "./Burger";
-import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
 
 export default function BurgerMenu() {
-  const { dispatch } = useHeader();
   const { dispatch: dispatchCart } = useCart();
-  const burgerNav = useRef<HTMLElement>(null);
-  useEffect(
-    function sendBurgerNavToGlobalForStickyNavigation() {
-      dispatch({ type: "setBurgerElement", payload: burgerNav });
-    },
-    [burgerNav],
-  );
+  const burgerNav = useRef<HTMLElement | null>(null);
+
   function showCart(e: React.MouseEvent<HTMLElement>) {
     e.stopPropagation();
     dispatchCart({ type: "openCart", payload: true });
@@ -28,6 +21,7 @@ export default function BurgerMenu() {
     ];
     if (burgerNav) {
       burgerNav?.current?.classList?.add(...hideBurgerTailwind);
+      document.body.style.overflow = ""; // enables page scroller
     }
   }
 
@@ -35,21 +29,21 @@ export default function BurgerMenu() {
 
   return (
     <>
-      <Burger />
+      <Burger burgerNav={burgerNav} />
       <nav
         ref={burgerNav}
         id="burger-nav"
-        className="visibility-hidden bg-main-color-shade text-secondary-color pointer-events-none absolute top-[-100%] right-0 left-0 hidden w-screen transition-all duration-300 ease-in-out"
+        className="visibility-hidden bg-main-color-shade text-secondary-color pointer-events-none absolute top-[-100%] right-0 left-0 z-100 hidden w-screen"
       >
         <ul className="text-secondary-color flex h-full w-full flex-col items-center justify-center gap-3.5 text-2xl">
           <li onClick={closeBurgerNav}>
             <NavLink to="/">Pocetna</NavLink>
           </li>
-          <li>
+          <li onClick={closeBurgerNav}>
             <NavLink to="/shop">Shop</NavLink>
           </li>
-          <li>
-            <NavLink to="/contact">Kontakt</NavLink>
+          <li onClick={closeBurgerNav}>
+            <NavLink to="/kontakt">Kontakt</NavLink>
           </li>
           <li
             onClick={(e) => showCart(e)}
@@ -61,10 +55,10 @@ export default function BurgerMenu() {
             </span>
             <span>Korpa</span>
           </li>
-          <li>
+          <li onClick={closeBurgerNav}>
             <NavLink to="/podesavanja">Podesavanja</NavLink>
           </li>
-          <li>
+          <li onClick={closeBurgerNav}>
             <NavLink to="/signup">Prijava</NavLink>
           </li>
         </ul>

@@ -1,29 +1,9 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
-
-export default function Burger() {
-  const URL = useLocation();
-  const { dispatch, burgerNavElement: burgerNav } = useHeader();
-
-  useEffect(
-    function resetNavBurgerCssOnURLChange() {
-      if (burgerNav) {
-        const hideBurgerTailwind = [
-          "top-[-100%]",
-          "pointer-events-none",
-          "visibility-hidden",
-          "hidden",
-        ];
-        dispatch({ type: "isBurgerOpen", payload: false });
-        document.body.style.overflow = ""; // Enables page scroller
-        burgerNav?.current?.classList.add(...hideBurgerTailwind);
-      }
-    },
-    [URL.pathname],
-  );
-
+type Props = {
+  burgerNav: React.RefObject<HTMLElement | null> | null;
+};
+export default function Burger({ burgerNav }: Props) {
   function handleBurgerClick() {
+    console.log("hello");
     if (!burgerNav) {
       throw new Error("There is no navigation with burger-nav id");
     }
@@ -45,12 +25,10 @@ export default function Burger() {
       burgerNav?.current?.classList.contains("top-[-100%]");
 
     if (isBurgerHidden) {
-      dispatch({ type: "isBurgerOpen", payload: true });
       document.body.style.overflow = "hidden"; // Disables page scroller
-      burgerNav?.current?.classList.remove(...hideBurgerTailwind);
+      burgerNav?.current?.classList?.remove(...hideBurgerTailwind);
       burgerNav?.current?.classList.add(...showBurgerTailwind);
     } else {
-      dispatch({ type: "isBurgerOpen", payload: false });
       document.body.style.overflow = ""; // Enables page scroller
       burgerNav?.current?.classList.remove(...showBurgerTailwind);
       burgerNav?.current?.classList.add(...hideBurgerTailwind);
@@ -62,7 +40,7 @@ export default function Burger() {
       onClick={() => handleBurgerClick()}
       className="text-secondary-color z-5 cursor-pointer sm:hidden"
     >
-      {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
+      {/* @ts-expect-error  Doesn't recognize icon as valid jsx element*/}
       <ion-icon name="menu-outline" size="large"></ion-icon>
     </span>
   );

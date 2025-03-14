@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { useEffect, useRef, useState } from "react";
 import BurgerMenu from "./BurgerMenu";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
+import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 
 export default function Header() {
   const { interceptingElement } = useHeader();
@@ -56,7 +56,7 @@ export default function Header() {
             <NavLink to="/shop">Shop</NavLink>
           </li>
           <li>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/kontakt">Kontakt</NavLink>
           </li>
           <li
             onClick={(e) => showCart(e)}
