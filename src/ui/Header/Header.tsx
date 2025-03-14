@@ -10,7 +10,8 @@ export default function Header() {
   const headerElement = useRef(null);
   const [intersecting, setIntersecting] = useState(true);
 
-  function showCart() {
+  function showCart(e: React.MouseEvent<HTMLElement>) {
+    e.stopPropagation();
     dispatch({ type: "openCart", payload: true });
   }
 
@@ -58,7 +59,7 @@ export default function Header() {
             <NavLink to="/contact">Contact</NavLink>
           </li>
           <li
-            onClick={() => showCart()}
+            onClick={(e) => showCart(e)}
             className="flex cursor-pointer items-center gap-2"
           >
             <span className="flex items-center justify-center text-2xl">
