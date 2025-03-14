@@ -14,7 +14,8 @@ export default function BurgerMenu() {
     },
     [burgerElement],
   );
-  function showCart() {
+  function showCart(e: React.MouseEvent<HTMLElement>) {
+    e.stopPropagation();
     dispatchCart({ type: "openCart", payload: true });
   }
 
@@ -37,7 +38,7 @@ export default function BurgerMenu() {
             <NavLink to="/contact">Kontakt</NavLink>
           </li>
           <li
-            onClick={showCart}
+            onClick={(e) => showCart(e)}
             className="flex cursor-pointer items-center gap-2"
           >
             <span className="flex items-center justify-center text-2xl">

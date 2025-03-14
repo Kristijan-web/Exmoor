@@ -3,7 +3,8 @@ import { useCart } from "../contexts/GlobalContexts/CartContext";
 
 export default function Footer() {
   const { dispatch } = useCart();
-  function showCart() {
+  function showCart(e: React.MouseEvent<HTMLElement>) {
+    e.stopPropagation();
     dispatch({ type: "openCart", payload: true });
   }
 
@@ -24,7 +25,7 @@ export default function Footer() {
                 <NavLink to="/contact">Kontakt</NavLink>
               </li>
               <li
-                onClick={showCart}
+                onClick={(e) => showCart(e)}
                 className="flex cursor-pointer items-center gap-2"
               >
                 <span className="flex items-center justify-center text-2xl">

@@ -9,7 +9,6 @@ export default function CartDisplay() {
   const { dispatch } = useCart();
 
   useEffect(function closeCartWhenClickedOutside() {
-    console.log("aloo");
     function closeCart(e: MouseEvent) {
       const cart = (e.target as Element)?.closest("aside");
       if (!cart) {
