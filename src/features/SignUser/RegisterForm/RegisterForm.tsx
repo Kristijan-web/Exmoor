@@ -9,7 +9,7 @@ export default function RegisterForm({
     >
       <div className="flex h-full flex-col">
         <h2 className="mb-4 text-xl font-bold text-gray-800 md:mb-6 md:text-2xl">
-          Create Account
+          Napravite nalog
         </h2>
         <form className="flex flex-grow flex-col justify-center space-y-4 md:space-y-5">
           <div>
@@ -17,14 +17,14 @@ export default function RegisterForm({
               className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
               htmlFor="register-name"
             >
-              Name
+              Ime
             </label>
             <input
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-name"
               type="text"
               autoComplete="username"
-              placeholder="Enter your full name"
+              placeholder="Ime"
             />
           </div>
           <div>
@@ -39,7 +39,7 @@ export default function RegisterForm({
               id="register-email"
               type="email"
               autoComplete="email"
-              placeholder="Enter your email"
+              placeholder="Email"
             />
           </div>
           <div>
@@ -47,13 +47,13 @@ export default function RegisterForm({
               className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
               htmlFor="register-password"
             >
-              Password
+              Šifra
             </label>
             <input
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-password"
               type="password"
-              placeholder="Create a password"
+              placeholder="Šifra"
               autoComplete="current-password"
             />
           </div>
@@ -64,12 +64,12 @@ export default function RegisterForm({
               className="h-4 w-4 text-blue-500"
             />
             <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
-              Remember me
+              Zapamti me
             </label>
           </div>
           <div className="mt-4 md:mt-auto">
             <button className="btn w-full" type="button">
-              Register
+              Registruj se
             </button>
           </div>
         </form>

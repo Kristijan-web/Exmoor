@@ -10,7 +10,7 @@ export default function CartItem() {
         <p className="text-xl">Zara perfume</p>
         <span className="font-semibold">5.999,00 RSD</span>
         <div className="flex items-center justify-start gap-2">
-          <span className="text-main-color-shade/90">Kolicina:</span>
+          <span className="text-main-color-shade/90">Količina:</span>
           <input
             type="number"
             className="no-spinner w-10 rounded-xs border-1 border-black text-center"

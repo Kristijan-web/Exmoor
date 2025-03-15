@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import BurgerMenu from "./BurgerMenu";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
 import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
+import { FaRegUser } from "react-icons/fa";
 
 export default function Header() {
   const { interceptingElement } = useHeader();
@@ -50,7 +51,7 @@ export default function Header() {
       <nav className="hidden sm:block">
         <ul className="text-secondary-color flex items-center gap-8">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">Pocetna</NavLink>
           </li>
           <li>
             <NavLink to="/shop">Shop</NavLink>
@@ -69,10 +70,13 @@ export default function Header() {
             <span>Korpa</span>
           </li>
           <li>
-            <NavLink to="/podesavanja">Settings</NavLink>
+            <NavLink to="/podesavanja">Podešavanja</NavLink>
           </li>
-          <li>
-            <NavLink to="/signup">Sign up</NavLink>
+          <li className="flex cursor-pointer items-center gap-2">
+            <span className="flex items-center justify-center text-xl">
+              <FaRegUser />
+            </span>
+            <NavLink to="/prijava">Prijava</NavLink>
           </li>
         </ul>
       </nav>

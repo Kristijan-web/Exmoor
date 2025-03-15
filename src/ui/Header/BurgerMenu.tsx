@@ -63,7 +63,7 @@ export default function BurgerMenu() {
             <NavLink to="/podesavanja">Podesavanja</NavLink>
           </li>
           <li onClick={closeBurgerNav}>
-            <NavLink to="/signup">Prijava</NavLink>
+            <NavLink to="/prijava">Prijava</NavLink>
           </li>
         </ul>
       </nav>

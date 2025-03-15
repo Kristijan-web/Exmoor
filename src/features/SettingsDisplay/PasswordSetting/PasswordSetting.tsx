@@ -5,7 +5,7 @@ export default function PasswordDisplay() {
         <form className="flex flex-col items-start justify-start gap-5 p-12">
           <h3>Promena sifre</h3>
           <div className="flex w-110 items-center justify-between">
-            <label htmlFor="old-password">Stara sifra</label>
+            <label htmlFor="old-password">Stara šifra</label>
             <input
               id="oldPassword"
               type="text"
@@ -13,7 +13,7 @@ export default function PasswordDisplay() {
             />
           </div>
           <div className="flex w-110 items-center justify-between">
-            <label htmlFor="newPassword">Nova sifra</label>
+            <label htmlFor="newPassword">Nova šifra</label>
             <input
               id="newPassword"
               type="text"
@@ -21,7 +21,7 @@ export default function PasswordDisplay() {
             />
           </div>
           <div className="mb-10 flex w-110 items-center justify-between">
-            <label htmlFor="newPasswordRepeat">Ponovite Novu sifru</label>
+            <label htmlFor="newPasswordRepeat">Ponovite Novu šifru</label>
             <input
               id="newPasswordRepeat"
               type="text"

@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/signup",
+        path: "/prijava",
         element: <SignUpPage />,
       },
       {

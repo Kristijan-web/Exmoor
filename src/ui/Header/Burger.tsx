@@ -3,6 +3,7 @@ type Props = {
   showBurgerIcon: boolean;
   setShowBurgerIcon: (toggle: boolean) => void;
 };
+
 export default function Burger({
   burgerNav,
   showBurgerIcon,

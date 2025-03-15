@@ -14,7 +14,7 @@ export default function Perks() {
               <TbTruckDelivery />
             </span>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-xl">Ocekivana dostava</p>
+              <p className="text-xl">Očekivana dostava</p>
               <p className="text-main-color-shade/70">
                 Dostava u roku od 4 do 7 dana
               </p>
@@ -25,7 +25,7 @@ export default function Perks() {
               <PiMoneyLight />
             </span>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-xl">Nacin placanja</p>
+              <p className="text-xl">Način plaćanja</p>
               <p className="text-main-color-shade/70">
                 Pouzecem kuriske sluzbe
               </p>

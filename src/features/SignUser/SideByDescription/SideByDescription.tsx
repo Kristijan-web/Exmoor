@@ -14,31 +14,31 @@ export default function SideByDescription({
       {isLoginActive ? (
         <>
           <h2 className="mb-2 text-xl font-bold md:mb-3 md:text-2xl">
-            Don't have an account?
+            Nemate nalog?
           </h2>
           <p className="mb-4 text-center text-sm text-white/80 md:mb-8 md:text-base">
-            Sign up to start your journey
+            Registrujte ga
           </p>
           <button
             onClick={toggleForm}
             className="text-main-color-shade rounded-md bg-white px-6 py-1.5 font-medium transition-colors hover:bg-blue-50 md:px-8 md:py-2"
           >
-            Sign up
+            Registrujte se.
           </button>
         </>
       ) : (
         <>
           <h2 className="mb-2 text-xl font-bold md:mb-3 md:text-2xl">
-            Already have an account?
+            Vec imate nalog?
           </h2>
           <p className="mb-4 text-center text-sm text-white/80 md:mb-8 md:text-base">
-            Sign in to stay connected
+            Prijavite se da bi ste ostali povezani
           </p>
           <button
             onClick={toggleForm}
             className="text-main-color-shade rounded-md bg-white px-6 py-1.5 font-medium transition-colors hover:bg-purple-50 md:px-8 md:py-2"
           >
-            Sign in
+            Prijava
           </button>
         </>
       )}

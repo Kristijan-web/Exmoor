@@ -14,7 +14,7 @@ export default function Filters() {
       <div className="hidden lg:flex lg:flex-col lg:gap-9">
         <h3 className="mb-6 text-center text-xl">Filtriraj parfeme</h3>
         <div>
-          <p className="mb-4 text-xl">Proizvodjac</p>
+          <p className="mb-4 text-xl">Proizvođač</p>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <Checkbox>
@@ -44,13 +44,13 @@ export default function Filters() {
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <Checkbox>
-                <span>Muski</span>
+                <span>Muški</span>
               </Checkbox>
               <span className="text-main-color-shade/70">15</span>
             </div>
             <div className="flex items-center justify-between">
               <Checkbox>
-                <span>Zenski</span>
+                <span>Ženski</span>
               </Checkbox>
               <span className="text-main-color-shade/70">3</span>
             </div>

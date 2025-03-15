@@ -23,14 +23,12 @@ export default function Thumbnail() {
       >
         <div className="flex w-full flex-col gap-4 sm:w-[70%] sm:gap-3">
           <h1 className="font-semi text-start text-4xl">
-            Choose from one of the best perfume sellers in the world
+            Izaberite jednog od najboljih prodavaca parfema na svetu.
           </h1>
           <p className="text-2xl">
-            High-quality and unique olfactory compositions
+            Visoko kvalitetni parfemi od poznatih brendova
           </p>
-          <p className="">
-            Born to our collaborations with famous Master perfumers.
-          </p>
+          <p className="text-xl">Mirisi koji govore vise od hiljadu reci</p>
         </div>
       </div>
     </section>

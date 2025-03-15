@@ -44,7 +44,7 @@ export default function Form() {
             ></textarea>
           </div>
           <button type="submit" className="btn lg:w-30">
-            Submit
+            Pošalji
           </button>
         </form>
       </div>

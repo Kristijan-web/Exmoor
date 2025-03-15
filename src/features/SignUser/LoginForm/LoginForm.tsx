@@ -9,7 +9,7 @@ export default function LoginForm({
     >
       <div className="flex h-full flex-col">
         <h2 className="mb-4 text-xl font-bold text-gray-800 md:mb-6 md:text-2xl">
-          Sign In
+          Tvoj nalog
         </h2>
         <form className="flex flex-grow flex-col justify-center space-y-4 md:space-y-5">
           <div>
@@ -24,7 +24,7 @@ export default function LoginForm({
               id="login-email"
               type="email"
               autoComplete="email"
-              placeholder="Enter your email"
+              placeholder="Email"
             />
           </div>
           <div>
@@ -32,14 +32,14 @@ export default function LoginForm({
               className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
               htmlFor="login-password"
             >
-              Password
+              Šifra
             </label>
             <input
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="login-password"
               type="password"
               autoComplete="current-password"
-              placeholder="Enter your password"
+              placeholder="Šifra"
             />
           </div>
           <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
@@ -53,16 +53,16 @@ export default function LoginForm({
                 htmlFor="remember-me"
                 className="ml-2 text-sm text-gray-600"
               >
-                Remember me
+                Zapamti me
               </label>
             </div>
             <a href="#" className="text-sm text-blue-500 hover:underline">
-              Forgot password?
+              Zaboravili ste sifru?
             </a>
           </div>
           <div className="mt-4 md:mt-auto">
             <button className="btn 0 w-full transition-colors" type="button">
-              Sign In
+              Prijava
             </button>
           </div>
         </form>
