@@ -17,7 +17,7 @@ export default function Footer() {
           <nav>
             <ul className="flex flex-col gap-4 text-xl">
               <li>
-                <NavLink to="/">Pocetna</NavLink>
+                <NavLink to="/">Početna</NavLink>
               </li>
               <li>
                 <NavLink to="/shop">Shop</NavLink>
@@ -50,7 +50,7 @@ export default function Footer() {
         <div className="text-secondary-color col-span-full flex flex-col gap-4 justify-self-start text-xl sm:col-start-6 sm:col-end-13 md:col-start-4 md:col-end-9">
           <h4 className="text-2xl font-semibold">Kontak</h4>
           <address className="w-50 sm:w-full">
-            <p className="break-words">Zdravka Celara 1, Novi grad, Beograd</p>
+            <p className="break-words">Zdravka Čelara 1, Novi grad, Beograd</p>
           </address>
           <a className="block" href="tel:111-222-333">
             +111 222-333

@@ -16,7 +16,7 @@ export default function Gadgets() {
             <ion-icon name="location-outline"></ion-icon>
           </span>
           <p className="text-center text-xl">
-            Zdravka Celara 1, Novi grad, Beograd
+            Zdravka Čelara 1, Novi grad, Beograd
           </p>
         </div>
       </div>

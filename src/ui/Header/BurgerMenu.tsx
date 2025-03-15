@@ -41,7 +41,7 @@ export default function BurgerMenu() {
       >
         <ul className="text-secondary-color flex h-full w-full flex-col items-center justify-center gap-3.5 text-2xl">
           <li onClick={closeBurgerNav}>
-            <NavLink to="/">Pocetna</NavLink>
+            <NavLink to="/">Početna</NavLink>
           </li>
           <li onClick={closeBurgerNav}>
             <NavLink to="/shop">Shop</NavLink>

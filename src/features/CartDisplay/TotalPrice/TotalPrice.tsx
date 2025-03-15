@@ -6,7 +6,7 @@ export default function TotalPrice() {
         <span className="font-semibold">5.999,00</span>
       </div>
       <div>
-        <button className="btn">Nastavi ka placanju</button>
+        <button className="btn">Nastavi ka plaćanju</button>
       </div>
     </div>
   );
