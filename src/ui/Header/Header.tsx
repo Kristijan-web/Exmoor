@@ -51,7 +51,7 @@ export default function Header() {
       <nav className="hidden sm:block">
         <ul className="text-secondary-color flex items-center gap-8">
           <li>
-            <NavLink to="/">Pocetna</NavLink>
+            <NavLink to="/">Početna</NavLink>
           </li>
           <li>
             <NavLink to="/shop">Shop</NavLink>

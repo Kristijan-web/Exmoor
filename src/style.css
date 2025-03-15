@@ -36,9 +36,10 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 /* Koristi @layer base za definisanje globalnih pravila */
 @layer base {
   body {
-    font-family: "Roboto";
-    color: var(--color-main-c olor-shade);
+    font-family: serif;
+    color: var(--color-main-color-shade);
   }
+
   h2 {
     @apply text-5xl;
   }

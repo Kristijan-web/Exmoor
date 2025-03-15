@@ -29,7 +29,7 @@ export default function SideByDescription({
       ) : (
         <>
           <h2 className="mb-2 text-xl font-bold md:mb-3 md:text-2xl">
-            Vec imate nalog?
+            Već imate nalog?
           </h2>
           <p className="mb-4 text-center text-sm text-white/80 md:mb-8 md:text-base">
             Prijavite se da bi ste ostali povezani
