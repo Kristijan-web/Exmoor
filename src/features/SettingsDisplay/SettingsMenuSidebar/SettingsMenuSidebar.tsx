@@ -1,6 +1,37 @@
 import { NavLink } from "react-router-dom";
 
 export default function SettingsMenuSidebar() {
+  const routes = [
+    {
+      to: "postavke",
+      description: "Opšte postavke",
+      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
+      icon: <ion-icon name="person-outline"></ion-icon>,
+    },
+    {
+      to: "promena-sifre",
+      description: "Promena šifre",
+      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
+      icon: <ion-icon name="lock-closed-outline"></ion-icon>,
+    },
+    {
+      to: "omiljeni-proizvodi",
+      description: "Omiljeni proizvodi",
+      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
+      icon: <ion-icon name="heart-outline"></ion-icon>,
+    },
+    {
+      to: "kupljeni-proizvodi",
+      description: "Kupljeni proizvodi",
+      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
+      icon: <ion-icon name="bag-outline"></ion-icon>,
+    },
+    {
+      description: "Odjavi se",
+      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
+      icon: <ion-icon name="log-in-outline"></ion-icon>,
+    },
+  ];
   return (
     <aside className="lg:h-180 lg:border-1 lg:border-black">
       <div className="flex h-full flex-col items-center justify-start gap-4 p-7 lg:gap-10">
@@ -11,60 +42,22 @@ export default function SettingsMenuSidebar() {
           <h2 className="mb-10 text-4xl">Dobrodošli Petar</h2>
         </div>
         <ul className="flex flex-col gap-10 px-5 lg:px-2">
-          <li className="flex cursor-pointer items-center justify-start gap-3">
-            <span className="flex items-center justify-start text-xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="person-outline"></ion-icon>
-            </span>
-            <NavLink to="postavke" className="text-2xl lg:text-xl">
-              Opšte postavke
-            </NavLink>
-          </li>
-          <li className="flex items-center justify-start gap-3">
-            <span className="flex items-center justify-start text-xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="lock-closed-outline"></ion-icon>
-            </span>
-            <NavLink
-              to="promena-sifre"
-              className="cursor-pointer text-2xl lg:text-xl"
-            >
-              Promena šifre
-            </NavLink>
-          </li>
-          <li className="flex items-center justify-start gap-3">
-            <span className="flex items-center justify-start text-xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="heart-outline"></ion-icon>
-            </span>
-            <NavLink
-              to="omiljeni-proizvodi"
-              className="cursor-pointer text-2xl lg:text-xl"
-            >
-              Omiljeni proizvodi
-            </NavLink>
-          </li>
-          <li className="flex items-center justify-start gap-3">
-            <span className="flex items-center justify-start text-xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="bag-outline"></ion-icon>
-            </span>
-            <NavLink
-              to="kupljeni-proizvodi"
-              className="cursor-pointer text-2xl lg:text-xl"
-            >
-              Kupljeni proizvodi
-            </NavLink>
-          </li>
-          <li className="flex items-center justify-start gap-3">
-            <span className="flex items-center justify-start text-xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="log-in-outline"></ion-icon>
-            </span>
-            <span className="cursor-pointer text-2xl lg:text-xl">
-              Odjavi se
-            </span>
-          </li>
+          {routes.map(({ to, description, icon }) => {
+            return (
+              <li className="flex cursor-pointer items-center justify-start gap-3">
+                <span className="flex items-center justify-start text-xl">
+                  {icon}
+                </span>
+                {to ? (
+                  <NavLink to={to} className="text-2xl lg:text-xl">
+                    {description}
+                  </NavLink>
+                ) : (
+                  <span className="text-2xl lg:text-xl">{description}</span>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </aside>
