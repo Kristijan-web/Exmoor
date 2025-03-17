@@ -7,7 +7,8 @@ import ContactPage from "./pages/ContactPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/SignUpPage";
-import UserSettings from "./features/SettingsDisplay/UserSettings/UserSettings";
+import UserSettings from "./features/SettingsDisplay/UserSettings/GeneralSettings";
+import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSetting";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
           {
             path: "postavke",
             element: <UserSettings />,
+          },
+          {
+            path: "promena-sifre",
+            element: <PasswordSetting />,
           },
         ],
       },

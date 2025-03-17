@@ -1,7 +1,7 @@
 export default function AboutUs() {
   return (
-    <section className="bg-secondary-new mb-24 h-120 xl:pb-2">
-      <div className="mx-auto flex h-full w-full max-w-6xl items-center gap-20 px-7 xl:px-7">
+    <section className="bg-secondary-new mb-24 h-140 sm:h-120 xl:pb-2">
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center gap-20 px-7 py-5 sm:py-0 xl:px-7">
         <div className="w-full xl:w-[50%]">
           <h3 className="mb-8 text-center xl:text-start">O Nama</h3>
           <p className="mb-4 text-center text-xl tracking-wide xl:text-start">

@@ -48,7 +48,7 @@ export default function Header() {
         src="/Images/logo-no-background.png"
         alt="exmoor logo"
       />
-      <nav className="hidden sm:block">
+      <nav className="hidden md:block">
         <ul className="text-secondary-color flex items-center gap-8">
           <li>
             <NavLink to="/">Početna</NavLink>

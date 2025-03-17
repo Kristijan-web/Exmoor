@@ -1,4 +1,4 @@
-export default function UserSettings() {
+export default function GeneralSettings() {
   return (
     <section className="col-span-full hidden lg:col-start-5 lg:col-end-13 lg:inline-block xl:col-start-4 2xl:col-start-3">
       <div className="mx-auto h-full max-w-4xl sm:p-7">

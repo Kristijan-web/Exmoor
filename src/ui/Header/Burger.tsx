@@ -47,7 +47,7 @@ export default function Burger({
   return showBurgerIcon ? (
     <span
       onClick={() => handleBurgerClick()}
-      className="text-secondary-color z-5 cursor-pointer sm:hidden"
+      className="text-secondary-color z-5 cursor-pointer md:hidden"
     >
       {/* @ts-expect-error  Doesn't recognize icon as valid jsx element*/}
       <ion-icon name="menu-outline" size="large"></ion-icon>
