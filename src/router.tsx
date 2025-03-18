@@ -7,7 +7,7 @@ import ContactPage from "./pages/ContactPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/SignUpPage";
-import UserSettings from "./features/SettingsDisplay/UserSettings/GeneralSettings";
+import UserSettings from "./features/SettingsDisplay/UserSettings/GeneralSettngs/GeneralSettingsDisplay";
 import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSetting";
 
 const router = createBrowserRouter([

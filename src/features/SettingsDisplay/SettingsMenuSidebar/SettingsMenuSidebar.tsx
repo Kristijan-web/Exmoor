@@ -1,6 +1,14 @@
 import { NavLink } from "react-router-dom";
 
-export default function SettingsMenuSidebar() {
+type Props = {
+  hideSidebar: boolean;
+  setHideSidebar: (param1: boolean) => void;
+};
+
+export default function SettingsMenuSidebar({
+  hideSidebar,
+  setHideSidebar,
+}: Props) {
   const routes = [
     {
       to: "postavke",
@@ -32,6 +40,7 @@ export default function SettingsMenuSidebar() {
       icon: <ion-icon name="log-in-outline"></ion-icon>,
     },
   ];
+  if (hideSidebar) return null;
   return (
     <aside className="lg:h-180 lg:border-1 lg:border-black">
       <div className="flex h-full flex-col items-center justify-start gap-4 p-7 lg:gap-10">
@@ -42,9 +51,13 @@ export default function SettingsMenuSidebar() {
           <h2 className="mb-10 text-4xl">Dobrodošli Petar</h2>
         </div>
         <ul className="flex flex-col gap-10 px-5 lg:px-2">
-          {routes.map(({ to, description, icon }) => {
+          {routes.map(({ to, description, icon }, index) => {
             return (
-              <li className="flex cursor-pointer items-center justify-start gap-3">
+              <li
+                key={to || index}
+                onClick={() => setHideSidebar(true)}
+                className="flex cursor-pointer items-center justify-start gap-3"
+              >
                 <span className="flex items-center justify-start text-xl">
                   {icon}
                 </span>
