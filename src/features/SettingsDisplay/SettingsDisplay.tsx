@@ -6,6 +6,7 @@ export default function SettingsDisplay() {
   const [hideSidebar, setHideSidebar] = useState(false);
   // 1. Resenje: Mozes resiti problem tako sto ces citati InnerWidth kada se pokrene aplikacija
   // 2. Resenje: Mozes da stavis strelicu za vracanje u nazad kada se prikaze user settings
+
   console.log(hideSidebar);
   return (
     <div

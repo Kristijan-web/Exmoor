@@ -4,7 +4,7 @@ export default function BackButton() {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute -top-5 left-8">
+    <div className="absolute -top-5 left-7 lg:hidden">
       <span
         onClick={() => navigate("/podesavanja/postavke")}
         className="text-2xl"

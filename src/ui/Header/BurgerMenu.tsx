@@ -59,7 +59,12 @@ export default function BurgerMenu() {
             </span>
             <span>Korpa</span>
           </li>
-          <li onClick={closeBurgerNav}>
+          <li
+            onClick={() => {
+              closeBurgerNav();
+              window.location.reload();
+            }}
+          >
             <NavLink to="/podesavanja">Podesavanja</NavLink>
           </li>
           <li onClick={closeBurgerNav}>

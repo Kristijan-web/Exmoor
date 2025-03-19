@@ -2,7 +2,7 @@ import BackButton from "./BackButton";
 
 export default function GeneralSettings() {
   return (
-    <div className="relative mx-auto mt-10 h-full sm:p-7">
+    <div className="relative mx-auto mt-10 h-full sm:p-7 lg:mt-0">
       <BackButton />
       <form className="flex h-full flex-col items-start justify-start gap-5 p-7 sm:p-12">
         <h3 className="mb-10">Vaše postavke</h3>
