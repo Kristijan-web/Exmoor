@@ -62,7 +62,6 @@ export default function BurgerMenu() {
           <li
             onClick={() => {
               closeBurgerNav();
-              window.location.reload();
             }}
           >
             <NavLink to="/podesavanja">Podesavanja</NavLink>

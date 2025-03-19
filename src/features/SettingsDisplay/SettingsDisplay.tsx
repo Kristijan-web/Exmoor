@@ -1,13 +1,22 @@
 import { Outlet } from "react-router-dom";
 import SettingsMenuSidebar from "./SettingsMenuSidebar/SettingsMenuSidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SettingsDisplay() {
   const [hideSidebar, setHideSidebar] = useState(false);
-  // 1. Resenje: Mozes resiti problem tako sto ces citati InnerWidth kada se pokrene aplikacija
-  // 2. Resenje: Mozes da stavis strelicu za vracanje u nazad kada se prikaze user settings
 
-  console.log(hideSidebar);
+  useEffect(function showSettingsMenu() {
+    function handleClick(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (target?.getAttribute("href") === "/podesavanja") {
+        console.log("ola");
+        setHideSidebar(false);
+      }
+    }
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
   return (
     <div
       className={`mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-[305px_1fr] lg:p-7`}
