@@ -3,11 +3,12 @@ import { NavLink } from "react-router-dom";
 type Props = {
   hideSidebar: boolean;
   setHideSidebar: (param1: boolean) => void;
+  sectionOutlet: React.RefObject<HTMLElement | null>;
 };
-
 export default function SettingsMenuSidebar({
   hideSidebar,
   setHideSidebar,
+  sectionOutlet,
 }: Props) {
   const routes = [
     {
@@ -55,7 +56,13 @@ export default function SettingsMenuSidebar({
             return (
               <li
                 key={to || index}
-                onClick={() => setHideSidebar(true)}
+                onClick={() => {
+                  // proveri da li sectionOutlet ima na sebi hidden, ako nema onda ne izvrsavaj sledecu liniju
+
+                  if (sectionOutlet?.current?.classList?.contains("hidden")) {
+                    setHideSidebar(true);
+                  }
+                }}
                 className="flex cursor-pointer items-center justify-start gap-3"
               >
                 <span className="flex items-center justify-start text-xl">
