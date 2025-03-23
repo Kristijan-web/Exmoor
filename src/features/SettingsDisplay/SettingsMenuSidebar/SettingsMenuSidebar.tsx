@@ -60,7 +60,6 @@ export default function SettingsMenuSidebar({
               <li
                 key={to || index}
                 onClick={() => {
-                  // proveri da li sectionOutlet ima na sebi hidden, ako nema onda ne izvrsavaj sledecu liniju
                   if (lessThan1024Width) {
                     setShowSidebar(false);
                   }

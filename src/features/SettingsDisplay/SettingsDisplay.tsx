@@ -2,8 +2,10 @@ import { Outlet } from "react-router-dom";
 import SettingsMenuSidebar from "./SettingsMenuSidebar/SettingsMenuSidebar";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import BackButton from "./UserSettings/GeneralSettngs/BackButton";
 
 export default function SettingsDisplay() {
+  // liftin state up, because its needed in parent of Outlet
   const [showSidebar, setshowSidebar] = useState(true);
   const lessThan1024Width = useMediaQuery({ maxWidth: 1024 });
   useEffect(function showSettingsMenu() {
@@ -25,9 +27,9 @@ export default function SettingsDisplay() {
         showSidebar={showSidebar}
       />
       <section
-        className={` ${showSidebar ? "hidden" : null} border-1 border-l-0 border-black lg:block`}
+        className={` ${showSidebar ? "hidden" : null} relative border-1 border-l-0 border-black lg:block`}
       >
-        {/* Mozda je moglo showSidebar ? null : <Outlet/> */}
+        <BackButton setShowSidebar={setshowSidebar} />
         <Outlet />
       </section>
     </div>
