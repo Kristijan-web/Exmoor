@@ -1,14 +1,15 @@
 import { NavLink } from "react-router-dom";
 
 type Props = {
-  hideSidebar: boolean;
-  setHideSidebar: (param1: boolean) => void;
-  sectionOutlet: React.RefObject<HTMLElement | null>;
+  lessThan1024Width: boolean;
+  setShowSidebar: (value: boolean) => void;
+  showSidebar: boolean;
 };
+
 export default function SettingsMenuSidebar({
-  hideSidebar,
-  setHideSidebar,
-  sectionOutlet,
+  lessThan1024Width,
+  setShowSidebar,
+  showSidebar,
 }: Props) {
   const routes = [
     {
@@ -41,7 +42,9 @@ export default function SettingsMenuSidebar({
       icon: <ion-icon name="log-in-outline"></ion-icon>,
     },
   ];
-  if (hideSidebar) return null;
+  if (!showSidebar) {
+    return null;
+  }
   return (
     <aside className="lg:h-180 lg:border-1 lg:border-black">
       <div className="flex h-full flex-col items-center justify-start gap-4 p-7 lg:gap-10">
@@ -58,9 +61,8 @@ export default function SettingsMenuSidebar({
                 key={to || index}
                 onClick={() => {
                   // proveri da li sectionOutlet ima na sebi hidden, ako nema onda ne izvrsavaj sledecu liniju
-
-                  if (sectionOutlet?.current?.classList?.contains("hidden")) {
-                    setHideSidebar(true);
+                  if (lessThan1024Width) {
+                    setShowSidebar(false);
                   }
                 }}
                 className="flex cursor-pointer items-center justify-start gap-3"
