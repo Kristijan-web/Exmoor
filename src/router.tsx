@@ -8,7 +8,8 @@ import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/SignUpPage";
 import UserSettings from "./features/SettingsDisplay/UserSettings/GeneralSettngs/GeneralSettingsDisplay";
-import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSetting";
+import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSettings/PasswordSetting";
+import FavoriteProducts from "./features/SettingsDisplay/UserSettings/FavoriteProducts/FavoriteProducts";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {
             path: "promena-sifre",
             element: <PasswordSetting />,
+          },
+          {
+            path: "omiljeni-proizvodi",
+            element: <FavoriteProducts />,
           },
         ],
       },
