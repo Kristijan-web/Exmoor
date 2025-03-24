@@ -12,7 +12,7 @@ export default function PasswordSetting() {
               type="text"
               id="old-password"
               placeholder="Stara šifra"
-              className="w-70 rounded-xs border-1 border-black p-1"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -23,7 +23,7 @@ export default function PasswordSetting() {
               type="text"
               id="new-password"
               placeholder="Nova šifra"
-              className="w-70 rounded-xs border-1 border-black p-1"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -34,7 +34,7 @@ export default function PasswordSetting() {
               type="text"
               id="retype-new-password"
               placeholder="Ponovi novu šifru"
-              className="w-70 rounded-xs border-1 border-black p-1"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
           </div>
           <div>

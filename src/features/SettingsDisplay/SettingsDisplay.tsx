@@ -2,12 +2,22 @@ import { Outlet } from "react-router-dom";
 import SettingsMenuSidebar from "./SettingsMenuSidebar/SettingsMenuSidebar";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import BackButton from "./UserSettings/GeneralSettngs/BackButton";
+import BackButton from "../../ui/BackButton";
 
 export default function SettingsDisplay() {
   // liftin state up, because its needed in parent of Outlet
   const [showSidebar, setshowSidebar] = useState(true);
   const lessThan1024Width = useMediaQuery({ maxWidth: 1024 });
+
+  useEffect(
+    function followResizingOfWidth() {
+      if (!lessThan1024Width) {
+        setshowSidebar(true);
+      }
+    },
+    [lessThan1024Width],
+  );
+
   useEffect(function showSettingsMenu() {
     function handleClick(e: MouseEvent) {
       const target = e.target as HTMLElement;
