@@ -1,11 +1,11 @@
 export default function Product() {
   return (
-    <div className="bg-secondary-new flex flex-col items-center justify-between gap-5 border-1 border-black p-4 sm:flex-row">
+    <div className="bg-secondary-new flex flex-col items-center justify-between gap-5 rounded-xs border-1 border-black p-4 sm:flex-row">
       <div className="flex flex-col items-center gap-5 sm:flex-row">
         <div className="w-[git 0%] sm:w-[15%]">
           <img
-            className="w-full"
-            src="/public/Images/ShopPage/Products/shop-item-1.jpg"
+            className="w-full rounded-xs"
+            src="/Images/ShopPage/Products/shop-item-1.jpg"
           />
         </div>
         <div className="flex flex-col items-center gap-3 sm:items-start">
