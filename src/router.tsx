@@ -10,6 +10,7 @@ import SignUpPage from "./pages/SignUpPage";
 import UserSettings from "./features/SettingsDisplay/UserSettings/GeneralSettngs/GeneralSettingsDisplay";
 import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSettings/PasswordSetting";
 import FavoriteProducts from "./features/SettingsDisplay/UserSettings/FavoriteProducts/FavoriteProducts";
+import PurchasedProducts from "./features/SettingsDisplay/UserSettings/PurchasedProducts/PurchasedProducts";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: "omiljeni-proizvodi",
             element: <FavoriteProducts />,
+          },
+          {
+            path: "kupljeni-proizvodi",
+            element: <PurchasedProducts />,
           },
         ],
       },
