@@ -2,12 +2,12 @@ import ProductItem from "../../../ShopDisplay/Sections/Products&Filters/Products
 
 export default function FavoriteProducts() {
   return (
-    <div className="mx-auto flex h-full flex-col sm:p-7">
+    <div className="mx-auto flex h-full flex-col p-7">
       <div className="p-12">
         <h3 className="mb-10 text-center">Omiljeni proizvodi</h3>
       </div>
       <div className="flex flex-col gap-10">
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 gap-5 sm:mx-auto sm:w-[70%] md:w-full md:grid-cols-3 lg:grid-cols-3">
           <ProductItem />
           <ProductItem />
           <ProductItem />
