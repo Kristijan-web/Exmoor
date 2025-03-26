@@ -2,8 +2,9 @@ import Checkbox from "./Checkbox";
 import DualPriceRangeSlider from "./FilterParts/DualPriceRangeSlider";
 
 export default function Filters() {
+  // da li je bolje da svakome elementu definisem kome redu pripada
   return (
-    <div className="cursor-poiner bg-main-color-shade text-secondary-color lg:text-main-color-shade k lg:shadow-my-shadow col-start-1 col-end-7 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:bg-white lg:p-5 lg:py-4">
+    <div className="cursor-poiner bg-main-color-shade text-secondary-color lg:text-main-color-shade k lg:shadow-my-shadow col-start-1 col-end-7 row-start-2 row-end-3 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:bg-white lg:p-5 lg:py-4">
       {/* Filter button on small screens START */}
       <div className="flex items-center justify-between px-4 lg:hidden">
         <span>Filters</span>

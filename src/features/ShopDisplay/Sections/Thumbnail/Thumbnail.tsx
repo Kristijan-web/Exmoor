@@ -16,7 +16,7 @@ export default function Thumbnail() {
   return (
     <section
       ref={intersectionElement}
-      className={`h-thumbnail gradient_image_shop bg-start relative mb-24 w-full bg-cover bg-no-repeat sm:bg-center`}
+      className={`h-thumbnail gradient_image_shop bg-start relative mb-18 w-full bg-cover bg-no-repeat sm:bg-center`}
     >
       <div
         className={`text-secondary-color absolute top-[50%] mx-auto max-w-7xl translate-y-[-50%] px-7 sm:left-[10%]`}
