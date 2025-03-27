@@ -10,7 +10,7 @@ export default function Sort() {
         </span>
       </div>
       {/* Sort button on small scerens END */}
-      <div className="hidden px-5 lg:flex lg:items-center lg:justify-end lg:gap-3">
+      <div className="hidden lg:flex lg:items-center lg:justify-end lg:gap-3">
         <p className="text-end text-xl">Sortiraj prema:</p>
         <select className="border-none bg-stone-300 px-2 py-4">
           <option>Najvišoj ceni</option>
