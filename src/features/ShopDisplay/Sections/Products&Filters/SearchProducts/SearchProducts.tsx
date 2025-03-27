@@ -1,6 +1,6 @@
 export default function SearchProducts() {
   return (
-    <div className="relative col-span-full row-start-1 row-end-2 self-start lg:col-start-4 lg:col-end-9 2xl:col-start-6">
+    <div className="relative col-span-full row-start-1 row-end-2 h-11 self-start lg:col-start-4 lg:col-end-9 2xl:col-start-4 2xl:col-end-9">
       {/* <span className="z-10 inline-block h-10 w-10"></span> */}
       <input
         type="text"
