@@ -4,14 +4,14 @@ export default function Sort() {
       {/* Sort button on small screens START */}
       <div className="flex items-center justify-between px-4 lg:hidden">
         <span>Sort</span>
-        <span>
+        <span className="flex items-center justify-center">
           {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
           <ion-icon name="chevron-down-outline"></ion-icon>
         </span>
       </div>
       {/* Sort button on small scerens END */}
       <div className="hidden h-11 w-full lg:flex lg:items-center lg:justify-end lg:gap-3">
-        <p className="text-xl whitespace-nowrap">Sortiraj cenu:</p>
+        <p className="whitesgitpace-nowrap text-xl">Sortiraj cenu:</p>
 
         <div className="flex items-center gap-3">
           <button className="btn px-9 py-2">Prvo najmanja</button>

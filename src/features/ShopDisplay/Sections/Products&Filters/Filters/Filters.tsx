@@ -8,7 +8,7 @@ export default function Filters() {
       {/* Filter button on small screens START */}
       <div className="flex items-center justify-between px-4 lg:hidden">
         <span>Filters</span>
-        <span>
+        <span className="flex items-center justify-center">
           {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
           <ion-icon name="chevron-down-outline"></ion-icon>
         </span>
