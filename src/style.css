@@ -32,6 +32,8 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   /* property ispod treba da ide u @layer utilities */
   --color-secondary-new: #f3f3f3;
   /* property ispod treba da ide u @layer utilities */
+  /* 1146px */
+  --breakpoint-1146: 71rem;
 }
 /* Koristi @layer base za definisanje globalnih pravila */
 @layer base {
