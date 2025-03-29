@@ -27,7 +27,7 @@ const DualRangeSlider = () => {
   const rightPosition = 100 - (maxValue / maxAllowed) * 100;
 
   return (
-    <div className="mx-auto w-full max-w-md rounded-lg bg-white">
+    <div className="mx-auto w-full max-w-md rounded-lg bg-white px-2">
       <div className="mb-8 text-center">
         <h2 className="text-xl font-bold text-gray-800">Dual Range Slider</h2>
         <p className="mt-2 text-lg text-gray-600">

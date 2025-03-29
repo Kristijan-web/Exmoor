@@ -7,11 +7,15 @@ export default function Filters() {
   const [showFilters, setShowFilters] = useState(false);
   // Korisit showFilters da bi direktno na elementu odredjivao tailwind klase
   return (
-    <div className="cursor-poiner bg-main-color-shade text-secondary-color lg:text-main-color-shade k lg:shadow-my-shadow col-start-1 col-end-7 row-start-2 row-end-3 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:bg-white lg:p-5 lg:py-4">
+    <div
+      className={`${showFilters ? "text-main-color-shade fixed top-0 right-0 left-0 z-20 col-span-full h-full overflow-auto bg-white" : "bg-main-color-shade col-start-1 col-end-7 text-white"} cursor-poiner lg:text-main-color-shade lg:shadow-my-shadow row-start-2 row-end-3 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:bg-white lg:p-5 lg:py-4`}
+    >
       {/* Filter button on small screens below 1024px START */}
       <FilterButton setShowFilters={setShowFilters} />
       {/* Filter button on small screens END */}
-      <div className="hidden lg:flex lg:flex-col lg:gap-9">
+      <div
+        className={` ${showFilters ? "" : "hidden"} flex flex-col gap-9 lg:flex`}
+      >
         <h3 className="mb-6 text-center text-xl">Filtriraj parfeme</h3>
         <div>
           <p className="mb-4 text-xl">Proizvođač</p>
@@ -82,6 +86,9 @@ export default function Filters() {
               <span>Da</span>
             </Checkbox>
           </div>
+        </div>
+        <div className="mt-5 text-center">
+          <button className="btn">Primeni</button>
         </div>
       </div>
     </div>
