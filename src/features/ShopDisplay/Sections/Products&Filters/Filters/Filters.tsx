@@ -11,10 +11,10 @@ export default function Filters() {
       className={`${showFilters ? "text-main-color-shade fixed top-0 right-0 left-0 z-20 col-span-full h-full overflow-auto bg-white" : "bg-main-color-shade col-start-1 col-end-7 text-white"} cursor-poiner lg:text-main-color-shade lg:shadow-my-shadow row-start-2 row-end-3 rounded-sm py-4 lg:col-start-1 lg:col-end-4 lg:row-start-1 lg:row-end-3 lg:h-full lg:bg-white lg:p-5 lg:py-4`}
     >
       {/* Filter button on small screens below 1024px START */}
-      <FilterButton setShowFilters={setShowFilters} />
+      <FilterButton setShowFilters={setShowFilters} showFilters={showFilters} />
       {/* Filter button on small screens END */}
       <div
-        className={` ${showFilters ? "" : "hidden"} flex flex-col gap-9 lg:flex`}
+        className={` ${showFilters ? "px-6" : "hidden"} flex flex-col gap-9 lg:flex`}
       >
         <h3 className="mb-6 text-center text-xl">Filtriraj parfeme</h3>
         <div>
@@ -74,7 +74,7 @@ export default function Filters() {
               <Checkbox>
                 <span>Parfemska voda</span>
               </Checkbox>
-              <span>9</span>
+              <span className="text-main-color-shade/70">9</span>
             </div>
           </div>
         </div>

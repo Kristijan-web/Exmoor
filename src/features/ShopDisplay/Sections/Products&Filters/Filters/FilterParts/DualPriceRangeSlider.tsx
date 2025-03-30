@@ -29,10 +29,10 @@ const DualRangeSlider = () => {
   return (
     <div className="mx-auto w-full max-w-md rounded-lg bg-white px-2">
       <div className="mb-8 text-center">
-        <h2 className="text-xl font-bold text-gray-800">Dual Range Slider</h2>
+        <h2 className="text-xl font-bold text-gray-800">Izaberite cenu</h2>
         <p className="mt-2 text-lg text-gray-600">
           Izabrani raspon:{" "}
-          <span className="font-semibold text-blue-600">
+          <span className="text-main-color-shade font-semibold">
             {minValue} - {maxValue}
           </span>
         </p>
@@ -43,7 +43,7 @@ const DualRangeSlider = () => {
         <div className="relative h-2 w-full rounded-full bg-gray-200">
           {/* Popunjena linija između dva indikatora */}
           <div
-            className="absolute h-full rounded-full bg-blue-500"
+            className="bg-main-color-shade absolute h-full rounded-full"
             style={{
               left: `${leftPosition}%`,
               right: `${rightPosition}%`,

@@ -59,14 +59,14 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
   input[type="range"]:focus {
     outline: none;
   }
-
+  /* This below are sliders for price range in shop page */
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     pointer-events: all;
     width: 24px;
     height: 24px;
     background-color: white;
-    border: 2px solid #3b82f6;
+    border: 2px solid black;
     border-radius: 50%;
     cursor: pointer;
     margin-top: -8px;
