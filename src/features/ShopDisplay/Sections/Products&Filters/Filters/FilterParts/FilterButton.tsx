@@ -25,7 +25,9 @@ export default function FilterButton({ setShowFilters, showFilters }: Props) {
       className="flex items-center justify-between px-4 lg:hidden"
     >
       <span>Filteri</span>
-      <span className="flex items-center justify-center text-2xl">
+      <span
+        className={`flex items-center justify-center ${showFilters ? "text-2xl" : ""}`}
+      >
         {showFilters ? (
           /* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/
           <ion-icon name="close-outline"></ion-icon>
