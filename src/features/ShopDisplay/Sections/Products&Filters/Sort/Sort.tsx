@@ -1,3 +1,5 @@
+import { IoChevronDown } from "react-icons/io5";
+
 export default function Sort() {
   return (
     <div className="lg:text-main-color-shade cursor-poiner bg-main-color-shade text-secondary-color col-start-7 col-end-13 rounded-sm py-4 lg:col-start-10 lg:col-end-13 lg:bg-white lg:py-0 2xl:col-start-9">
@@ -5,8 +7,7 @@ export default function Sort() {
       <div className="flex items-center justify-between px-4 lg:hidden">
         <span>Sort</span>
         <span className="flex items-center justify-center">
-          {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-          <ion-icon name="chevron-down-outline"></ion-icon>
+          <IoChevronDown />
         </span>
       </div>
       {/* Sort button on small scerens END */}

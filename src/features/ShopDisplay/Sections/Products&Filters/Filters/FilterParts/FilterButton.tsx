@@ -1,3 +1,5 @@
+import { IoChevronDown, IoClose } from "react-icons/io5";
+
 type Props = {
   setShowFilters: (value: boolean) => void;
   showFilters: boolean;
@@ -28,13 +30,7 @@ export default function FilterButton({ setShowFilters, showFilters }: Props) {
       <span
         className={`flex items-center justify-center ${showFilters ? "text-2xl" : ""}`}
       >
-        {showFilters ? (
-          /* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/
-          <ion-icon name="close-outline"></ion-icon>
-        ) : (
-          /* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/
-          <ion-icon name="chevron-down-outline"></ion-icon>
-        )}
+        {showFilters ? <IoClose /> : <IoChevronDown />}
       </span>
     </div>
   );

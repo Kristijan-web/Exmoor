@@ -1,6 +1,11 @@
 // sirina section-a je 1152px
 
-import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import {
+  IoLeafOutline,
+  IoShieldCheckmarkOutline,
+  IoTimeOutline,
+  IoWalletOutline,
+} from "react-icons/io5";
 
 export default function Gadgets() {
   // na samom vrhu div ce imati sirinu i margin-x auto, a div unutar njega ce imati paddng sa leve i desne strane
@@ -12,7 +17,7 @@ export default function Gadgets() {
         </div>
         <div className="grid items-center justify-items-center gap-12 px-7 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <span className="flex items-center justify-center text-5xl">
+            <span className="mb-2 flex items-center justify-center text-5xl">
               <IoShieldCheckmarkOutline />
             </span>
             <p className="text-xl font-semibold">Kvalitet</p>
@@ -22,9 +27,8 @@ export default function Gadgets() {
             </p>
           </div>
           <div>
-            <span className="text-5xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="time-outline"></ion-icon>
+            <span className="mb-2 flex items-center justify-center text-5xl">
+              <IoTimeOutline />
             </span>
             <p className="text-xl font-semibold">Trajno</p>
             <p>
@@ -33,9 +37,8 @@ export default function Gadgets() {
             </p>
           </div>
           <div>
-            <span className="text-5xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="wallet-outline"></ion-icon>
+            <span className="mb-2 flex items-center justify-center text-5xl">
+              <IoWalletOutline />
             </span>
             <p className="text-xl font-semibold">Cena</p>
             <p>
@@ -44,9 +47,8 @@ export default function Gadgets() {
             </p>
           </div>
           <div>
-            <p className="text-5xl">
-              {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-              <ion-icon name="leaf-outline"></ion-icon>
+            <p className="mb-2 flex items-center justify-center text-5xl">
+              <IoLeafOutline />
             </p>
             <p className="text-xl font-semibold">Reciklirano</p>
             <p>

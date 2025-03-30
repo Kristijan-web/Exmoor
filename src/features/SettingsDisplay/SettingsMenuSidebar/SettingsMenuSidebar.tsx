@@ -1,3 +1,10 @@
+import {
+  IoBagOutline,
+  IoHeartOutline,
+  IoLockClosedOutline,
+  IoLogOutOutline,
+  IoPersonOutline,
+} from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 
 type Props = {
@@ -15,31 +22,26 @@ export default function SettingsMenuSidebar({
     {
       to: "postavke",
       description: "Opšte postavke",
-      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
-      icon: <ion-icon name="person-outline"></ion-icon>,
+      icon: <IoPersonOutline />,
     },
     {
       to: "promena-sifre",
       description: "Promena šifre",
-      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
-      icon: <ion-icon name="lock-closed-outline"></ion-icon>,
+      icon: <IoLockClosedOutline />,
     },
     {
       to: "omiljeni-proizvodi",
       description: "Omiljeni proizvodi",
-      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
-      icon: <ion-icon name="heart-outline"></ion-icon>,
+      icon: <IoHeartOutline />,
     },
     {
       to: "kupljeni-proizvodi",
       description: "Kupljeni proizvodi",
-      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
-      icon: <ion-icon name="bag-outline"></ion-icon>,
+      icon: <IoBagOutline />,
     },
     {
       description: "Odjavi se",
-      /* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/
-      icon: <ion-icon name="log-in-outline"></ion-icon>,
+      icon: <IoLogOutOutline />,
     },
   ];
   if (!showSidebar) {

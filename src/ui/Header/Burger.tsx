@@ -1,3 +1,5 @@
+import { IoClose, IoMenuOutline } from "react-icons/io5";
+
 type Props = {
   burgerNav: React.RefObject<HTMLElement | null> | null;
   showBurgerIcon: boolean;
@@ -43,22 +45,20 @@ export default function Burger({
       setShowBurgerIcon(true);
     }
   }
-
+  // This bellow write better
   return showBurgerIcon ? (
     <span
       onClick={() => handleBurgerClick()}
       className="text-secondary-color z-5 cursor-pointer md:hidden"
     >
-      {/* @ts-expect-error  Doesn't recognize icon as valid jsx element*/}
-      <ion-icon name="menu-outline" size="large"></ion-icon>
+      <IoMenuOutline className="text-3xl" />
     </span>
   ) : (
     <span
-      className="flex items-center text-3xl text-white"
+      className="flex items-center text-2xl text-white"
       onClick={() => handleBurgerClick()}
     >
-      {/* @ts-expect-error  Doesn't recognize icon as valid jsx element*/}
-      <ion-icon name="close-outline"></ion-icon>
+      <IoClose />
     </span>
   );
 }

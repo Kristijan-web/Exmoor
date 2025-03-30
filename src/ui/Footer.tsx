@@ -1,6 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { useCart } from "../contexts/GlobalContexts/CartContext";
 import { FaRegUser } from "react-icons/fa";
+import {
+  IoCartOutline,
+  IoLogoGithub,
+  IoLogoInstagram,
+  IoLogoYoutube,
+  IoMailOutline,
+} from "react-icons/io5";
 
 export default function Footer() {
   const { dispatch } = useCart();
@@ -30,8 +37,7 @@ export default function Footer() {
                 className="flex cursor-pointer items-center gap-2"
               >
                 <span className="flex items-center justify-center text-2xl">
-                  {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
-                  <ion-icon name="cart-outline"></ion-icon>
+                  <IoCartOutline />
                 </span>
                 <span>Korpa</span>
               </li>
@@ -65,14 +71,10 @@ export default function Footer() {
             Društvene mreže
           </h4>
           <div className="text-secondary-color flex gap-6 text-4xl">
-            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-            <ion-icon name="logo-instagram"></ion-icon>
-            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-            <ion-icon name="mail-outline"></ion-icon>
-            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-            <ion-icon name="logo-youtube"></ion-icon>
-            {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-            <ion-icon name="logo-github"></ion-icon>
+            <IoLogoInstagram />
+            <IoMailOutline />
+            <IoLogoYoutube />
+            <IoLogoGithub />
           </div>
         </div>
       </div>

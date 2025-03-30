@@ -4,6 +4,7 @@ import BurgerMenu from "./BurgerMenu";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
 import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { FaRegUser } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
 
 export default function Header() {
   const { interceptingElement } = useHeader();
@@ -64,8 +65,7 @@ export default function Header() {
             className="flex cursor-pointer items-center gap-2"
           >
             <span className="flex items-center justify-center text-2xl">
-              {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element*/}
-              <ion-icon name="cart-outline"></ion-icon>
+              <IoCartOutline />
             </span>
             <span>Korpa</span>
           </li>

@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import Burger from "./Burger";
 import { useRef, useState } from "react";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
+import { IoCartOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
 
 export default function BurgerMenu() {
   const { dispatch: dispatchCart } = useCart();
@@ -54,8 +56,7 @@ export default function BurgerMenu() {
             className="flex cursor-pointer items-center gap-2"
           >
             <span className="flex items-center justify-center text-2xl">
-              {/* @ts-expect-error  Typescript doesn't recognize icon as valid jsx element */}
-              <ion-icon name="cart-outline"></ion-icon>
+              <IoCartOutline />
             </span>
             <span>Korpa</span>
           </li>
@@ -64,10 +65,15 @@ export default function BurgerMenu() {
               closeBurgerNav();
             }}
           >
-            <NavLink to="/podesavanja">Podesavanja</NavLink>
+            <NavLink to="/podesavanja">Podešavanja</NavLink>
           </li>
           <li onClick={closeBurgerNav}>
-            <NavLink to="/prijava">Prijava</NavLink>
+            <NavLink className="flex items-center gap-2" to="/prijava">
+              <span>
+                <FaRegUser className="text-xl" />
+              </span>
+              <span>Prijava</span>
+            </NavLink>
           </li>
         </ul>
       </nav>
