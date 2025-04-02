@@ -8,7 +8,7 @@ import { useCart } from "../../contexts/GlobalContexts/CartContext";
 export default function CartDisplay() {
   const { dispatch } = useCart();
 
-  useEffect(function closeCartWhenClickedOutside() {
+  useEffect(function closeCartWhenClickedOutsideOfCart() {
     function closeCart(e: MouseEvent) {
       const cart = (e.target as Element)?.closest("aside");
       if (!cart) {
