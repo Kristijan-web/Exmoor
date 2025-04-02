@@ -11,10 +11,12 @@ import UserSettings from "./features/SettingsDisplay/UserSettings/GeneralSettngs
 import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSettings/PasswordSetting";
 import FavoriteProducts from "./features/SettingsDisplay/UserSettings/FavoriteProducts/FavoriteProducts";
 import PurchasedProducts from "./features/SettingsDisplay/UserSettings/PurchasedProducts/PurchasedProducts";
+import Error from "./ui/Error";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",

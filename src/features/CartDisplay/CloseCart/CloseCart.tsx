@@ -1,13 +1,12 @@
 import { useCart } from "../../../contexts/GlobalContexts/CartContext";
 
 export default function CloseCart() {
-  //kada se klikne na x treba da se ukloni clasa show
   const { dispatch } = useCart();
 
   function handleCloseCart() {
-    const cartSection = document.querySelector(".cart");
+    const cartSection = document.querySelector(".cartt");
     if (!cartSection) {
-      console.error("Cart sekcija ne postoji");
+      throw new Error("Section element does not exist");
     }
     const hideCart = [
       "translate-x-[100%]",

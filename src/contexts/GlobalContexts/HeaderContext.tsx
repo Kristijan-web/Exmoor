@@ -1,5 +1,5 @@
 // Purpose of this context:
-// - To make navigation show after viewport passed "Intercepting element"
+// - To make navigation show after viewport passed "Intercepting element" AKA 'sticky navigation'
 
 // Used in pages:
 // - HomePage -> thumbnail
