@@ -24,7 +24,7 @@ export default function CartDisplay() {
   }, []);
 
   return ReactDOM.createPortal(
-    <aside className="cart bg-secondary-new cart fixed top-0 right-0 z-100 h-screen w-full sm:w-100">
+    <aside className="cart bg-secondary-new fixed top-0 right-0 z-100 h-screen w-full sm:w-100">
       <div className="relative mx-auto flex max-w-95 flex-col gap-10 px-8 py-10">
         <CloseCart />
         <CartItem />

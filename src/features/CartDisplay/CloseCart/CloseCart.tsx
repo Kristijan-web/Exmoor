@@ -4,17 +4,6 @@ export default function CloseCart() {
   const { dispatch } = useCart();
 
   function handleCloseCart() {
-    const cartSection = document.querySelector(".cartt");
-    if (!cartSection) {
-      throw new Error("Section element does not exist");
-    }
-    const hideCart = [
-      "translate-x-[100%]",
-      "transition-all",
-      "duration-[0.3s]",
-    ];
-
-    cartSection?.classList.add(...hideCart);
     dispatch({ type: "closeCart", payload: false });
   }
 
