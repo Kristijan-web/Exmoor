@@ -20,7 +20,7 @@ type Action =
     }
   | { type: "closeCart"; payload: boolean };
 
-const CartContext = createContext<{
+export const CartContext = createContext<{
   isCartOpen: boolean;
   dispatch: (action: Action) => void;
 } | null>(null); // last null makes sure to tell me that i have not wrapped component in provider, second to last null makes me check for existance of provider data in each component

@@ -1,20 +1,23 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { expect, test } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { expect, test, vi } from "vitest";
 import "@testing-library/jest-dom";
-import CartProvider from "../../../../contexts/GlobalContexts/CartContext";
-import CloseCart from "../CloseCart";
+import { CartContext } from "../../../../contexts/GlobalContexts/CartContext";
+import CartPage from "../../../../pages/CartPage";
+import userEvent from "@testing-library/user-event";
 
-test("Is cart closing when dispatch for context is being called", async () => {
+test("is context with dispatch closeCart being called", async () => {
+  const mockDispatch = vi.fn();
+  const user = userEvent.setup();
   render(
-    <CartProvider>
-      <CloseCart />
-    </CartProvider>,
+    <CartContext.Provider value={{ dispatch: mockDispatch, isCartOpen: true }}>
+      <CartPage />
+    </CartContext.Provider>,
   );
   const closeButton = screen.getByText("✖");
+  await user.click(closeButton);
 
-  fireEvent.click(closeButton);
-  // mora waitFor jer bilo kakav rad sa context-om se desava asinhrono
-  await waitFor(() => {
-    expect(screen.queryByText("✖")).not.toBeInTheDocument();
+  expect(mockDispatch).toHaveBeenCalledWith({
+    type: "closeCart",
+    payload: false,
   });
 });
