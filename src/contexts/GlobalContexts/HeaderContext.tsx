@@ -21,7 +21,7 @@ const initialState: State = {
   interceptingElement: null,
 };
 
-const HeaderContext = createContext<{
+export const HeaderContext = createContext<{
   interceptingElement: HTMLElement | null;
   dispatch: (action: Action) => void;
 } | null>(null);
