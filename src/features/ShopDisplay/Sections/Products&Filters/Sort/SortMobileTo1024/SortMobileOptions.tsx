@@ -11,8 +11,8 @@ export default function SortMobileOptions({ setShowSortOptions }: Props) {
       function closeSort(e: MouseEvent) {
         const clickedElement = e.target as HTMLElement;
         if (!clickedElement.closest("#sortModal")) {
-          console.log("alo");
           setShowSortOptions(false);
+          document.body.style.overflow = "";
         }
       }
       document.addEventListener("click", closeSort);
@@ -26,7 +26,7 @@ export default function SortMobileOptions({ setShowSortOptions }: Props) {
     document.body.style.overflow = "";
   }
   return ReactDOM.createPortal(
-    <div className="text-main-color-shade fixed inset-0">
+    <div className="text-main-color-shade fixed inset-0 lg:hidden">
       <div className="fixed top-0 right-0 bottom-[50%] left-0 bg-black/45"></div>
       <div
         id="sortModal"
