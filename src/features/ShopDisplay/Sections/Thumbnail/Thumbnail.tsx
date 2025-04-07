@@ -15,6 +15,7 @@ export default function Thumbnail() {
   );
   return (
     <section
+      data-testid="thumbnail"
       ref={intersectionElement}
       className={`h-thumbnail gradient_image_shop bg-start relative mb-18 w-full bg-cover bg-no-repeat sm:bg-center`}
     >
