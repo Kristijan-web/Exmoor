@@ -87,7 +87,7 @@ export default function Filters() {
             </Checkbox>
           </div>
         </div>
-        <div className="mt-5 text-center">
+        <div className="mt-5 text-center lg:hidden">
           <button className="btn">Primeni</button>
         </div>
       </div>
