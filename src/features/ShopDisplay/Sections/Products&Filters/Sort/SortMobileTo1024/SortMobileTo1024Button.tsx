@@ -4,9 +4,8 @@ import { useState } from "react";
 
 export default function SortMobileTo1024Button() {
   const [showSortOptions, setShowSortOptions] = useState(false);
-  console.log(showSortOptions);
-  function handleShowSortOptions() {
-    console.log("nikako");
+  function handleShowSortOptions(e: React.MouseEvent) {
+    e.stopPropagation();
     setShowSortOptions(true);
     document.body.style.overflow = "hidden";
   }
