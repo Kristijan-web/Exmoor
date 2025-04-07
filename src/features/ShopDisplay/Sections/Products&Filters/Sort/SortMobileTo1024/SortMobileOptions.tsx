@@ -6,6 +6,7 @@ type Props = {
 
 export default function SortMobileOptions({ setShowSortOptions }: Props) {
   function handleCloseSortOptions() {
+    console.log("ola");
     setShowSortOptions(false);
     document.body.style.overflow = "";
   }
@@ -16,12 +17,9 @@ export default function SortMobileOptions({ setShowSortOptions }: Props) {
         <div className="flex h-full w-full flex-col gap-5 p-7">
           <div className="flex items-center justify-between border-b-1 border-black/10 pb-2">
             <h3 className="text-3xl">Sortiraj cenu:</h3>
-            <p> &#10006;</p>
+            <p onClick={handleCloseSortOptions}> &#10006;</p>
           </div>
-          <div
-            onClick={handleCloseSortOptions}
-            className="flex items-center justify-between border-b-1 border-black/10 pb-2"
-          >
+          <div className="flex items-center justify-between border-b-1 border-black/10 pb-2">
             <p>Preporuceno</p>
             <input name="price" type="radio" />
           </div>
