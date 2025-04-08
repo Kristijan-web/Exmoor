@@ -26,7 +26,10 @@ export default function SortMobileOptions({ setShowSortOptions }: Props) {
     document.body.style.overflow = "";
   }
   return ReactDOM.createPortal(
-    <div className="text-main-color-shade fixed inset-0 lg:hidden">
+    <div
+      data-testid="sortOptions"
+      className="text-main-color-shade fixed inset-0 lg:hidden"
+    >
       <div className="fixed top-0 right-0 bottom-[50%] left-0 bg-black/45"></div>
       <div
         id="sortModal"

@@ -13,6 +13,7 @@ export default function SortMobileTo1024Button() {
   return (
     <>
       <div
+      data-testid = 'sortButton'
         onClick={handleShowSortOptions}
         className="flex items-center justify-between px-4 lg:hidden"
       >
