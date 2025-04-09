@@ -1,6 +1,9 @@
 export default function GeneralSettings() {
   return (
-    <div className="mx-auto mt-10 h-full sm:p-7 lg:mt-0">
+    <div
+      data-testid="generalSettings"
+      className="mx-auto mt-10 h-full sm:p-7 lg:mt-0"
+    >
       <form className="flex h-full flex-col items-start justify-start gap-5 p-7 sm:p-12">
         <h3 className="mb-10">Vaše postavke</h3>
         <div className="grid-cols-1s grid w-full gap-5 sm:grid-cols-2 sm:gap-15">

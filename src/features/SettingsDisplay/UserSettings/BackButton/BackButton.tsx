@@ -9,7 +9,7 @@ export default function BackButton({ setShowSidebar }: Props) {
   }
 
   return (
-    <div className="absolute top-5 left-7 lg:hidden">
+    <div data-testid="backButton" className="absolute top-5 left-7 lg:hidden">
       <span onClick={handleBackToSettings} className="text-2xl">
         <IoArrowBackOutline />
       </span>
