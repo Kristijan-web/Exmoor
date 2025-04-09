@@ -63,6 +63,7 @@ export default function SettingsMenuSidebar({
           {routes.map(({ to, description, icon }, index) => {
             return (
               <li
+                data-testid="sidebarOption"
                 key={to || index}
                 onClick={() => {
                   if (lessThan1024Width) {

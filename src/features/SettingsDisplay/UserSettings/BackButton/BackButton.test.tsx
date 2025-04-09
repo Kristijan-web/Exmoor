@@ -8,6 +8,7 @@ import userEvent from "@testing-library/user-event";
 describe("BackButton", () => {
   test("Back button displays settings menu sidebar and hides outlet", async () => {
     const user = userEvent.setup();
+    window.innerWidth = 1000;
     render(
       <MemoryRouter initialEntries={["/podesavanja/postavke"]}>
         <Routes>
@@ -17,7 +18,8 @@ describe("BackButton", () => {
         </Routes>
       </MemoryRouter>,
     );
-    expect(screen.getByTestId("backButton")).toBeInTheDocument();
+    // mora se uci u settingsMenuSidebar da se klikne na element i da se proveri da settingsMenu NE postoji
+
     expect(screen.queryByTestId("generalSettings")).toBeInTheDocument();
     // klik dugmeta treba da sakrije outlet
     await user.click(screen.getByTestId("backButton"));
