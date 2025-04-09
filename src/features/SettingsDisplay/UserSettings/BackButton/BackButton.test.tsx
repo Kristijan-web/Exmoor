@@ -6,7 +6,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import GeneralSettings from "../GeneralSettngs/GeneralSettingsDisplay";
 import userEvent from "@testing-library/user-event";
 describe("BackButton", () => {
-  test("Back button displays settings menu", async () => {
+  test("Back button displays settings menu sidebar and hides outlet", async () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter initialEntries={["/podesavanja/postavke"]}>
@@ -21,6 +21,7 @@ describe("BackButton", () => {
     expect(screen.queryByTestId("generalSettings")).toBeInTheDocument();
     // klik dugmeta treba da sakrije outlet
     await user.click(screen.getByTestId("backButton"));
-    expect(screen.queryByTestId("generalSettings")).not.toBeInTheDocument();
+    expect(screen.getByTestId("outletContainer")).toHaveClass("hidden");
+    expect(screen.getByTestId("sidebar")).toBeInTheDocument();
   });
 });

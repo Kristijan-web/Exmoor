@@ -36,6 +36,7 @@ export default function SettingsDisplay() {
         showSidebar={showSidebar}
       />
       <section
+        data-testid="outletContainer"
         className={` ${showSidebar ? "hidden" : null} relative border-1 border-l-0 border-black lg:block`}
       >
         <BackButton setShowSidebar={setshowSidebar} />

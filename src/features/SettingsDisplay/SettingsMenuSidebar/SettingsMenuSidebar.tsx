@@ -48,7 +48,10 @@ export default function SettingsMenuSidebar({
     return null;
   }
   return (
-    <aside className="lg:h-180 lg:border-1 lg:border-black">
+    <aside
+      data-testid="sidebar"
+      className="lg:h-180 lg:border-1 lg:border-black"
+    >
       <div className="flex h-full flex-col items-center justify-start gap-4 p-7 lg:gap-10">
         <div className="flex flex-col items-center justify-center gap-5">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-black text-white lg:h-25 lg:w-25">
