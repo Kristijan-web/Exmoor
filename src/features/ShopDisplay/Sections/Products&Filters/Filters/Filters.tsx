@@ -14,7 +14,7 @@ export default function Filters() {
       <FilterButton setShowFilters={setShowFilters} showFilters={showFilters} />
       {/* Filter button on small screens END */}
       <div
-        className={` ${showFilters ? "px-6" : "hidden"} flex flex-col gap-9 lg:flex`}
+        className={` ${showFilters ? "mx-auto max-w-[640px] px-6" : "hidden"} flex flex-col gap-9 lg:flex`}
       >
         <h3 className="mb-6 text-center text-xl">Filtriraj parfeme</h3>
         <div>
