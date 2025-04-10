@@ -1,3 +1,5 @@
+import { IoSearchOutline } from "react-icons/io5";
+
 export default function SearchProducts() {
   return (
     <div className="relative col-span-full row-start-1 row-end-2 h-11 self-start overflow-visible lg:col-start-4 lg:col-end-10 lg:w-full lg:overflow-hidden xl:w-[108%] 2xl:col-end-9">
@@ -7,6 +9,9 @@ export default function SearchProducts() {
         placeholder="Pretrazite..."
         className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
       />
+      <span className="absolute top-[50%] right-3 -translate-y-[50%] text-xl text-gray-500">
+        <IoSearchOutline />
+      </span>
     </div>
   );
 }
