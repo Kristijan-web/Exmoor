@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 
 export default function useDeleteProducts() {
-  const { error, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => deleteProduct(),
     onSuccess: () => console.log("yey"),
     onError: (err) => console.log(err),
   });
-  return { error, isLoading };
+  return { mutate, isPending };
 }
