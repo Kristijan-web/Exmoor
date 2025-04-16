@@ -10,7 +10,7 @@ type Props = {
   product: Product;
 };
 
-export default function ProductItem({ product }: Product) {
+export default function ProductItem({ product }: Props) {
   return (
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-sm p-10">
       <img
