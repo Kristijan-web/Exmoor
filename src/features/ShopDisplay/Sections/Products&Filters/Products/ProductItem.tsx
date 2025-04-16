@@ -1,4 +1,16 @@
-export default function ProductItem() {
+type Product = {
+  id: number;
+  title: string;
+  image: string;
+  price: number;
+  description: string;
+  category_id: number;
+};
+type Props = {
+  product: Product;
+};
+
+export default function ProductItem({ product }: Product) {
   return (
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-sm p-10">
       <img
@@ -6,7 +18,7 @@ export default function ProductItem() {
         src="/Images/ShopPage/Products/shop-item-1.jpg"
         alt="zara perfume"
       />
-      <p className="text-xl">Zara Light Touch</p>
+      <p className="text-xl">{product.title}</p>
       <span className="text-main-color-shade/70">Muški</span>
       <p>3.999 RSD </p>
       <span className="text-main-color-tint absolute top-[10px] right-[15px] text-xl">
