@@ -4,7 +4,20 @@ import ProductItem from "./ProductItem";
 
 export default function Products() {
   const { products, isLoading, error } = useProducts();
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div>
+        <span style={{ 
+            width: '48px',
+    height: '48px',
+    border: '5px solid #FFF',
+    borderBottomColor:' transparent',
+    borderRadius: '50%',
+    display:' inline-block',
+    box-sizing:' border-box',
+    animation: 'rotation 1s linear infinite'}}></span>
+      </div>
+    );
   if (error) {
     toast.error("Error! Please reload the page");
   }
