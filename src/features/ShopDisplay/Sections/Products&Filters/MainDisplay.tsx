@@ -6,7 +6,7 @@ import Sort from "./Sort/Sort";
 export default function MainDisplay() {
   return (
     <section className="mb-24">
-      <div className="grid-rows-auto mx-auto grid max-w-[1600px] grid-cols-12 items-start gap-4 px-4">
+      <div className="mx-auto grid max-w-[1600px] grid-cols-12 grid-rows-[42px_auto_auto] items-start gap-4 px-4">
         <Filters />
         <SearchProducts />
         <Sort />
