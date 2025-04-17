@@ -11,6 +11,7 @@ type Product = {
 
 export default async function getProducts(): Promise<Product[]> {
   const { data: products, error } = await supabase.from("Products").select("*");
+
   if (error) {
     throw new Error(`Failed to get products ${error.message}`);
   }
