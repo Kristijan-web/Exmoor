@@ -1,5 +1,9 @@
 import supabase from "../Supabase";
 
+type Gender = {
+  gemnder: "string";
+  id: number;
+};
 type Product = {
   id: number;
   title: string;
@@ -7,11 +11,11 @@ type Product = {
   price: number;
   description: string;
   category_id: number;
-  gender: string;
+  Gender: Gender;
 };
 
 export default async function getProducts(): Promise<Product[]> {
-  const { data: products, error } = await supabase.from("products").select(`
+  const { data: products, error } = await supabase.from("Products").select(`
     *,
     Gender (
       *
