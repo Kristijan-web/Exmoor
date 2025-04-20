@@ -15,7 +15,7 @@ export default function ProductItem({ product }: Props) {
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-sm p-10">
       <img
         className="mb-5 w-[60%] rounded-sm"
-        src="/Images/ShopPage/Products/shop-item-1.jpg"
+        src={product.image}
         alt="zara perfume"
       />
       <p className="text-xl">{product.title}</p>
