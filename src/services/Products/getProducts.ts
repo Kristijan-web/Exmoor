@@ -7,10 +7,16 @@ type Product = {
   price: number;
   description: string;
   category_id: number;
+  gender: string;
 };
 
 export default async function getProducts(): Promise<Product[]> {
-  const { data: products, error } = await supabase.from("Products").select("*");
+  const { data: products, error } = await supabase.from("products").select(`
+    *,
+    Gender (
+      *
+    )
+  `);
 
   if (error) {
     throw new Error(`Failed to get products ${error.message}`);
