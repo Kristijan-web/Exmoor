@@ -1,7 +1,7 @@
 import supabase from "../Supabase";
 
 type Gender = {
-  gemnder: "string";
+  gender: "string";
   id: number;
 };
 type Product = {
