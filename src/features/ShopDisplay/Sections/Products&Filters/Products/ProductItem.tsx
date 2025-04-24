@@ -1,3 +1,8 @@
+type Brand = {
+  id: number;
+  name: string;
+};
+
 type Gender = {
   gender: "string";
   id: number;
@@ -10,6 +15,7 @@ type Product = {
   description: string;
   category_id: number;
   Gender: Gender;
+  Brand: Brand;
 };
 type Props = {
   product: Product;
@@ -23,7 +29,9 @@ export default function ProductItem({ product }: Props) {
         src={product.image}
         alt="zara perfume"
       />
-      <p className="text-xl">{product.title}</p>
+      <p className="text-xl">
+        {product.Brand.name} {product.title}
+      </p>
       <span className="text-main-color-shade/70">{product.Gender.gender}</span>
       <p>{product.price} RSD</p>
       <span className="text-main-color-tint absolute top-[10px] right-[15px] text-xl">
