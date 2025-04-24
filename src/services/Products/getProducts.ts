@@ -1,5 +1,10 @@
 import supabase from "../Supabase";
 
+type ProductType = {
+  id: number;
+  type: string;
+};
+
 type Brand = {
   id: number;
   name: string;
@@ -16,7 +21,8 @@ type Product = {
   description: string;
   category_id: number;
   Gender: Gender;
-  Bran: Brand;
+  Brand: Brand;
+  Product_type: ProductType;
 };
 
 export default async function getProducts(): Promise<Product[]> {
@@ -26,6 +32,9 @@ export default async function getProducts(): Promise<Product[]> {
       *
     ),
     Brand(
+    *
+    ),
+    Product_type (
     *
     )
   `);
