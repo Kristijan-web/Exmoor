@@ -1,3 +1,10 @@
+type Sale = {
+  id: number;
+  sale_price: number;
+  valid_from: string;
+  valid_to: string;
+};
+
 type ProductType = {
   id: number;
   type: string;
@@ -22,6 +29,7 @@ type Product = {
   Gender: Gender;
   Brand: Brand;
   Product_type: ProductType;
+  Sale: Sale;
 };
 type Props = {
   product: Product;
