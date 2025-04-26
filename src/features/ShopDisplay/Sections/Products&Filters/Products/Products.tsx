@@ -4,7 +4,7 @@ import ProductItem from "./ProductItem";
 // grid grid-cols-1 justify-self-center sm:grid-cols-2 md:grid-cols-3 lg:col-start-4 lg:col-end-14 lg:mt-0
 export default function Products() {
   const { products, isLoading, error } = useProducts();
-  console.log(products, isLoading);
+  console.log(products, isLoading, error);
   if (isLoading)
     return (
       <div className="col-span-full text-center lg:col-start-4 lg:col-end-13">
