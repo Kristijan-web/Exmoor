@@ -23,7 +23,6 @@ type Product = {
   title: string;
   image: string;
   price: number;
-  description: string;
   category_id: number;
   Gender: Gender;
   Brand: Brand;

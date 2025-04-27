@@ -24,7 +24,6 @@ type Product = {
   title: string;
   image: string;
   price: number;
-  description: string;
   category_id: number;
   Gender: Gender;
   Brand: Brand;
@@ -36,6 +35,14 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
+  const {
+    title,
+    image,
+    price,
+    Gender: { gender },
+    Brand: { name },
+    Product_type: { type },
+  } = product;
   return (
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-sm p-10">
       <img
