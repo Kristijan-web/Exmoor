@@ -16,7 +16,7 @@ type Brand = {
 };
 
 type Gender = {
-  gender: "string";
+  gender: string;
   id: number;
 };
 type Product = {
@@ -28,13 +28,14 @@ type Product = {
   Gender: Gender;
   Brand: Brand;
   Product_type: ProductType;
-  Sale: Sale;
+  Sale?: Sale | null;
 };
 type Props = {
   product: Product;
 };
 
 export default function ProductItem({ product }: Props) {
+  const sale_price = product.Sale?.sale_price ?? null;
   const {
     title,
     image,
@@ -42,11 +43,12 @@ export default function ProductItem({ product }: Props) {
     Gender: { gender },
     Brand: { name },
     Product_type: { type },
-    Sale: { sale_price },
   } = product;
   return (
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-sm p-10">
-      {sale_price && <div>Test</div>}
+      {sale_price && (
+        <div className="absolute top-0 right-0 rotate-45 bg-red-500">Test</div>
+      )}
       <img className="mb-5 w-[60%] rounded-sm" src={image} alt="zara perfume" />
       <p className="text-xl">
         {name} {title}
