@@ -45,9 +45,11 @@ export default function ProductItem({ product }: Props) {
     Product_type: { type },
   } = product;
   return (
-    <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-sm p-10">
+    <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-sm p-10">
       {sale_price && (
-        <div className="absolute top-0 right-0 rotate-45 bg-red-500">Test</div>
+        <div className="text-secondary-color absolute top-5 -right-7 w-[120px] rotate-45 bg-black text-center">
+          {sale_price}%
+        </div>
       )}
       <img className="mb-5 w-[60%] rounded-sm" src={image} alt="zara perfume" />
       <p className="text-xl">
