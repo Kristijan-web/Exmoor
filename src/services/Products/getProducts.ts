@@ -1,7 +1,7 @@
 import supabase from "../Supabase";
 type Sale = {
   id: number;
-  sale_price: number;
+  sale_discount: number;
   valid_from: string;
   valid_to: string;
 };

@@ -1,6 +1,6 @@
 type Sale = {
   id: number;
-  sale_price: number;
+  sale_discount: number;
   valid_from: string;
   valid_to: string;
 };
@@ -35,6 +35,8 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
+  // RESI PROBLEM
+  // - Kada se u supabase-u u tabeli Sale doda broj sa . npr 4.999 umesto 4999 onda discountedPrice se ne izracuna lepo
   const {
     title,
     image,
@@ -44,14 +46,13 @@ export default function ProductItem({ product }: Props) {
     Product_type: { type },
   } = product;
 
-  const sale_discount = product.Sale?.sale_price ?? null;
-  const sale_price = sale_discount
+  const sale_discount = product.Sale?.sale_discount ?? null;
+  const discountedPrice = sale_discount
     ? price - Math.round((price * sale_discount) / 100)
     : null;
-  console.log(
-    sale_discount &&
-      price - Math.round((Number(price) * Number(sale_discount)) / 100),
-  );
+  if (sale_discount) {
+    console.log(discountedPrice);
+  }
   return (
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-sm p-10">
       {sale_discount && (
@@ -67,7 +68,7 @@ export default function ProductItem({ product }: Props) {
       <span className="text-main-color-shade/70">{type}</span>
       <p>{price} RSD</p>
       {sale_discount && (
-        <p className="text-main-color-shade/70">{sale_price} RSD</p>
+        <p className="text-main-color-shade/70">{discountedPrice} RSD</p>
       )}
       <span className="text-main-color-tint absolute top-[10px] right-[15px] text-xl">
         {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
