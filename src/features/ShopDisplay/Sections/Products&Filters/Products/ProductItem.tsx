@@ -37,6 +37,7 @@ type Props = {
 export default function ProductItem({ product }: Props) {
   // RESI PROBLEM
   // - Kada se u supabase-u u tabeli Sale doda broj sa . npr 4.999 umesto 4999 onda discountedPrice se ne izracuna lepo
+  // - ne dohvata se discount_price iz supabase-a
   const {
     title,
     image,
@@ -56,7 +57,7 @@ export default function ProductItem({ product }: Props) {
   return (
     <div className="shadow-my-shadow relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-sm p-10">
       {sale_discount && (
-        <div className="text-secondary-color absolute top-5 -right-7">
+        <div className="text-secondary-color absolute top-5 -right-7 w-[120px] rotate-45 bg-black text-center">
           {sale_discount}%
         </div>
       )}
