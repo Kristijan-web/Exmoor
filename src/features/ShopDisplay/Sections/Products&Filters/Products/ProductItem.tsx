@@ -77,7 +77,7 @@ export default function ProductItem({ product }: Props) {
         {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
         <ion-icon name="heart"></ion-icon>
       </span>
-      <button className="bg-main-color-shade text-secondary-color text-center">
+      <button className="bg-main-color-shade text-secondary-color btn text-center">
         Add to cart
       </button>
     </div>
