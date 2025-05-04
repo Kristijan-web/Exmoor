@@ -35,9 +35,6 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
-  // RESI PROBLEM
-  // - Kada se u supabase-u u tabeli Sale doda broj sa . npr 4.999 umesto 4999 onda discountedPrice se ne izracuna lepo
-  // - ne dohvata se discount_price iz supabase-a
   const {
     title,
     image,
