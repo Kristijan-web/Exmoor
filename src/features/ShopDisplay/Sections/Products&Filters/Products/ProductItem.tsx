@@ -52,7 +52,7 @@ export default function ProductItem({ product }: Props) {
     console.log(discountedPrice);
   }
   return (
-    <div className="sp-10">
+    <div className="shadow-my-shadow relative flex h-[524px] w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-sm p-10">
       {sale_discount && (
         <div className="text-secondary-color absolute top-5 -right-7 w-[120px] rotate-45 bg-black text-center">
           {sale_discount}%
