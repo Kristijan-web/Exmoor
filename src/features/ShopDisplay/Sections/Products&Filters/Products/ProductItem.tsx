@@ -35,15 +35,6 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
-  const {
-    title,
-    image,
-    price,
-    Gender: { gender },
-    Brand: { name },
-    Product_type: { type },
-  } = product;
-
   const sale_discount = product.Sale?.sale_discount ?? null;
   const discountedPrice = sale_discount
     ? price - Math.round((price * sale_discount) / 100)
