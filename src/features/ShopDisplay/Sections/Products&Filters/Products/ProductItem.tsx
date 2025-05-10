@@ -45,12 +45,7 @@ export default function ProductItem({ product }: Props) {
   } = product;
 
   const sale_discount = product.Sale?.sale_discount ?? null;
-  const discountedPrice = sale_discount
-    ? price - Math.round((price * sale_discount) / 100)
-    : null;
-  if (sale_discount) {
-    console.log(discountedPrice);
-  }
+
   return (
     <div className="shadow-my-shadow relative flex h-[524px] w-full flex-col items-center justify-between gap-3 overflow-hidden rounded-sm p-10">
       {sale_discount && (
