@@ -35,6 +35,7 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
+  console.log("product", product);
   const {
     title,
     image,
