@@ -35,6 +35,15 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
+  const {
+    title,
+    image,
+    price,
+    Gender: { gender },
+    Brand: { name },
+    Product_type: { type },
+  } = product;
+
   const sale_discount = product.Sale?.sale_discount ?? null;
   const discountedPrice = sale_discount
     ? price - Math.round((price * sale_discount) / 100)
@@ -63,7 +72,6 @@ export default function ProductItem({ product }: Props) {
       {sale_discount && <p>{discountedPrice} RSD</p>}
       <span className="text-main-color-tint absolute top-[10px] right-[15px] text-xl">
         {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
-        <ion-icon name="heart"></ion-icon>
       </span>
     </div>
   );
