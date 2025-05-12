@@ -64,7 +64,11 @@ export default function ProductItem({ product }: Props) {
       </p>
       <span className="text-main-color-shade/70">{gender}</span>
       <span className="text-main-color-shade/70">{type}</span>
-
+      {sale_discount ? (
+        <s className="text-main-color-shade/70">{price} RSD</s>
+      ) : (
+        <p>{price} RSD</p>
+      )}
       {sale_discount && <p>{discountedPrice} RSD</p>}
       <span className="text-main-color-tint absolute top-[10px] right-[15px] text-xl">
         {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
