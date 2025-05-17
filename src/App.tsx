@@ -12,22 +12,4 @@ export default function App() {
       },
     },
   });
-
-  return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Toaster
-          position="top-center"
-          gutter={12}
-          toastOptions={{
-            success: { duration: 3000 },
-            error: { duration: 3000 },
-            style: { fontSize: "16px" },
-          }}
-        />
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </>
-  );
 }
