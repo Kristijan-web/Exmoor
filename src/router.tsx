@@ -13,15 +13,7 @@ import FavoriteProducts from "./features/SettingsDisplay/UserSettings/FavoritePr
 import PurchasedProducts from "./features/SettingsDisplay/UserSettings/PurchasedProducts/PurchasedProducts";
 import Error from "./ui/Error";
 
-const router = createBrowserRouter([
-  {
-    element: <AppLayout />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
+
       {
         path: "/shop",
         element: <ShopPage />,
