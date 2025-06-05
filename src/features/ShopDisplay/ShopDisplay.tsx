@@ -7,6 +7,7 @@ export default function ShopDisplay() {
     <>
       <Thumbnail />
       <MainDisplay />
+      <Perks />
     </>
   );
 }
