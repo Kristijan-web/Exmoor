@@ -7,4 +7,5 @@ export default function useDeleteProducts() {
     onSuccess: () => console.log("yey"),
     onError: (err) => console.log(err),
   });
+  return { mutate, isPending, data };
 }
