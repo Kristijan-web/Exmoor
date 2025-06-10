@@ -7,6 +7,12 @@ import {
 } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 
+type Props = {
+  lessThan1024Width: boolean;
+  setShowSidebar: (value: boolean) => void;
+  showSidebar: boolean;
+};
+
 export default function SettingsMenuSidebar({
   lessThan1024Width,
   setShowSidebar,
