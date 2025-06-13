@@ -17,6 +17,10 @@ export default function CartDisplay() {
     }
 
     document.addEventListener("click", closeCart);
+
+    return () => {
+      document.removeEventListener("click", closeCart);
+    };
   }, []);
 
   return ReactDOM.createPortal(
