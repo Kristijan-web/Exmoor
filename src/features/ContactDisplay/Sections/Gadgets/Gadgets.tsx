@@ -15,6 +15,9 @@ export default function Gadgets() {
           <span className="text-3xl">
             <IoLocationOutline />
           </span>
+          <p className="text-center text-xl">
+            Zdravka Čelara 1, Novi grad, Beograd
+          </p>
         </div>
       </div>
     </section>
