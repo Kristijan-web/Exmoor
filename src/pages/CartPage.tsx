@@ -1,5 +1,3 @@
 import CartDisplay from "../features/CartDisplay/CartDisplay";
 
-export default function CartPage() {
-  return <CartDisplay />;
-}
+export default function CartPage() {}
