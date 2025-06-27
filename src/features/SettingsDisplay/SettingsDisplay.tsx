@@ -24,8 +24,6 @@ export default function SettingsDisplay() {
         setshowSidebar(true);
       }
     }
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
   }, []);
 
   return (
