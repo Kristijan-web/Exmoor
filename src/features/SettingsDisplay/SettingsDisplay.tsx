@@ -17,14 +17,7 @@ export default function SettingsDisplay() {
     [lessThan1024Width],
   );
 
-  useEffect(function showSettingsMenu() {
-    function handleClick(e: MouseEvent) {
-      const target = e.target as HTMLElement;
-      if (target?.getAttribute("href") === "/podesavanja") {
-        setshowSidebar(true);
-      }
-    }
-  }, []);
+
 
   return (
     <div className="mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-[305px_1fr] lg:p-7">
