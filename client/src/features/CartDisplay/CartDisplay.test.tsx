@@ -3,6 +3,9 @@ import { describe, expect, test, vi } from "vitest";
 import CartDisplay from "./CartDisplay";
 import { CartContext } from "../../contexts/GlobalContexts/CartContext";
 
+// Sta mi ovde nije jasno?
+// - Ne razumem zasto mockujem dispatch ako koristim CartContext
+
 describe("CartDisplay component", () => {
   test("is cart modal being closed when clicking outside of the cart component", () => {
     const mockupDispatch = vi.fn();
