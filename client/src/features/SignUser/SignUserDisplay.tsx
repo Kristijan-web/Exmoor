@@ -3,7 +3,7 @@ import RegisterForm from "./RegisterForm/RegisterForm";
 import LoginForm from "./LoginForm/LoginForm";
 import SideByDescription from "./SideByDescription/SideByDescription";
 
-export default function SignUserLayout() {
+export default function SignUserDisplay() {
   const [isLoginActive, setIsLoginActive] = useState(false);
 
   const toggleForm = () => {

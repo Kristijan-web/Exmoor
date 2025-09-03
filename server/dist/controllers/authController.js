@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.protect = exports.signup = void 0;
+exports.login = exports.protect = exports.signup = void 0;
 const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -38,21 +38,28 @@ function setJWTInHttpOnlyCookie(jwtToken, res) {
     res.cookie("jwt", jwtToken, cookieOptions);
 }
 const protect = (0, catchAsync_1.default)(async (req, res, next) => {
-    //   - Provera da li je korisnik ulogovan (Da li postoji JWT token)
+    // - Provera da li je korisnik ulogovan (Da li postoji JWT token)
     // - Validacija JWT tokena
     // - Provera da li je korisniku u medjuvremenu obrisan nalog
     // - Provera da li je sifra i dalje validna, to jest ako je korisnik promenio sifru, onda ne bih trebao da moze da radi stari jwt token
     // - Izmeni req objekat i dodaj user-a iz baze req.user = currentUser i na kraju next()
-    // jwt dolazi iz http-only cookie-a
     const jwtToken = req.cookies.jwt;
+    if (!jwtToken) {
+        return next(new appError_1.default("Not logged in!", 401));
+    }
     // jwt.verify ce vratiti payload jwt-a
     const jwtPayload = jsonwebtoken_1.default.verify(jwtToken, mustEnv("JWT_SECRET_KEY"));
     const user = await userModel_1.default.findById(jwtPayload.id);
     if (!user) {
-        next(new appError_1.default("User does not exist", 404));
+        return next(new appError_1.default("User does not exist", 404));
     }
-    // provera sifre da li je i dalje validan ovde mora da se koristi:
+    // provera sifre da li je i dalje validan ovde mora da se koris ti:
     // Instance method -> poziva se na instanci document-a
+    if (user.isPasswordOld(jwtPayload.iat)) {
+        return next(new appError_1.default("Old password found please log in again", 401));
+    }
+    req.user = user;
+    next();
 });
 exports.protect = protect;
 const signup = (0, catchAsync_1.default)(async (req, res, next) => {
@@ -64,7 +71,7 @@ const signup = (0, catchAsync_1.default)(async (req, res, next) => {
         phoneNumber: req.body.phoneNumber,
     });
     if (!user) {
-        next(new appError_1.default("Something went wrong creating a user, please contact developer", 404));
+        return next(new appError_1.default("Something went wrong creating a user, please contact developer", 404));
     }
     const jwtToken = createJWT(user);
     setJWTInHttpOnlyCookie(jwtToken, res);
@@ -73,10 +80,22 @@ const signup = (0, catchAsync_1.default)(async (req, res, next) => {
     sendResponse(res, user);
 });
 exports.signup = signup;
-// Problem
-// - Ne treba vratiti sifru na frontend
-// - Kako to izbeci, ali vodi racuna baza treba da vrati sifru kada radimo poredjenje sifri
-// Resenja:
-// - Tako da koristim pre-query middleware nije opcija
-// - Mozda obican middleware u ruteru koji ce da na res.data.password = undefined
-// - Svaki put pre nego se podaci posalju uradim user.password = undefined
+const login = (0, catchAsync_1.default)(async (req, res, next) => {
+    // Koji su edge case-ovi?
+    // - Treba da se dohvati korisnik iz baze na osnovu email-a
+    // - Treba da se izvrsi provera sifre, to jest poredjenje poslate sifre sa hash-ovanom, za to ima bcrypt.compare(poslata,iz_baze)
+    // - Treba da se napravi jwt i posalje zajedno uz korisnikove podatke
+    const user = await userModel_1.default.findOne({
+        email: req.body.email,
+    });
+    if (!user) {
+        return next(new appError_1.default("Email is incorrect", 404));
+    }
+    if (!user.doPasswordsMatch(req.body.password)) {
+        return next(new appError_1.default("Passwordis incorrect", 404));
+    }
+    const jwtToken = createJWT(user);
+    setJWTInHttpOnlyCookie(jwtToken, res);
+    sendResponse(res, user);
+});
+exports.login = login;

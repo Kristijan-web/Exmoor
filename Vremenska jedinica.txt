@@ -1,0 +1,6 @@
+// JWT
+- Kod jwt.sign expiresIn ocekuje sekunde, bez potrebe za Date.now()
+
+// Cookie
+- Expires kod cookie-a ocekuje NewDate(Date.now()) + milisekunde
+

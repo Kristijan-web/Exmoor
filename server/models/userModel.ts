@@ -1,6 +1,11 @@
 import mongoose, { InferSchemaType, Query } from "mongoose";
 import bcrypt from "bcrypt";
 
+export interface IUserMethods {
+  isPasswordOld(JwtIatAt: number): boolean;
+  doPasswordsMatch(value: string): boolean;
+}
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -32,7 +37,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    passwordChangedAt: {
+      type: Date,
+    },
   },
+
   {
     timestamps: true,
   }
@@ -55,7 +64,24 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-export type UserType = InferSchemaType<typeof userSchema>;
+// Ako je jwt.iat manji od passwordChangedAt
+// Onda se pokusava pristupiti ukradenom jwt-u
+userSchema.methods.isPasswordOld = function (JwtIatAt: number) {
+  // pretvar jwt.iat u milisekunde
+  const JWTMiliseconds = JwtIatAt * 1000;
+
+  if (JWTMiliseconds < this.passwordChangedAt) {
+    return true;
+  }
+  return false;
+};
+
+// instance metoda za proverevanja sifre iz baze sa poslatom sifrom
+userSchema.methods.doPasswordsMatch = function (frontendPassword: string) {
+  return bcrypt.compare(frontendPassword, this.password);
+};
+
+export type UserType = InferSchemaType<typeof userSchema> & IUserMethods;
 
 // ts misli da this pokazuje na document objekat zbog overload-a i zato mora rucno da mu kazem da je query objekat koji vraca UserType ili UserType[] i da se izvrsava nad query objektom tipa UserType
 userSchema.pre<Query<UserType | UserType[], UserType>>(
@@ -67,22 +93,6 @@ userSchema.pre<Query<UserType | UserType[], UserType>>(
   }
 );
 
-// instance methoda koja proverava da li je sifra i dalje validna
-// - Moze da se desi da je korisniku neko ukrao JWT i da je on odmah promenio sifru, onda kada nam se posalje JWT treba da proverimo da li je u pitanju stara ili nova sifra
-
-// Zasto koristim JWT?
-// Za autorizaciju, da odredjenim endpoint-ma moze da pristupi samo
-// 1. Ako je tako sto onda samo ne prosledim role u (local storage ili cookie)
-// - Ako bih tako radio onda svako moze da promeni iz role: 'user' u role: 'admin'
-// 2. Ako je tako onda ne bih nigde na frontu slao role, vec bi poslao id usera, taj id bi se iskoristio da se dohvati user i vidi njegov role
-// ODOGOVIR NA pitanja ispod, zasto umesto jwt-a ne bih slao id korisnika?
-// 3. Sta ako neko ukrade korisnikog id?
-// - Onda nastaje haos on ce imati pristup svim podacima usera, jos ako je taj user admin jos gore.
-// 4. Sta ako neko ukrade jwt token?
-// - Onda je isto kao u odgovoru iznad
-
-userSchema.methods.isPasswordFresh = function () {};
-
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<UserType>("User", userSchema);
 
 export default User;

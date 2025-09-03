@@ -1,8 +1,38 @@
-export default function LoginForm({
-  isLoginActive,
-}: {
+import React, { useState } from "react";
+import { API_URL } from "../../../utills/constants";
+import useCatchAsync from "../../../utills/useCatchAsync";
+
+type Props = {
   isLoginActive: boolean;
-}) {
+};
+
+export default function LoginForm({ isLoginActive }: Props) {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  // Proveri frontend error handling logiku sa useCatchAsync
+
+  const handleSubmit = useCatchAsync(async (e) => {
+    e?.preventDefault();
+    // api zahtev ka endpoint-u za login
+    const fetchData = await fetch(`${API_URL}/api/v1/users/login`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    // login vraca podatke korisnika
+    // ovde server moze vratiti !fetchData.ok i status koji je razlicit od 200
+    const response = await fetchData.json();
+    console.log("From server", response.data);
+  });
+
   return (
     <div
       className={`bg-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 ${isLoginActive ? "md:left-1/2 md:translate-x-0" : "md:left-1/2 md:translate-x-full"} ${isLoginActive ? "px-6 pt-56 pb-8 sm:pt-64 md:p-10" : "hidden"} md:block`}
@@ -11,7 +41,10 @@ export default function LoginForm({
         <h2 className="mb-4 text-xl font-bold text-gray-800 md:mb-6 md:text-2xl">
           Tvoj nalog
         </h2>
-        <form className="flex flex-grow flex-col justify-center space-y-4 md:space-y-5">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="flex flex-grow flex-col justify-center space-y-4 md:space-y-5"
+        >
           <div>
             <label
               className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
@@ -25,6 +58,8 @@ export default function LoginForm({
               type="email"
               autoComplete="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -40,6 +75,8 @@ export default function LoginForm({
               type="password"
               autoComplete="current-password"
               placeholder="Šifra"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
@@ -61,7 +98,7 @@ export default function LoginForm({
             </a>
           </div>
           <div className="mt-4 md:mt-auto">
-            <button className="btn 0 w-full transition-colors" type="button">
+            <button className="btn 0 w-full transition-colors" type="submit">
               Prijava
             </button>
           </div>
