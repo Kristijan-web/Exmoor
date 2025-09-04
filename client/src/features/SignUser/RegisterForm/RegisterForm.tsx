@@ -5,7 +5,7 @@ export default function RegisterForm({
 }) {
   return (
     <div
-      className={`bg-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 ${isLoginActive ? "md:right-1/2 md:translate-x-[-100%]" : "md:right-1/2 md:translate-x-0"} ${isLoginActive ? "hidden" : "px-6 pb-8 md:p-10"} md:block`}
+      className={`w-full bg-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 ${isLoginActive ? "md:right-1/2 md:translate-x-[-100%]" : "md:right-1/2 md:translate-x-0"} ${isLoginActive ? "hidden" : "px-6 pt-8 pb-8 md:p-10 md:pt-4"} md:block`}
     >
       <div className="flex h-full flex-col">
         <h2 className="mb-4 text-xl font-bold text-gray-800 md:mb-6 md:text-2xl">
@@ -61,13 +61,13 @@ export default function RegisterForm({
           <div>
             <label
               className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
-              htmlFor="register-password"
+              htmlFor="repeat-password"
             >
               Potvrdi šifru
             </label>
             <input
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-              id="register-password"
+              id="repeat-password"
               type="password"
               placeholder="Potvrdi šifru  "
               autoComplete="tel"

@@ -9,7 +9,7 @@ export default function SideByDescription({
 }: checkProps) {
   return (
     <div
-      className={`absolute flex flex-col items-center justify-center p-6 text-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 md:p-10 ${isLoginActive ? "bg-main-color-shade md:left-0" : "bg-main-color-shade md:right-0"} ${isLoginActive ? "top-0 h-48 w-full sm:h-56" : "bottom-0 w-full"} md:top-0 md:bottom-auto`}
+      className={`flex flex-col items-center justify-center p-6 text-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 md:p-10 ${isLoginActive ? "bg-main-color-shade md:left-0" : "bg-main-color-shade md:right-0"} ${isLoginActive ? "top-0 h-48 w-full sm:h-56" : "bottom-0 w-full"} md:top-0 md:bottom-auto`}
     >
       {isLoginActive ? (
         <>

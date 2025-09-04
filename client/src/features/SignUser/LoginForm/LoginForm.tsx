@@ -39,7 +39,7 @@ export default function LoginForm({ isLoginActive }: Props) {
 
   return (
     <div
-      className={`bg-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 ${isLoginActive ? "md:left-1/2 md:translate-x-0" : "md:left-1/2 md:translate-x-full"} ${isLoginActive ? "px-6 pt-56 pb-8 sm:pt-64 md:p-10" : "hidden"} md:block`}
+      className={`w-full bg-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 ${isLoginActive ? "md:left-1/2 md:translate-x-0" : "md:left-1/2 md:translate-x-full"} ${isLoginActive ? "px-6 py-6 md:p-10" : "hidden"} md:block`}
     >
       <div className="flex h-full flex-col">
         <h2 className="mb-4 text-xl font-bold text-gray-800 md:mb-6 md:text-2xl">

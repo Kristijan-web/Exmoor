@@ -12,7 +12,7 @@ export default function SignUserDisplay() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-      <div className="relative h-200 w-full max-w-4xl overflow-hidden rounded-lg shadow-lg md:h-140">
+      <div className="relative flex h-200 w-full max-w-4xl flex-col items-center justify-center gap-15 overflow-hidden rounded-lg md:h-140 md:shadow-lg">
         <SideByDescription
           isLoginActive={isLoginActive}
           toggleForm={toggleForm}
