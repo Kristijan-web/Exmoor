@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { API_URL } from "../../../utills/constants";
 import useCatchAsync from "../../../utills/useCatchAsync";
+import Loader from "../../../ui/Loader";
 
 type Props = {
   isLoginActive: boolean;
@@ -9,12 +10,14 @@ type Props = {
 export default function LoginForm({ isLoginActive }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  // Loader treba da se prosledi useCatchAsync da gi ga setovao na false u slucaju da je async funkcije uspesna ili ne
+  // Da li da pravim loader u useCatchAsync, ali kako bih mu pristupio recimo u ovoj komponenti?
+  // - Mozda da ova useCatchAsync vrati loader
 
-  // Proveri frontend error handling logiku sa useCatchAsync
-
-  const handleSubmit = useCatchAsync(async (e) => {
+  const handleSubmit = useCatchAsync(async (signal, e) => {
     e?.preventDefault();
-    // api zahtev ka endpoint-u za login
+    // api zahtev ka endpoint-u za login\
     const fetchData = await fetch(`${API_URL}/api/v1/users/login`, {
       method: "POST",
       credentials: "include",
@@ -25,13 +28,14 @@ export default function LoginForm({ isLoginActive }: Props) {
         email,
         password,
       }),
+      signal,
     });
 
     // login vraca podatke korisnika
     // ovde server moze vratiti !fetchData.ok i status koji je razlicit od 200
     const response = await fetchData.json();
     console.log("From server", response.data);
-  });
+  }, setLoading);
 
   return (
     <div
@@ -98,9 +102,13 @@ export default function LoginForm({ isLoginActive }: Props) {
             </a>
           </div>
           <div className="mt-4 md:mt-auto">
-            <button className="btn 0 w-full transition-colors" type="submit">
-              Prijava
-            </button>
+            {loading ? (
+              <Loader />
+            ) : (
+              <button className="btn 0 w-full transition-colors" type="submit">
+                Prijava
+              </button>
+            )}
           </div>
         </form>
       </div>

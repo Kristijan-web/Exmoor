@@ -57,6 +57,22 @@ export default function RegisterForm({
               autoComplete="current-password"
             />
           </div>
+
+          <div>
+            <label
+              className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
+              htmlFor="register-password"
+            >
+              Potvrdi šifru
+            </label>
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              id="register-password"
+              type="password"
+              placeholder="Potvrdi šifru  "
+              autoComplete="tel"
+            />
+          </div>
           <div className="flex items-center">
             <input
               type="checkbox"
