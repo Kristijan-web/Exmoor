@@ -13,6 +13,7 @@ const userSchema = new mongoose_1.default.Schema({
     email: {
         type: String,
         required: [true, "Email is required"],
+        unique: true,
     },
     password: {
         type: String,
@@ -29,7 +30,6 @@ const userSchema = new mongoose_1.default.Schema({
     },
     phoneNumber: {
         type: Number,
-        required: [true, "Phone number is required"],
     },
     role: {
         type: String,

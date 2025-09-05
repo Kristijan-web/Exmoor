@@ -77,12 +77,12 @@ const protect = catchAsync(async (req, res, next) => {
 });
 
 const signup = catchAsync(async (req, res, next) => {
+  console.log("signup handler");
   const user = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
-    phoneNumber: req.body.phoneNumber,
   });
   if (!user) {
     return next(

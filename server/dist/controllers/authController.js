@@ -63,12 +63,12 @@ const protect = (0, catchAsync_1.default)(async (req, res, next) => {
 });
 exports.protect = protect;
 const signup = (0, catchAsync_1.default)(async (req, res, next) => {
+    console.log("signup handler");
     const user = await userModel_1.default.create({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
-        phoneNumber: req.body.phoneNumber,
     });
     if (!user) {
         return next(new appError_1.default("Something went wrong creating a user, please contact developer", 404));

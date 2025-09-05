@@ -4,6 +4,7 @@ dotenv.config({
 });
 import app from "./app";
 import mongoose from "mongoose";
+import User from "./models/userModel";
 
 if (!process.env.CONNECTION_STRING || !process.env.DB_PASSWORD) {
   console.log("No connection string or password");
@@ -19,6 +20,11 @@ mongoose.connect(CONNECTION_STRING).then(() => {
   console.log("Db connection succesful");
 });
 
+Promise.all([
+  User.init(),
+  // Product.init(),
+  // Order.init(),
+]);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

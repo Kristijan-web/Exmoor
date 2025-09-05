@@ -1,6 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 
-function sendProduction() {}
+function sendProduction(error: Error, res: Response) {
+  // if(error.isOperational) {
+  //   res.status(error.statusCode).send({
+  //     status: error.status
+  //     message: error.message,
+  //     isOperationa: true
+  //   })
+  // }
+}
 
 function sendDevelopment(error: Error, res: Response) {
   console.log("Evo ga error objekat", error);
@@ -17,7 +25,11 @@ const globalErrorMiddleware = function (
   res: Response,
   next: NextFunction
 ) {
-  sendDevelopment(error, res);
+  if (process.env.NODE_ENV === "development") {
+    sendDevelopment(error, res);
+  } else {
+    sendProduction(error, res);
+  }
 };
 
 export default globalErrorMiddleware;

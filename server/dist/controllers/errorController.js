@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function sendProduction() { }
+function sendProduction(error, res) {
+    // if(error.isOperational) {
+    //   res.status(error.statusCode).send({
+    //     status: error.status
+    //     message: error.message,
+    //     isOperationa: true
+    //   })
+    // }
+}
 function sendDevelopment(error, res) {
     console.log("Evo ga error objekat", error);
     res.status(500).send({
@@ -9,6 +17,11 @@ function sendDevelopment(error, res) {
     });
 }
 const globalErrorMiddleware = function (error, req, res, next) {
-    sendDevelopment(error, res);
+    if (process.env.NODE_ENV === "development") {
+        sendDevelopment(error, res);
+    }
+    else {
+        sendProduction(error, res);
+    }
 };
 exports.default = globalErrorMiddleware;

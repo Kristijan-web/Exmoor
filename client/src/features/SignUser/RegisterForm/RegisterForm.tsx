@@ -1,4 +1,8 @@
 import { useForm } from "react-hook-form";
+import useCatchAsync from "../../../utills/useCatchAsync";
+import { useState } from "react";
+import { API_URL } from "../../../utills/constants";
+import Loader from "../../../ui/Loader";
 
 type Props = {
   isLoginActive: boolean;
@@ -8,19 +12,43 @@ type FormTypes = {
   name: string;
   email: string;
   password: string;
-  repeatPassword: string;
+  confirmPassword: string;
 };
 
 // Treba napisati regexe
 
 export default function RegisterForm({ isLoginActive }: Props) {
+  const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, getValues, formState } = useForm<FormTypes>({
     mode: "onBlur",
   });
   const { errors } = formState;
   function onSuccess(data: FormTypes) {
-    console.log(data);
-    console.log("hello from onSuccess");
+    console.log("UPA U SUCCESS");
+    useCatchAsync(async (signal) => {
+      const fetchData = await fetch(`${API_URL}/api/v1/users/signup`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+        signal,
+      });
+
+      console.log("dosao do ove linije");
+      const response = await fetchData.json();
+
+      if (!fetchData.ok) {
+        // salji operatinal gresku catch-u
+        // const error = new Error(response.message);
+        // error.status = "isOperation";
+        // throw error;
+        console.log("Upao u not ok");
+        throw { isOperational: true, message: response.message };
+      }
+      console.log("Sve je super");
+    }, setLoading)();
   }
   return (
     <div
@@ -103,7 +131,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
               {...register("password", {
                 required: "Šifra je obavezna",
                 pattern: {
-                  value: /^[A-Za-z]{8,20}$/,
+                  value: /^[A-Za-z\d]{8,20}$/,
                   message: "Minimalno 8 karaktera",
                 },
               })}
@@ -128,7 +156,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
               type="password"
               placeholder="Potvrdi šifru  "
               autoComplete="password"
-              {...register("repeatPassword", {
+              {...register("confirmPassword", {
                 required: "Ponoviti šifru je obavezno",
                 validate: (val) => {
                   return (
@@ -137,9 +165,9 @@ export default function RegisterForm({ isLoginActive }: Props) {
                 },
               })}
             />
-            {errors?.repeatPassword?.message && (
+            {errors?.confirmPassword?.message && (
               <p className="mt-1 text-sm text-red-500">
-                {errors.repeatPassword.message}
+                {errors.confirmPassword.message}
               </p>
             )}
           </div>
@@ -154,9 +182,13 @@ export default function RegisterForm({ isLoginActive }: Props) {
             </label>
           </div>
           <div className="mt-4 md:mt-auto">
-            <button className="btn w-full" type="submit">
-              Registruj se
-            </button>
+            {loading ? (
+              <Loader />
+            ) : (
+              <button className="btn w-full" type="submit">
+                Registruj se
+              </button>
+            )}
           </div>
         </form>
       </div>
