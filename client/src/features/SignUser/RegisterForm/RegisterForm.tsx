@@ -1,8 +1,27 @@
-export default function RegisterForm({
-  isLoginActive,
-}: {
+import { useForm } from "react-hook-form";
+
+type Props = {
   isLoginActive: boolean;
-}) {
+};
+
+type FormTypes = {
+  name: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
+
+// Treba napisati regexe
+
+export default function RegisterForm({ isLoginActive }: Props) {
+  const { register, handleSubmit, getValues, formState } = useForm<FormTypes>({
+    mode: "onBlur",
+  });
+  const { errors } = formState;
+  function onSuccess(data: FormTypes) {
+    console.log(data);
+    console.log("hello from onSuccess");
+  }
   return (
     <div
       className={`w-full bg-white transition-all duration-400 ease-in-out md:absolute md:h-full md:w-1/2 ${isLoginActive ? "md:right-1/2 md:translate-x-[-100%]" : "md:right-1/2 md:translate-x-0"} ${isLoginActive ? "hidden" : "px-6 pt-8 pb-8 md:p-10 md:pt-4"} md:block`}
@@ -11,7 +30,10 @@ export default function RegisterForm({
         <h2 className="mb-4 text-xl font-bold text-gray-800 md:mb-6 md:text-2xl">
           Napravite nalog
         </h2>
-        <form className="flex flex-grow flex-col justify-center space-y-4 md:space-y-5">
+        <form
+          onSubmit={handleSubmit(onSuccess)}
+          className="flex flex-grow flex-col justify-center space-y-4 md:space-y-5"
+        >
           <div>
             <label
               className="mb-1 block text-sm font-medium text-gray-700 md:mb-2"
@@ -25,7 +47,17 @@ export default function RegisterForm({
               type="text"
               autoComplete="username"
               placeholder="Ime"
+              {...register("name", {
+                required: "Ime je obavezno",
+                pattern: {
+                  value: /^[A-Z][a-z]{1,15}/,
+                  message: "Ime mora poceti sa velikim slovom",
+                },
+              })}
             />
+            {errors?.name?.message && (
+              <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+            )}
           </div>
           <div>
             <label
@@ -40,7 +72,20 @@ export default function RegisterForm({
               type="email"
               autoComplete="email"
               placeholder="Email"
+              {...register("email", {
+                required: "Email je obavezan",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Email nije u dobrom formatu",
+                },
+              })}
             />
+
+            {errors?.email?.message && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -55,7 +100,19 @@ export default function RegisterForm({
               type="password"
               placeholder="Šifra"
               autoComplete="current-password"
+              {...register("password", {
+                required: "Šifra je obavezna",
+                pattern: {
+                  value: /^[A-Za-z]{8,20}$/,
+                  message: "Minimalno 8 karaktera",
+                },
+              })}
             />
+            {errors?.password?.message && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -70,8 +127,21 @@ export default function RegisterForm({
               id="repeat-password"
               type="password"
               placeholder="Potvrdi šifru  "
-              autoComplete="tel"
+              autoComplete="password"
+              {...register("repeatPassword", {
+                required: "Ponoviti šifru je obavezno",
+                validate: (val) => {
+                  return (
+                    val === getValues().password || "Šifre se ne poklapaju"
+                  );
+                },
+              })}
             />
+            {errors?.repeatPassword?.message && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.repeatPassword.message}
+              </p>
+            )}
           </div>
           <div className="flex items-center">
             <input
@@ -84,7 +154,7 @@ export default function RegisterForm({
             </label>
           </div>
           <div className="mt-4 md:mt-auto">
-            <button className="btn w-full" type="button">
+            <button className="btn w-full" type="submit">
               Registruj se
             </button>
           </div>
