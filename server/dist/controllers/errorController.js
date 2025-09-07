@@ -4,15 +4,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const appError_1 = __importDefault(require("../utills/appError"));
-// interface AppErrorType extends Error {
-//   isOperational?: boolean;
-//   statusCode: number;
-//   status: string;
-// }
-// Sta ja uopste zelim?
-// - Da uradim type safety za sendProduction, error u send production moze biti ili AppError ili Error,
-// Da li smatram da sam uradio type safety ako samo stavim error: AppErrorType?
-// - Donekle, resice problem, ali nije istina da ce error uvek biti AppErrorType, takodje moze biti i Error
+const mongodb_1 = require("mongodb");
+const mongoose_1 = __importDefault(require("mongoose"));
+function handleInvalidId() {
+    return new appError_1.default("Provided id is invalid", 400);
+}
+function handleDuplicateKey(err) {
+    let uniqueField;
+    for (const prop in err.keyValue) {
+        uniqueField = prop;
+    }
+    return new appError_1.default(`${uniqueField} already exists`, 400);
+}
+function handleValidationError(err) {
+    // Sta moze da pukne za validaciju?
+    // - sifre se ne pokpalaju
+    // - polje koje je required nje prosledjeno
+    let firstError = Object.values(err.errors)[0];
+    return new appError_1.default(`${firstError.message}`, 400);
+}
 function sendProduction(error, res) {
     if (error instanceof appError_1.default && error.isOperational) {
         res.status(error.statusCode).send({
@@ -29,24 +39,28 @@ function sendProduction(error, res) {
     }
 }
 function sendDevelopment(error, res) {
-    console.log("Evo ga error objekat", error);
     res.status(500).send({
         message: error.message,
+        error,
         stack: error.stack,
     });
 }
-// Sta sve moze da stigne kao tip podatka u error?
-// - Moze da stigne AppErrorType ili obicni Error
-// Sta ja zelim?
-// - Da u sendProduction pravilno uradim logiku ako je error tipa AppErrorType
-// Sta je problem?
-// - Problem je taj sto lazem ts, govorim da ce svakie error biti tipa AppErrorType a moze stici i Error objekat
 const globalErrorMiddleware = function (error, req, res, next) {
     if (process.env.NODE_ENV === "development") {
         sendDevelopment(error, res);
     }
     else {
         let err = error;
+        if (err.name === "CastError") {
+            err = handleInvalidId();
+        }
+        if (err instanceof mongoose_1.default.Error.ValidationError &&
+            err.name === "ValidationError") {
+            err = handleValidationError(err);
+        }
+        if (err instanceof mongodb_1.MongoServerError && err.code === 11000) {
+            err = handleDuplicateKey(err);
+        }
         sendProduction(err, res);
     }
 };

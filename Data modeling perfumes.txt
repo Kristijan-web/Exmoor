@@ -1,0 +1,114 @@
+BACKEND
+
+Koraci:
+
+1. Organizujes fajlove i foldere
+2. Da li prvo pravim bazu podataka ili identifikujem endpoint-e i sta ce da rade 
+- Prvo pravim bazu podataka ali u isto vreme zamisljam proces dohvatanja podataka
+3. Nakon napravljene baze, konektujem se na nju i krecem da pravim router i endpoint-e
+
+
+Pravljenje baze:
+
+Koje kolekcije ce mi biti potrebne
+
+1. Users
+- name
+- email
+- password
+- confirmPassword
+- phoneNumber
+- role (user ili admin)
+
+2. Products
+- name
+- brand 
+- type of water
+- price
+- quantity
+ - sales -> bice embedding-a
+
+3. Sales_history
+ 
+4. Receit
+
+
+Kako cu popust kolekciju da uradim i da li treba biti posebna kolekcija?
+- Moze biti posebna kolekcija koje ce imati popuste pocevsi sa 0% i onda proizvod koji ima 0% znaci da nije na snizenju
+- Moze biti posebna kolekcija koja ce imati popuste a proizvodi koji nemaju popust ce biti null 
+- Moze da se napravi posebna kolona u products npr. sale i ako proizvod ima 0% onda nije na sale-u.
+
+
+Znaci da li cu da radim referencing ili embedding kod proizvod i popust?
+
+1. Ko je parent a ko child
+
+- Da li proizvod ima smisla bez popust. Ima smisla 
+- Da li cena bez proizvoda ima smisla. Nema smisla
+
+Parent je proizvod
+Child je popust
+
+
+
+2. Kakav odnos imaju proizvod i popust
+
+Proizvod moze imati vise popusta dok odredjeni popust moze pripadati vise proizvoda
+
+FEW:MANY
+
+3. Koliko se cesto podaci citaju / update-uju? 
+- Cesto se citaju, to je svaki put kada korisnik udje na products page ili hoce da pogleda poseban proizvod, Dosta Read? DA
+- Update-ovanje dosta zavisi od toga sta ja zelim u mojoj aplikaciji, ako cu imati svaki dan proizvode koji su na popustu odna je to jedna update operacije tokom celog dana sto i nije mnogo.
+
+READ -> DOSTA
+UPDATE -> NE
+
+- Embedding
+
+AKo bih hteo da embedujem popuste u proizvod odna bi to bilo jako lose jer kako vreme bude prelazimo proizvod moze sadrzati razne popuste i onda bi se presao file size.
+
+Resenje:
+- Posebna tabela popusti
+- Posebna tabela proizvodi
+- Medju tabela koja ce imati svoj poseban id, id proizvoda i id popusta i dodatne kolone za vazenje roka popusta 
+- Imao bih parent refencing izmedju products i medju tabele, products bi sadrzao id u medju tabeli              
+
+1. Kako bi dohvatio sve proizvode i prikazao one na popustu, ako radim samo citanje iz tabele products necu znati koji su na popustu
+- Tako sto bih dohvatio sve proizvode iz tabele i dodatno bi uradio populate sa medju tabelom onda bih video koji proizvodi imaju product.popust i tjt
+
+2. Da li bi onda mogla da se cuva istorija popusta proizvoda?
+- Ne
+
+3. Zasto ne bih mogla da se cuva istorija popusta proizvoda?
+- Zato sto kada bi se menjao popust na proizvodu recimo sa 15% na 30%, radio bi se update u medju tabeli gde bi se samo izmenio id iz popust kolekcije.
+                                                                                                                                       
+
+4. Da li su podaci usko povezani, to jest da li ce imati potrebe da se kolekcije posebno query-uju? Da proizvodi su vrlo usko povezani
+Trenutno ne vidim razlog zasto bih ikada posebno query-o sve popuste koji postoje u "popusti" kolekciji.
+- DA
+
+===================================================
+GLAVNI DEO SVIH PITANJA IZNAD:
+Referencing ili embedding -> EMBEDING
+
+
+Ali svaki put kada se napravi novi proizvod sa popust u tabeli istorija_popusta mora da se napravi zapis proizvoda, popusta i roka od kad je vazio. Isto tako svaki put kada se update-uje proizvod mora da se napravi novi zapis u tabelu istorija_proizvoda.
+====================================================
+
+Kako bih vodio evidenciju koliko je proizvoda kupljeno za svaki popust i ukupan broj kupljenih proizvoda
+
+
+Imacu tabelu Racun, iz te tabele mogu da vidim koji proizvod je najprodavaniji, koji brend.
+BITNO:  Da li bih mogao da vidim koliko je puta prodat proizvod na popustu. Morace svaki put kada se napravi novi raucn da se uradi update u tabeli istorija_popust. 
+Mozda bi lakse bilo da zapisem datum kupovine, onda posle mogu uzeti proizvod koji je na popustu otici u tabelu racuni i vratiti sve prodaje za taj proizvod u periodu kada je bio na popustu
+- Imao bi kompozitni kljuc proizvoda i racuna!!!
+- na primer: 
+- absdd23s2 tastatura 1x 
+- absdd23s2 mis 1x 
+- absdd23s2 podloga 2x
+
+
+
+
+

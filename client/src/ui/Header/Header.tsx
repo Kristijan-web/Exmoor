@@ -72,11 +72,13 @@ export default function Header() {
           <li>
             <NavLink to="/podesavanja">Podešavanja</NavLink>
           </li>
-          <li className="flex cursor-pointer items-center gap-2">
-            <span className="flex items-center justify-center text-xl">
-              <FaRegUser />
-            </span>
-            <NavLink to="/prijava">Prijava</NavLink>
+          <li className="cursor-pointer">
+            <NavLink to="/prijava" className="flex items-end gap-2">
+              <span className="flex items-center justify-center text-xl">
+                <FaRegUser />
+              </span>
+              <span>Prijava</span>
+            </NavLink>
           </li>
         </ul>
       </nav>
