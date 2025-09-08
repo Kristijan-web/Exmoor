@@ -38,10 +38,6 @@ const userSchema = new mongoose_1.default.Schema({
     passwordChangedAt: {
         type: Date,
     },
-    birthDate: {
-        type: Date,
-        required: [true, "Birth date is required"],
-    },
 }, {
     timestamps: true,
 });

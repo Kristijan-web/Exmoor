@@ -1,0 +1,17 @@
+TODO za sajt
+
+Server:
+
+Dodaj CRUD operacija za user-a i products isto napravi factory funkcije da bih smanjio ponavljanje
+- uradi filtraciju body-a pri radi sa create i update operacijama u factory.ts
+
+Klijent:
+
+Pre svega upisi korisnikove podatke u global state -> koristi React Query
+
+- Uraditi autorizaciju za 
+
+- login i register page
+- admin
+
+

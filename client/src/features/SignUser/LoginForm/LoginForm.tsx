@@ -2,6 +2,8 @@ import { useState } from "react";
 import { API_URL } from "../../../utills/constants";
 import useCatchAsync from "../../../utills/useCatchAsync";
 import Loader from "../../../ui/Loader";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   isLoginActive: boolean;
@@ -11,6 +13,7 @@ export default function LoginForm({ isLoginActive }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   // Loader treba da se prosledi useCatchAsync da gi ga setovao na false u slucaju da je async funkcije uspesna ili ne
   // Da li da pravim loader u useCatchAsync, ali kako bih mu pristupio recimo u ovoj komponenti?
   // - Mozda da ova useCatchAsync vrati loader
@@ -31,10 +34,13 @@ export default function LoginForm({ isLoginActive }: Props) {
       signal,
     });
 
-    // login vraca podatke korisnika
-    // ovde server moze vratiti !fetchData.ok i status koji je razlicit od 200
     const response = await fetchData.json();
-    console.log("From server", response.data);
+    if (!fetchData.ok) {
+      // response je objekat greske
+      throw response;
+    }
+    toast.success("Uspesno logovanje!");
+    navigate("/");
   }, setLoading);
 
   return (

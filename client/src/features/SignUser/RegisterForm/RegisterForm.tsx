@@ -3,6 +3,8 @@ import useCatchAsync from "../../../utills/useCatchAsync";
 import { useState } from "react";
 import { API_URL } from "../../../utills/constants";
 import Loader from "../../../ui/Loader";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   isLoginActive: boolean;
@@ -18,6 +20,7 @@ type FormTypes = {
 // Treba napisati regexe
 
 export default function RegisterForm({ isLoginActive }: Props) {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, getValues, formState } = useForm<FormTypes>({
     mode: "onBlur",
@@ -36,18 +39,14 @@ export default function RegisterForm({ isLoginActive }: Props) {
         signal,
       });
 
-      console.log("dosao do ove linije");
       const response = await fetchData.json();
 
       if (!fetchData.ok) {
-        // salji operatinal gresku catch-u
-        // const error = new Error(response.message);
-        // error.status = "isOperation";
-        // throw error;
-        console.log("Upao u not ok");
-        throw { isOperational: true, message: response.message };
+        throw response;
       }
-      console.log("Sve je super");
+
+      toast.success("Uspesna registracija!");
+      navigate("/");
     }, setLoading)();
   }
   return (
