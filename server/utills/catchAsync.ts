@@ -9,7 +9,6 @@ type AppNext = (err?: AppError) => void;
 const catchAsync = function (
   fn: (req: Request, res: Response, next: AppNext) => Promise<void>
 ) {
-  console.log("Pozdrav iz catchAsync-a");
   return (req: Request, res: Response, next: AppNext) => {
     // Zasto next(err) ts ne izbacuje gresku
     // - ts se drugacije ponasa kada se tipizira parametar funkcije, posto je err: any on prihvata isti ili siri tip

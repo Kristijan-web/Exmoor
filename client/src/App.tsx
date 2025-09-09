@@ -8,7 +8,7 @@ export default function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 0,
+        staleTime: 600_000, // 10 minuta
       },
     },
   });

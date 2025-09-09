@@ -15,3 +15,5 @@ Pre svega upisi korisnikove podatke u global state -> koristi React Query
 - admin
 
 
+Nadji nacin da asinhrone funkcije koje pozivaju custom hook-ovi wrapujes u useCatchAsync
+

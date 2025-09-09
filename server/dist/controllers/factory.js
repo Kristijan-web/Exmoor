@@ -46,6 +46,7 @@ const deleteOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
 });
 exports.deleteOne = deleteOne;
 const updateOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
+    console.log("evo me u catchAsync");
     const { id } = req.params;
     // ne zaboravi da uradis filtraciju req.body, moze se poslati role: 'admin'
     const updatedDocument = await Model.findByIdAndUpdate(id, req.body, {

@@ -12,7 +12,9 @@ import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSet
 import FavoriteProducts from "./features/SettingsDisplay/UserSettings/FavoriteProducts/FavoriteProducts";
 import PurchasedProducts from "./features/SettingsDisplay/UserSettings/PurchasedProducts/PurchasedProducts";
 import Error from "./ui/Error";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
+// Nakon logovanja/signup-a ne bi trebalo da moze ponovo da se pristupi tim stranicama
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -63,7 +65,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/prijava",
-        element: <SignUpPage />,
+        element: (
+          <ProtectedRoute allowedRoles={["all"]} redirectIfLoggedIn={true}>
+            <SignUpPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "*",

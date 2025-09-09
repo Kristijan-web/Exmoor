@@ -2,13 +2,15 @@ import toast from "react-hot-toast";
 
 const useCatchAsync = function <T>(
   fn: (signal: AbortSignal, e?: React.SyntheticEvent) => Promise<T>,
-  setLoading: (val: boolean) => void,
+  setLoading?: (val: boolean) => void,
 ) {
   return (e?: React.SyntheticEvent) => {
     const controller = new AbortController();
     const { signal } = controller;
     const tid = setTimeout(() => controller.abort(), 5000);
-    setLoading(true);
+    if (setLoading) {
+      setLoading(true);
+    }
     fn(signal, e)
       .catch((err) => {
         if (err.name === "AbortError") {
@@ -24,7 +26,9 @@ const useCatchAsync = function <T>(
       })
       .finally(() => {
         clearTimeout(tid);
-        setLoading(false);
+        if (setLoading) {
+          setLoading(false);
+        }
       });
   };
 };
