@@ -12,6 +12,8 @@ import PasswordSetting from "./features/SettingsDisplay/UserSettings/PasswordSet
 import FavoriteProducts from "./features/SettingsDisplay/UserSettings/FavoriteProducts/FavoriteProducts";
 import PurchasedProducts from "./features/SettingsDisplay/UserSettings/PurchasedProducts/PurchasedProducts";
 import Error from "./ui/Error";
+import Redirect from "./ui/Redirect";
+import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./ui/ProtectedRoute";
 
 // Nakon logovanja/signup-a ne bi trebalo da moze ponovo da se pristupi tim stranicama
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
       {
         path: "/kontakt",
         element: <ContactPage />,
+      },
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/podesavanja",
@@ -64,11 +74,12 @@ const router = createBrowserRouter([
         ],
       },
       {
+        // ovde nastaje greska jer pokusavam da pozovem /me endpoint ali nemam httpOnly cookie sa JWT-om
         path: "/prijava",
         element: (
-          <ProtectedRoute allowedRoles={["all"]} redirectIfLoggedIn={true}>
+          <Redirect>
             <SignUpPage />
-          </ProtectedRoute>
+          </Redirect>
         ),
       },
       {

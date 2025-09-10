@@ -2,14 +2,20 @@ TODO za sajt
 
 Server:
 
-Dodaj CRUD operacija za user-a i products isto napravi factory funkcije da bih smanjio ponavljanje
-- uradi filtraciju body-a pri radi sa create i update operacijama u factory.ts
+
 
 Klijent:
 
-Pre svega upisi korisnikove podatke u global state -> koristi React Query
+BITNO
 
-- Uraditi autorizaciju za 
+
+1. Ispravi gresku u Redirect.tsx proverava se cache usera pre nego sto stignu podaci!!!
+
+1.5 Gledaj da ipak prikazes spiner na svakoj stranici dok se dohvataju korisnikovi podaci
+
+2. Ispravi error handling u useQuery funkcijama 
+
+3. Uraditi autorizaciju za 
 
 - login i register page
 - admin

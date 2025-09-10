@@ -12,7 +12,7 @@ type User = {
 
 type GetUserResult = {
   isLoading: boolean;
-  data: User | undefined;
+  data: User | null | undefined;
 };
 
 // Zasto ts upozorava da data moze biti undefined kod return {data, isLoading} i ako sam tipizirao getUser
@@ -27,6 +27,13 @@ function useGetUser(): GetUserResult {
     queryKey: ["user"],
     // ocekuje asinhronu funkciju
     queryFn: getUser,
+    // onError: (error: unknown) => {
+    //   // Ovde možeš da hendlaš grešku
+    //   console.error("Došlo je do greške:", error);
+
+    //   // Ako koristiš toast
+    //   // if (error instanceof AppError) toast.error(error.message);
+    // },
   });
 
   // data je undefined dok podaci ne stignu iz api call-a

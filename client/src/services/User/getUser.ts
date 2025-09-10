@@ -7,7 +7,7 @@ type User = {
   role: string;
 };
 
-const getUser = async function (): Promise<User> {
+const getUser = async function (): Promise<User | null> {
   const fetchData = await fetch(`${API_URL}/api/v1/users/me`, {
     method: "GET",
     credentials: "include",
@@ -16,8 +16,10 @@ const getUser = async function (): Promise<User> {
   const response = await fetchData.json();
 
   if (!fetchData.ok) {
-    // Radim ovako jer sam ja radio backend i znam sta vraca u slucaju greske
-    throw response;
+    // toast.error(response.message);
+
+    // ako je null znaci da korisnik nije ulogovan
+    return null;
   }
 
   return response.data;

@@ -1,26 +1,20 @@
 import { ReactNode } from "react";
 import useGetUser from "../hooks/user/useGetUser";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 type Props = {
   allowedRoles: [string];
   children: ReactNode;
-  redirectIfLoggedIn?: boolean;
 };
 
-export default function ProtectedRoute({
-  allowedRoles,
-  children,
-  redirectIfLoggedIn,
-}: Props): ReactNode {
+export default function ProtectedRoute({ allowedRoles, children }: Props) {
   const { data: user, isLoading } = useGetUser();
-  const navigate = useNavigate();
 
-  // Ukoliko postoje podaci o user-u i naveden je redirectIfLoggedIn onda je zabranjen pristup stranici
-  // Kada se koristi?
-  // - Za login/singup stranicu gde nema smisla dati pristup ako je korisnik vec ulogovan
-  if (redirectIfLoggedIn && user) {
-    navigate("/");
+  // ako je user null onda nije ulogovan
+  if (user === null) {
+    // korisnik nema role, uopste nije ulogovan
+    // replace je ovde koristan jer moze da se desi da korisnik pristupa /profil i onda da se uradi redirekcija na login , i onda da pokusa da klikne back strelicu u browseru i da upadne u loop redirektova
+    return <Navigate replace to="/prijava" />;
   }
 
   // Zasto && pravi problem za ts a || ne?
@@ -28,9 +22,10 @@ export default function ProtectedRoute({
   if (isLoading || user === undefined) return <p>Loading...</p>;
 
   // ako role ispunjava uslov onda ima pristup
-  if (allowedRoles.includes(user.role) || allowedRoles.includes("all")) {
+  if (allowedRoles.includes(user.role)) {
     return children;
   } else {
-    navigate("/");
+    // ovde znam da je ulogovan ali nema dozvolu za pristup
+    return <Navigate replace to="/" />;
   }
 }

@@ -19,7 +19,7 @@ userRouter.post("/login", login);
 // - Zato sto je getUser endpoint za admina, i on tu moze  da vidi id bilo kog usera, moze da dohvati bilo cije podatke  i da posalje id endpoint-u getUser preko url-a
 // - /me je za korisnike da bi u njihovom browseru mogao da vratim njihove podatke sa servera preko jwt-a u httpOnly kolacicu i time oni ni ne znaju kako njihov id izgleda, tako da je "nemoguce" da im iko ukrade id jer nema nikakvog cuvanja id-a na njihovom browseru
 
-userRouter.post("/me", protect, getMe);
+userRouter.get("/me", protect, getMe);
 
 // admin routes for CRUD
 userRouter.get("/", protect, getUsers);

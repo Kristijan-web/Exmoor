@@ -80,6 +80,9 @@ export default function Header() {
               <span>Prijava</span>
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/admin">Admin</NavLink>
+          </li>
         </ul>
       </nav>
       <BurgerMenu />
