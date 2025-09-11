@@ -7,11 +7,16 @@ const override: CSSProperties = {
   animation: "spin 1s linear infinite",
 };
 
-export default function Loader() {
+type Props = {
+  size?: number;
+  position?: string;
+};
+
+export default function Loader({ size, position }: Props) {
   return (
     <ClipLoader
       cssOverride={override}
-      size={50}
+      size={size ? size : 50}
       speedMultiplier={1}
       aria-label="Loading Spinner"
       data-testid="loader"

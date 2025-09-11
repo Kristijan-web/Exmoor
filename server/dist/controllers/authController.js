@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.protect = exports.signup = void 0;
+exports.logout = exports.login = exports.protect = exports.signup = void 0;
 const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -25,7 +25,7 @@ function sendResponse(res, data) {
 // prosledjeni argument mora biti instanca user modela znaci treba mi HydratedDocument
 function createJWT(user) {
     return jsonwebtoken_1.default.sign({ id: user._id }, JWT_SECRET_KEY, {
-        expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima,
+        expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima, trenutno je stavljeno na 2 sata
     });
 }
 function setJWTInHttpOnlyCookie(jwtToken, res) {
@@ -98,3 +98,13 @@ const login = (0, catchAsync_1.default)(async (req, res, next) => {
     sendResponse(res, user);
 });
 exports.login = login;
+const logout = (0, catchAsync_1.default)(async (req, res, next) => {
+    res.clearCookie("jwt", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+    });
+    // pa ne saljem nista LOOL
+    res.status(204).send();
+});
+exports.logout = logout;

@@ -4,6 +4,7 @@ import useCatchAsync from "../../../utills/useCatchAsync";
 import Loader from "../../../ui/Loader";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   isLoginActive: boolean;
@@ -13,10 +14,10 @@ export default function LoginForm({ isLoginActive }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  // Loader treba da se prosledi useCatchAsync da gi ga setovao na false u slucaju da je async funkcije uspesna ili ne
-  // Da li da pravim loader u useCatchAsync, ali kako bih mu pristupio recimo u ovoj komponenti?
-  // - Mozda da ova useCatchAsync vrati loader
+
+  // Problem je sto ovde kada je uspesan login samo se upise HtppOnly cookie nigde nema setovanja podataka!!!!
 
   const handleSubmit = useCatchAsync(async (signal, e) => {
     e?.preventDefault();
@@ -35,10 +36,12 @@ export default function LoginForm({ isLoginActive }: Props) {
     });
 
     const response = await fetchData.json();
+
     if (!fetchData.ok) {
       // response je objekat greske
       throw response;
     }
+    queryClient.setQueryData(["user"], response.data);
     toast.success("Uspesno logovanje!");
     navigate("/");
   }, setLoading);

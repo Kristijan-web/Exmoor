@@ -9,6 +9,7 @@ const userController_1 = require("../controllers/userController");
 const userRouter = express_1.default.Router();
 userRouter.post("/signup", authController_1.signup);
 userRouter.post("/login", authController_1.login);
+userRouter.post("/logout", authController_1.logout);
 // Zasto koristim /me umesto getUser endpoint-a?
 // - Zato sto je getUser endpoint za admina, i on tu moze  da vidi id bilo kog usera, moze da dohvati bilo cije podatke  i da posalje id endpoint-u getUser preko url-a
 // - /me je za korisnike da bi u njihovom browseru mogao da vratim njihove podatke sa servera preko jwt-a u httpOnly kolacicu i time oni ni ne znaju kako njihov id izgleda, tako da je "nemoguce" da im iko ukrade id jer nema nikakvog cuvanja id-a na njihovom browseru

@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 // U kojim rutama se koristi ova komponenta
 // - /prijava
@@ -20,7 +20,6 @@ type Props = {
 export default function Redirect({ children }: Props): ReactNode {
   const queryClient = useQueryClient();
   const cachedUser = queryClient.getQueryData(["user"]);
-  const navigate = useNavigate();
 
   console.log("evo cached usera", cachedUser);
 
@@ -31,8 +30,9 @@ export default function Redirect({ children }: Props): ReactNode {
   if (cachedUser) {
     // ako postoje podaci o useru onda radi redirect
     console.log("upao u navigate");
-    navigate("/");
+    return <Navigate to="/" replace />;
   } else {
+    console.log("Upao u else");
     return children;
   }
 }

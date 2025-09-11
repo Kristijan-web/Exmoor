@@ -6,6 +6,7 @@ import { useCart } from "../contexts/GlobalContexts/CartContext";
 import ScrollToTopOnURLChange from "./ScrollToTopOnURLCange";
 import { useQuery } from "@tanstack/react-query";
 import getUser from "../services/User/getUser";
+import Loader from "./Loader";
 
 export default function AppLayout() {
   const { isCartOpen } = useCart();
@@ -20,7 +21,11 @@ export default function AppLayout() {
   });
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="absolute top-[50%] left-[50%] translate-[-50%]">
+        <Loader size={100} />
+      </div>
+    );
   }
 
   return (

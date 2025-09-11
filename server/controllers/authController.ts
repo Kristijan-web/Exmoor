@@ -24,7 +24,7 @@ function sendResponse<T>(res: Response, data: HydratedDocument<T>) {
 // prosledjeni argument mora biti instanca user modela znaci treba mi HydratedDocument
 function createJWT(user: HydratedDocument<UserType>) {
   return jwt.sign({ id: user._id }, JWT_SECRET_KEY, {
-    expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima,
+    expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima, trenutno je stavljeno na 2 sata
   });
 }
 
@@ -118,4 +118,15 @@ const login = catchAsync(async (req, res, next) => {
   sendResponse(res, user);
 });
 
-export { signup, protect, login };
+const logout = catchAsync(async (req, res, next) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none" as "none",
+  });
+
+  // pa ne saljem nista LOOL
+  res.status(204).send();
+});
+
+export { signup, protect, login, logout };
