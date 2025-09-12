@@ -6,15 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateOne = exports.deleteOne = exports.createOne = exports.getOne = exports.getAll = void 0;
 const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
 const appError_1 = __importDefault(require("../utills/appError"));
-function sendResponse(res, data) {
-    res.status(200).json({
-        message: "success",
-        data,
-    });
-}
+const sendResponse_1 = __importDefault(require("../utills/sendResponse"));
 const getAll = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     const documents = await Model.find();
-    sendResponse(res, documents);
+    (0, sendResponse_1.default)(res, documents);
 });
 exports.getAll = getAll;
 const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
@@ -23,13 +18,13 @@ const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     if (!document) {
         return next(new appError_1.default("Resource does not exist", 404));
     }
-    sendResponse(res, document);
+    (0, sendResponse_1.default)(res, document);
 });
 exports.getOne = getOne;
 const createOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
     const newDocument = await Model.create(req.body);
-    sendResponse(res, newDocument);
+    (0, sendResponse_1.default)(res, newDocument);
 });
 exports.createOne = createOne;
 // ovo je za admina
@@ -56,6 +51,6 @@ const updateOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
     if (!updatedDocument) {
         return next(new appError_1.default("Specified element does not exist", 404));
     }
-    sendResponse(res, updatedDocument);
+    (0, sendResponse_1.default)(res, updatedDocument);
 });
 exports.updateOne = updateOne;

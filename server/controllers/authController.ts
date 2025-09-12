@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { HydratedDocument } from "mongoose";
 import { Response } from "express";
 import AppError from "../utills/appError";
+import sendResponse from "../utills/sendResponse";
 
 function mustEnv(key: string): string {
   const v = process.env[key];
@@ -14,12 +15,7 @@ function mustEnv(key: string): string {
 const JWT_SECRET_KEY = mustEnv("JWT_SECRET_KEY");
 const JWT_EXPIRES_IN_HOURS = Number(mustEnv("JWT_EXPIRES_IN")); // npr. 5 (sati)
 
-function sendResponse<T>(res: Response, data: HydratedDocument<T>) {
-  res.status(200).json({
-    message: "success",
-    data,
-  });
-}
+// sendResponse funkcije je prebacena u utills folder
 
 // prosledjeni argument mora biti instanca user modela znaci treba mi HydratedDocument
 function createJWT(user: HydratedDocument<UserType>) {

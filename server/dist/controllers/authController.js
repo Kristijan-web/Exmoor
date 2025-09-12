@@ -8,6 +8,7 @@ const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const appError_1 = __importDefault(require("../utills/appError"));
+const sendResponse_1 = __importDefault(require("../utills/sendResponse"));
 function mustEnv(key) {
     const v = process.env[key];
     if (!v)
@@ -16,12 +17,7 @@ function mustEnv(key) {
 }
 const JWT_SECRET_KEY = mustEnv("JWT_SECRET_KEY");
 const JWT_EXPIRES_IN_HOURS = Number(mustEnv("JWT_EXPIRES_IN")); // npr. 5 (sati)
-function sendResponse(res, data) {
-    res.status(200).json({
-        message: "success",
-        data,
-    });
-}
+// sendResponse funkcije je prebacena u utills folder
 // prosledjeni argument mora biti instanca user modela znaci treba mi HydratedDocument
 function createJWT(user) {
     return jsonwebtoken_1.default.sign({ id: user._id }, JWT_SECRET_KEY, {
@@ -76,7 +72,7 @@ const signup = (0, catchAsync_1.default)(async (req, res, next) => {
     setJWTInHttpOnlyCookie(jwtToken, res);
     user.password = undefined;
     user.__v = undefined;
-    sendResponse(res, user);
+    (0, sendResponse_1.default)(res, user);
 });
 exports.signup = signup;
 const login = (0, catchAsync_1.default)(async (req, res, next) => {
@@ -95,7 +91,7 @@ const login = (0, catchAsync_1.default)(async (req, res, next) => {
     }
     const jwtToken = createJWT(user);
     setJWTInHttpOnlyCookie(jwtToken, res);
-    sendResponse(res, user);
+    (0, sendResponse_1.default)(res, user);
 });
 exports.login = login;
 const logout = (0, catchAsync_1.default)(async (req, res, next) => {

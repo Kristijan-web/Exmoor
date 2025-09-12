@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import BurgerMenu from "./BurgerMenu";
 import { useCart } from "../../contexts/GlobalContexts/CartContext";
@@ -19,6 +19,7 @@ export default function Header() {
   const { data } = useGetUser();
   const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   function showCart(e: React.MouseEvent<HTMLElement>) {
     e.stopPropagation();
@@ -35,6 +36,7 @@ export default function Header() {
     });
 
     queryClient.removeQueries({ queryKey: ["user"] });
+    navigate("/");
   }, setLoading);
 
   useEffect(

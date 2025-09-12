@@ -1,9 +1,11 @@
 import mongoose, { InferSchemaType, Query } from "mongoose";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 export interface IUserMethods {
   isPasswordOld(JwtIatAt: number): boolean;
   doPasswordsMatch(value: string): boolean;
+  setAndGetForgotPasswordToken(): string;
 }
 
 const userSchema = new mongoose.Schema(
@@ -38,6 +40,12 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     passwordChangedAt: {
+      type: Date,
+    },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetTokenExpires: {
       type: Date,
     },
   },
@@ -79,6 +87,21 @@ userSchema.methods.isPasswordOld = function (JwtIatAt: number) {
 // instance metoda za proverevanja sifre iz baze sa poslatom sifrom
 userSchema.methods.doPasswordsMatch = function (frontendPassword: string) {
   return bcrypt.compare(frontendPassword, this.password);
+};
+
+userSchema.methods.setAndGetForgotPasswordToken = function () {
+  // napravi reset token i encryptovanog ga upisi u bazuu
+  // koristi se crypt build in biblioteka
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  const encryptedToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.passwordResetToken = encryptedToken;
+  this.passwordResetTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+  return resetToken;
 };
 
 export type UserType = InferSchemaType<typeof userSchema> & IUserMethods;

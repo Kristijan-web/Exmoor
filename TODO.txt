@@ -2,16 +2,14 @@ TODO za sajt
 
 Server:
 
-
+1. Pogledaj u forgotPassowrd endpoint-u zasto ne stavlaj await kod sendMail!!!
 
 Klijent:
 
 BITNO
 
 
-1. Ispravi gresku u Redirect.tsx proverava se cache usera pre nego sto stignu podaci!!!
-
-1.5 Gledaj da ipak prikazes spiner na svakoj stranici dok se dohvataju korisnikovi podaci
+1. OBAVEZNO DODAJ TRY CATRCH KOD getUser koji gadja /me endpoint
 
 2. Ispravi error handling u useQuery funkcijama 
 

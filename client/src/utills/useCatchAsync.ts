@@ -21,7 +21,7 @@ const useCatchAsync = function <T>(
         if (err.isOperational) {
           return toast.error(err.message);
         } else {
-          toast.error("Something went wrong, please contact developer");
+          return toast.error("Something went wrong, please contact developer");
         }
       })
       .finally(() => {

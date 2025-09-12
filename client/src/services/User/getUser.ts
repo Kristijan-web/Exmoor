@@ -8,6 +8,7 @@ type User = {
 };
 
 const getUser = async function (): Promise<User | null> {
+  // RADIM FETCH A NEMAM TRY CATCH!!!!!
   const fetchData = await fetch(`${API_URL}/api/v1/users/me`, {
     method: "GET",
     credentials: "include",

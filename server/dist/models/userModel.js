@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const crypto_1 = __importDefault(require("crypto"));
 const userSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -38,6 +39,12 @@ const userSchema = new mongoose_1.default.Schema({
     passwordChangedAt: {
         type: Date,
     },
+    passwordResetToken: {
+        type: String,
+    },
+    passwordResetTokenExpires: {
+        type: Date,
+    },
 }, {
     timestamps: true,
 });
@@ -68,6 +75,18 @@ userSchema.methods.isPasswordOld = function (JwtIatAt) {
 // instance metoda za proverevanja sifre iz baze sa poslatom sifrom
 userSchema.methods.doPasswordsMatch = function (frontendPassword) {
     return bcrypt_1.default.compare(frontendPassword, this.password);
+};
+userSchema.methods.setAndGetForgotPasswordToken = function () {
+    // napravi reset token i encryptovanog ga upisi u bazuu
+    // koristi se crypt build in biblioteka
+    const resetToken = crypto_1.default.randomBytes(32).toString("hex");
+    const encryptedToken = crypto_1.default
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+    this.passwordResetToken = encryptedToken;
+    this.passwordResetTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
+    return resetToken;
 };
 // ts misli da this pokazuje na document objekat zbog overload-a i zato mora rucno da mu kazem da je query objekat koji vraca UserType ili UserType[] i da se izvrsava nad query objektom tipa UserType
 userSchema.pre(/^find/, function (next) {

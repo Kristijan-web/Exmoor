@@ -15,6 +15,7 @@ import Error from "./ui/Error";
 import Redirect from "./ui/Redirect";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 // Nakon logovanja/signup-a ne bi trebalo da moze ponovo da se pristupi tim stranicama
 const router = createBrowserRouter([
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             <SignUpPage />
           </Redirect>
         ),
+      },
+      {
+        path: "/zaboravljena-sifra",
+        element: <ForgotPasswordPage />,
       },
       {
         path: "*",

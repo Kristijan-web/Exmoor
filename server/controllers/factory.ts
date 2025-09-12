@@ -2,16 +2,7 @@ import { HydratedDocument, Model } from "mongoose";
 import catchAsync from "../utills/catchAsync";
 import { Response } from "express";
 import AppError from "../utills/appError";
-
-function sendResponse<T>(
-  res: Response,
-  data: HydratedDocument<T>[] | HydratedDocument<T>
-) {
-  res.status(200).json({
-    message: "success",
-    data,
-  });
-}
+import sendResponse from "../utills/sendResponse";
 
 const getAll = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {

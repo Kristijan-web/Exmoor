@@ -4,6 +4,7 @@ import {
   createUser,
   deleteUser,
   filterBody,
+  forgotPassword,
   getMe,
   getUser,
   getUsers,
@@ -15,6 +16,8 @@ const userRouter = express.Router();
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.post("/logout", logout);
+
+userRouter.post("/forgotPassword", forgotPassword);
 
 // Zasto koristim /me umesto getUser endpoint-a?
 // - Zato sto je getUser endpoint za admina, i on tu moze  da vidi id bilo kog usera, moze da dohvati bilo cije podatke  i da posalje id endpoint-u getUser preko url-a

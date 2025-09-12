@@ -12,7 +12,7 @@ type Props = {
   position?: string;
 };
 
-export default function Loader({ size, position }: Props) {
+export default function Loader({ size }: Props) {
   return (
     <ClipLoader
       cssOverride={override}
