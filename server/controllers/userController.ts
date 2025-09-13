@@ -7,7 +7,6 @@ import sendMail from "../helpers/sendMail";
 import sendResponse from "../utills/sendResponse";
 
 const filterBody = function (req: Request, res: Response, next: NextFunction) {
-  console.log("evo me u filter body");
   req.body = {
     name: req.body.name,
     email: req.body.email,
@@ -15,7 +14,6 @@ const filterBody = function (req: Request, res: Response, next: NextFunction) {
     confirmPassword: req.body.confirmPassword,
     phoneNumber: req.body.phoneNumber,
   };
-  console.log("evo me nakon req.body");
   next();
 };
 
@@ -45,9 +43,12 @@ const getMe = function (req: Request, res: Response, next: NextFunction) {
 const forgotPassword = catchAsync(async (req, res, next) => {
   // salje mi njegov email
 
+  console.log("Upao u forgot password");
+
   const user = await User.findOne({
     email: req.body.email,
   });
+
   if (!user) {
     return next(new AppError("Email does not exist", 404));
   }
@@ -55,8 +56,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.setAndGetForgotPasswordToken();
 
   // saljem reset token korisniku
-  console.log("EVO GA HOSTNAME", req.hostname);
-  const resetURL = `${req.protocol}://${req.hostname}/forgotPassoword/${resetToken}`;
+  const resetURL = `${req.protocol}://localhost:5173/nova-sifra/${resetToken}`;
 
   // treba sada poslati token korisniku na mail
 
@@ -66,10 +66,11 @@ const forgotPassword = catchAsync(async (req, res, next) => {
     text: `Your reset link: ${resetURL}`,
   };
 
-  // Zasto ovde ne treba await, po meni treba da bih sacekao da se uspesno posalje mail pa onda da se vrati status
-  sendMail(mailOptions);
+  await sendMail(mailOptions);
 
-  res.status(204);
+  res.status(200).json({
+    message: "success",
+  });
 });
 
 export {
@@ -82,18 +83,3 @@ export {
   getMe,
   forgotPassword,
 };
-
-// da li cu sendResponse funkciju da drzim u utills ili helpers folderu?
-
-// Zasta se koristi utills folder?
-// On se obicno koristi za funkcije koje nemaju veze sa business logikom moje aplikacije
-
-// Zasta se koristi helpers folder?
-// On se obicno koristi za funkcije koje imaju veze sa business logikom moje aplikacije
-
-// Da li sendResponse ima veze sa mojom business Logikom
-// - NE
-
-// Onda utils ili helpers
-
-// Utills

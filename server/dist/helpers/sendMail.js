@@ -3,10 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// bice funkcija kojoj se prosledjuju parametri i onda salje mail
 const nodemailer_1 = __importDefault(require("nodemailer"));
-const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
-const sendMail = (options) => (0, catchAsync_1.default)(async (req, res, next) => {
+const sendMail = async (options) => {
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -22,5 +20,5 @@ const sendMail = (options) => (0, catchAsync_1.default)(async (req, res, next) =
         text: options.text,
     };
     await transporter.sendMail(mailOptions);
-});
+};
 exports.default = sendMail;

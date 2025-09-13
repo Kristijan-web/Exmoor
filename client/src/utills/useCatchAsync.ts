@@ -13,6 +13,7 @@ const useCatchAsync = function <T>(
     }
     fn(signal, e)
       .catch((err) => {
+        console.log(err);
         if (err.name === "AbortError") {
           return toast.error(
             "Request was aborted (timeout). Please check your connection.",

@@ -10,7 +10,6 @@ const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
 const appError_1 = __importDefault(require("../utills/appError"));
 const sendMail_1 = __importDefault(require("../helpers/sendMail"));
 const filterBody = function (req, res, next) {
-    console.log("evo me u filter body");
     req.body = {
         name: req.body.name,
         email: req.body.email,
@@ -18,7 +17,6 @@ const filterBody = function (req, res, next) {
         confirmPassword: req.body.confirmPassword,
         phoneNumber: req.body.phoneNumber,
     };
-    console.log("evo me nakon req.body");
     next();
 };
 exports.filterBody = filterBody;
@@ -45,6 +43,7 @@ const getMe = function (req, res, next) {
 exports.getMe = getMe;
 const forgotPassword = (0, catchAsync_1.default)(async (req, res, next) => {
     // salje mi njegov email
+    console.log("Upao u forgot password");
     const user = await userModel_1.default.findOne({
         email: req.body.email,
     });
@@ -53,25 +52,16 @@ const forgotPassword = (0, catchAsync_1.default)(async (req, res, next) => {
     }
     const resetToken = user.setAndGetForgotPasswordToken();
     // saljem reset token korisniku
-    console.log("EVO GA HOSTNAME", req.hostname);
-    const resetURL = `${req.protocol}://${req.hostname}/forgotPassoword/${resetToken}`;
+    const resetURL = `${req.protocol}://localhost:5173/nova-sifra/${resetToken}`;
     // treba sada poslati token korisniku na mail
     const mailOptions = {
         email: "kristijankiki884@gmail.com",
         subject: "Reset your password, valid for the next 10 minutes",
         text: `Your reset link: ${resetURL}`,
     };
-    // Zasto ovde ne treba await, po meni treba da bih sacekao da se uspesno posalje mail pa onda da se vrati status
-    (0, sendMail_1.default)(mailOptions);
-    res.status(204);
+    await (0, sendMail_1.default)(mailOptions);
+    res.status(200).json({
+        message: "success",
+    });
 });
 exports.forgotPassword = forgotPassword;
-// da li cu sendResponse funkciju da drzim u utills ili helpers folderu?
-// Zasta se koristi utills folder?
-// On se obicno koristi za funkcije koje nemaju veze sa business logikom moje aplikacije
-// Zasta se koristi helpers folder?
-// On se obicno koristi za funkcije koje imaju veze sa business logikom moje aplikacije
-// Da li sendResponse ima veze sa mojom business Logikom
-// - NE
-// Onda utils ili helpers
-// Utills

@@ -3,7 +3,7 @@ import { API_URL } from "../../../utills/constants";
 import useCatchAsync from "../../../utills/useCatchAsync";
 import Loader from "../../../ui/Loader";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
@@ -106,9 +106,12 @@ export default function LoginForm({ isLoginActive }: Props) {
                 Zapamti me
               </label>
             </div>
-            <a href="#" className="text-sm text-blue-500 hover:underline">
+            <Link
+              to="/zaboravljena-sifra"
+              className="text-sm text-blue-500 hover:underline"
+            >
               Zaboravili ste sifru?
-            </a>
+            </Link>
           </div>
           <div className="mt-4 md:mt-auto">
             {loading ? (
