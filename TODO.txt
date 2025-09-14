@@ -9,6 +9,10 @@ Klijent:
 BITNO
 
 
+
+
+0.3 Napravi regexe u NewPasswordPageDisplay.tsx!!!
+
 1. OBAVEZNO DODAJ TRY CATRCH KOD getUser koji gadja /me endpoint
 
 2. Ispravi error handling u useQuery funkcijama 

@@ -8,8 +8,8 @@ import { IoCartOutline } from "react-icons/io5";
 import useGetUser from "../../hooks/user/useGetUser";
 import useCatchAsync from "../../utills/useCatchAsync";
 import { API_URL } from "../../utills/constants";
-import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import useDisplayGlobalLoader from "../../hooks/ui/useDisplayGlobalLoader";
 
 export default function Header() {
   const { interceptingElement } = useHeader();
@@ -20,6 +20,8 @@ export default function Header() {
   const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  useDisplayGlobalLoader("Odjava u toku...", loading);
 
   function showCart(e: React.MouseEvent<HTMLElement>) {
     e.stopPropagation();
@@ -38,19 +40,6 @@ export default function Header() {
     queryClient.removeQueries({ queryKey: ["user"] });
     navigate("/");
   }, setLoading);
-
-  useEffect(
-    function displayToasterWhenLoggingOut() {
-      const toastId = "boolean-toast";
-
-      if (loading) {
-        toast.loading("Odjava u toku...", { id: toastId });
-      } else {
-        toast.dismiss(toastId);
-      }
-    },
-    [loading],
-  );
 
   useEffect(
     function checkForStickyNavigation() {

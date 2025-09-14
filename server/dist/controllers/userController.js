@@ -3,12 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.forgotPassword = exports.getMe = exports.filterBody = exports.updateUser = exports.deleteUser = exports.createUser = exports.getUser = exports.getUsers = void 0;
+exports.getMe = exports.filterBody = exports.updateUser = exports.deleteUser = exports.createUser = exports.getUser = exports.getUsers = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
 const factory_1 = require("./factory");
-const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
-const appError_1 = __importDefault(require("../utills/appError"));
-const sendMail_1 = __importDefault(require("../helpers/sendMail"));
 const filterBody = function (req, res, next) {
     req.body = {
         name: req.body.name,
@@ -41,27 +38,3 @@ const getMe = function (req, res, next) {
     });
 };
 exports.getMe = getMe;
-const forgotPassword = (0, catchAsync_1.default)(async (req, res, next) => {
-    // salje mi njegov email
-    console.log("Upao u forgot password");
-    const user = await userModel_1.default.findOne({
-        email: req.body.email,
-    });
-    if (!user) {
-        return next(new appError_1.default("Email does not exist", 404));
-    }
-    const resetToken = user.setAndGetForgotPasswordToken();
-    // saljem reset token korisniku
-    const resetURL = `${req.protocol}://localhost:5173/nova-sifra/${resetToken}`;
-    // treba sada poslati token korisniku na mail
-    const mailOptions = {
-        email: "kristijankiki884@gmail.com",
-        subject: "Reset your password, valid for the next 10 minutes",
-        text: `Your reset link: ${resetURL}`,
-    };
-    await (0, sendMail_1.default)(mailOptions);
-    res.status(200).json({
-        message: "success",
-    });
-});
-exports.forgotPassword = forgotPassword;

@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { API_URL } from "../../utills/constants";
 import useCatchAsync from "../../utills/useCatchAsync";
 import toast from "react-hot-toast";
+import useDisplayGlobalLoader from "../../hooks/ui/useDisplayGlobalLoader";
 
 export default function ForgotPasswordDisplay() {
   // Kada se klikne na dugme gadja se api za koji se salje email
 
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  useDisplayGlobalLoader("Molimo sacekajte...", loading);
 
   const sendEmail = useCatchAsync(async (signal, e) => {
     e?.preventDefault();
@@ -32,19 +35,6 @@ export default function ForgotPasswordDisplay() {
   }, setLoading);
 
   // Da li useEffect mogu da stavim u poseban hook, tipa usePendingMessage, da samo posaljem loading
-
-  useEffect(
-    function displayToasterWhenLoggingOut() {
-      const toastId = "boolean-toast";
-
-      if (loading) {
-        toast.loading("Molimo sacekajte...", { id: toastId });
-      } else {
-        toast.dismiss(toastId);
-      }
-    },
-    [loading],
-  );
 
   return (
     <div className="flex h-120 items-center justify-center">

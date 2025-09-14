@@ -5,6 +5,8 @@ import { HydratedDocument } from "mongoose";
 import { Response } from "express";
 import AppError from "../utills/appError";
 import sendResponse from "../utills/sendResponse";
+import sendMail from "../helpers/sendMail";
+import crypto from "crypto";
 
 function mustEnv(key: string): string {
   const v = process.env[key];
@@ -121,8 +123,81 @@ const logout = catchAsync(async (req, res, next) => {
     sameSite: "none" as "none",
   });
 
-  // pa ne saljem nista LOOL
   res.status(204).send();
 });
 
-export { signup, protect, login, logout };
+const forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({
+    email: req.body.email,
+  });
+
+  if (!user) {
+    return next(new AppError("Email does not exist", 404));
+  }
+
+  const resetToken = user.setAndGetForgotPasswordToken();
+
+  // saljem reset token korisniku
+  const resetURL = `${req.protocol}://localhost:5173/nova-sifra/${resetToken}`;
+
+  // treba sada poslati token korisniku na mail
+  const mailOptions = {
+    email: "kristijankiki884@gmail.com",
+    subject: "Reset your password, valid for the next 10 minutes",
+    text: `Your reset link: ${resetURL}`,
+  };
+
+  await sendMail(mailOptions);
+
+  // mora se ugasiti validatori
+  await user.save({
+    validateBeforeSave: false,
+  });
+
+  res.status(200).json({
+    message: "success",
+  });
+});
+
+const newPassword = catchAsync(async (req, res, next) => {
+  // - Get user based on the token
+  // - Check if token has not expired and there is user, set the new password
+  // - Update changedPasswordAt property for the user
+  // - Log the user in, send JWT
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+
+  // dohvati usera tako da proveravas da li postoji token i da li je expiro-ovo, sve u jednom query-u
+
+  // GRESKA je ta sto proveravam ne kriptovan token sa kriptovanim u bazi!!!
+
+  const encryptedToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    passwordResetToken: encryptedToken,
+    passwordResetTokenExpires: {
+      $gte: new Date(),
+    },
+  });
+
+  if (!user) {
+    return next(new AppError("Token has expired", 400));
+  }
+
+  user.password = password;
+  user.confirmPassword = confirmPassword;
+  user.passwordResetToken = undefined;
+  user.passwordResetTokenExpires = undefined;
+  await user.save();
+
+  const jwt = createJWT(user);
+  setJWTInHttpOnlyCookie(jwt, res);
+  // mislim da nema potrebe da prosledim user-a u reponse, dovoljno je samo jwt i onda kada se uradi reidrect dohvatice se novi podaci
+  user.password = undefined as any;
+  sendResponse(res, user);
+});
+
+export { signup, protect, login, logout, forgotPassword, newPassword };
