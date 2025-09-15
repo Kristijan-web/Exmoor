@@ -7,7 +7,9 @@ export interface IUserMethods {
   doPasswordsMatch(value: string): boolean;
   setAndGetForgotPasswordToken(): string;
 }
-
+// city
+// postalCode
+// adress
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -18,6 +20,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Email is required"],
       unique: true,
+    },
+    city: {
+      type: String,
+    },
+    postalCode: {
+      type: String,
+    },
+    address: {
+      type: String,
     },
     password: {
       type: String,

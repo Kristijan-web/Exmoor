@@ -3,8 +3,11 @@ import { API_URL } from "../../utills/constants";
 type User = {
   name: string;
   email: string;
-  phoneNumber: string;
   role: string;
+  phoneNumber?: number;
+  city?: string;
+  postalCode?: number;
+  adress?: string;
 };
 
 const getUser = async function (): Promise<User | null> {

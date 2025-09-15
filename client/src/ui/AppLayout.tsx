@@ -4,9 +4,8 @@ import Footer from "./Footer";
 import CartPage from "../pages/CartPage";
 import { useCart } from "../contexts/GlobalContexts/CartContext";
 import ScrollToTopOnURLChange from "./ScrollToTopOnURLCange";
-import { useQuery } from "@tanstack/react-query";
-import getUser from "../services/User/getUser";
 import Loader from "./Loader";
+import useGetUser from "../hooks/user/useGetUser";
 
 export default function AppLayout() {
   const { isCartOpen } = useCart();
@@ -15,10 +14,7 @@ export default function AppLayout() {
 
   // iskoristi isLoading da se prikaze spinner na sajtu dok ne stignu podaci
   // ako cu tako ici onda obrisi loader u ProtectedRoute.tsx jer se ovaj pre izvrsava
-  const { isLoading } = useQuery({
-    queryKey: ["user"],
-    queryFn: getUser,
-  });
+  const { isLoading, data } = useGetUser();
 
   if (isLoading) {
     return (
@@ -27,6 +23,8 @@ export default function AppLayout() {
       </div>
     );
   }
+
+  console.log("Evo fresh user", data);
 
   return (
     <>

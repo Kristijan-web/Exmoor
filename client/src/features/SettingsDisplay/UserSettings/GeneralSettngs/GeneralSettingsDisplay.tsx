@@ -1,15 +1,69 @@
+import { useForm } from "react-hook-form";
+import useGetUser from "../../../../hooks/user/useGetUser";
+import useCatchAsync from "../../../../utills/useCatchAsync";
+import { API_URL } from "../../../../utills/constants";
+import useDisplayGlobalLoader from "../../../../hooks/ui/useDisplayGlobalLoader";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+type FormData = {
+  name: string;
+  email: string;
+  role: string;
+  phoneNumber?: number;
+  city?: string;
+  postalCode?: number;
+  adress?: string;
+};
+
 export default function GeneralSettings() {
+  // popuni useForm sa korisnikovim podacima
+  const { data: user } = useGetUser();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { register, handleSubmit, reset, getValues, formState } =
+    useForm<FormData>({
+      defaultValues: user ? user : undefined,
+    });
+  // const { errors } = formState;
+  useDisplayGlobalLoader("Molimo sačekajte...", loading);
+
+  const onSuccess = function (data: FormData) {
+    console.log(data);
+    useCatchAsync(async (signal) => {
+      const fetchData = await fetch(`${API_URL}/api/v1/users`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+        signal,
+      });
+      const response = await fetchData.json();
+
+      if (!fetchData.ok) {
+        throw response;
+      }
+      toast.success("Ažuziranje gotovo");
+    }, setLoading)();
+  };
+
   return (
     <div
       data-testid="generalSettings"
       className="mx-auto mt-10 h-full sm:p-7 lg:mt-0"
     >
-      <form className="flex h-full flex-col items-start justify-start gap-5 p-7 sm:p-12">
+      <form
+        onSubmit={handleSubmit(onSuccess)}
+        className="flex h-full flex-col items-start justify-start gap-5 p-7 sm:p-12"
+      >
         <h3 className="mb-10">Vaše postavke</h3>
         <div className="grid-cols-1s grid w-full gap-5 sm:grid-cols-2 sm:gap-15">
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="username">Ime i prezime</label>
             <input
+              disabled={loading}
+              {...register("name")}
               id="username"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
@@ -18,6 +72,8 @@ export default function GeneralSettings() {
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="email">Email</label>
             <input
+              disabled={loading}
+              {...register("email")}
               id="email"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
@@ -26,6 +82,8 @@ export default function GeneralSettings() {
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="city">Grad</label>
             <input
+              disabled={loading}
+              {...register("city")}
               id="city"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
@@ -34,6 +92,8 @@ export default function GeneralSettings() {
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="postalCode">Poštanski broj</label>
             <input
+              disabled={loading}
+              {...register("postalCode")}
               id="postalCode"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
@@ -42,6 +102,8 @@ export default function GeneralSettings() {
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="address">Adresa</label>
             <input
+              disabled={loading}
+              {...register("adress")}
               id="address"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
@@ -50,13 +112,18 @@ export default function GeneralSettings() {
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="phone">Broj telefona</label>
             <input
+              disabled={loading}
+              {...register("phoneNumber")}
               id="phone"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
           </div>
           <div className="col-span-full flex items-center justify-start text-center">
-            <button className="btn flex h-10 w-25 items-center justify-center">
+            <button
+              disabled={loading}
+              className="btn flex h-10 w-25 items-center justify-center"
+            >
               Potvrdi
             </button>
           </div>

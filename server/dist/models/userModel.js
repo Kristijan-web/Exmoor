@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
+// city
+// postalCode
+// adress
 const userSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -15,6 +18,15 @@ const userSchema = new mongoose_1.default.Schema({
         type: String,
         required: [true, "Email is required"],
         unique: true,
+    },
+    city: {
+        type: String,
+    },
+    postalCode: {
+        type: String,
+    },
+    address: {
+        type: String,
     },
     password: {
         type: String,

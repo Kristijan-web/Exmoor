@@ -6,8 +6,11 @@ import getUser from "../../services/User/getUser";
 type User = {
   name: string;
   email: string;
-  phoneNumber: string;
   role: string;
+  phoneNumber?: number;
+  city?: string;
+  postalCode?: number;
+  adress?: string;
 };
 
 type GetUserResult = {

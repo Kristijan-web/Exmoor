@@ -10,7 +10,7 @@ import {
 import {
   createUser,
   deleteUser,
-  filterBody,
+  filterUserBody,
   getMe,
   getUser,
   getUsers,
@@ -34,8 +34,8 @@ userRouter.get("/me", protect, getMe);
 // admin routes for CRUD
 userRouter.get("/", protect, getUsers);
 userRouter.get("/:id", protect, getUser);
-userRouter.post("/", protect, filterBody, createUser);
+userRouter.post("/", protect, filterUserBody, createUser);
 userRouter.delete("/:id", protect, deleteUser);
-userRouter.patch("/:id", protect, filterBody, updateUser);
+userRouter.patch("/", protect, filterUserBody, updateUser);
 
 export default userRouter;

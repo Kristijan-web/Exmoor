@@ -20,6 +20,7 @@ function handleValidationError(err) {
     // Sta moze da pukne za validaciju?
     // - sifre se ne pokpalaju
     // - polje koje je required nje prosledjeno
+    console.log("UPAO U VALIDATION ERROR");
     let firstError = Object.values(err.errors)[0];
     return new appError_1.default(`${firstError.message}`, 400);
 }
@@ -46,6 +47,7 @@ function sendDevelopment(error, res) {
     });
 }
 const globalErrorMiddleware = function (error, req, res, next) {
+    console.log(error);
     if (process.env.NODE_ENV === "development") {
         sendDevelopment(error, res);
     }

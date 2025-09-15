@@ -19,7 +19,7 @@ userRouter.get("/me", authController_1.protect, userController_1.getMe);
 // admin routes for CRUD
 userRouter.get("/", authController_1.protect, userController_1.getUsers);
 userRouter.get("/:id", authController_1.protect, userController_1.getUser);
-userRouter.post("/", authController_1.protect, userController_1.filterBody, userController_1.createUser);
+userRouter.post("/", authController_1.protect, userController_1.filterUserBody, userController_1.createUser);
 userRouter.delete("/:id", authController_1.protect, userController_1.deleteUser);
-userRouter.patch("/:id", authController_1.protect, userController_1.filterBody, userController_1.updateUser);
+userRouter.patch("/", authController_1.protect, userController_1.filterUserBody, userController_1.updateUser);
 exports.default = userRouter;

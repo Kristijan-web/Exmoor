@@ -186,7 +186,6 @@ const newPassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError("Token has expired", 400));
   }
-
   user.password = password;
   user.confirmPassword = confirmPassword;
   user.passwordResetToken = undefined;

@@ -16,7 +16,7 @@ const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     const { id } = req.params;
     const document = await Model.findById(id);
     if (!document) {
-        return next(new appError_1.default("Resource does not exist", 404));
+        return next(new appError_1.default(`${Model.modelName} does not exist`, 404));
     }
     (0, sendResponse_1.default)(res, document);
 });
@@ -32,7 +32,7 @@ const deleteOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
     const { id } = req.params;
     const deletedDocument = await Model.findByIdAndDelete(id);
     if (!deletedDocument) {
-        return next(new appError_1.default("Specified element does not exist", 404));
+        return next(new appError_1.default(`${Model.modelName} does not exist`, 404));
     }
     // trebalo bi vrati statusCode 204 i message: 'success', umesto da se salje ceo user document
     res.status(204).json({
@@ -41,15 +41,16 @@ const deleteOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
 });
 exports.deleteOne = deleteOne;
 const updateOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
-    console.log("evo me u catchAsync");
+    // umesto req.params koristicu
     const { id } = req.params;
+    console.log("evo id usera", id);
     // ne zaboravi da uradis filtraciju req.body, moze se poslati role: 'admin'
     const updatedDocument = await Model.findByIdAndUpdate(id, req.body, {
         new: true,
         runValidators: true,
     });
     if (!updatedDocument) {
-        return next(new appError_1.default("Specified element does not exist", 404));
+        return next(new appError_1.default(`${Model.modelName} does not exist`, 404));
     }
     (0, sendResponse_1.default)(res, updatedDocument);
 });

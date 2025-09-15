@@ -16,7 +16,7 @@ export default function Header() {
   const { dispatch } = useCart();
   const headerElement = useRef(null);
   const [intersecting, setIntersecting] = useState<boolean>(true);
-  const { data } = useGetUser();
+  const { data: user } = useGetUser();
   const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -94,7 +94,7 @@ export default function Header() {
             <span>Korpa</span>
           </li>
           {/* ======================== */}
-          {data ? (
+          {user ? (
             <>
               <li>
                 <NavLink to="/podesavanja">Podešavanja</NavLink>
@@ -114,9 +114,11 @@ export default function Header() {
             </li>
           )}
           {/* ======================= */}
-          <li>
-            <NavLink to="/admin">Admin</NavLink>
-          </li>
+          {user?.role === "admin" && (
+            <li>
+              <NavLink to="/admin">Admin</NavLink>
+            </li>
+          )}
         </ul>
       </nav>
       <BurgerMenu />

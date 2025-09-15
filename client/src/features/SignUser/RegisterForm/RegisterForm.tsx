@@ -69,6 +69,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
               Ime
             </label>
             <input
+              disabled={loading}
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-name"
               type="text"
@@ -94,6 +95,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
               Email
             </label>
             <input
+              disabled={loading}
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-email"
               type="email"
@@ -122,6 +124,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
               Šifra
             </label>
             <input
+              disabled={loading}
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="register-password"
               type="password"
@@ -150,6 +153,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
               Potvrdi šifru
             </label>
             <input
+              disabled={loading}
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               id="repeat-password"
               type="password"

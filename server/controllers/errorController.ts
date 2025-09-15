@@ -21,6 +21,7 @@ function handleValidationError(err: mongoose.Error.ValidationError) {
   // Sta moze da pukne za validaciju?
   // - sifre se ne pokpalaju
   // - polje koje je required nje prosledjeno
+  console.log("UPAO U VALIDATION ERROR");
   let firstError = Object.values(err.errors)[0];
   return new AppError(`${firstError.message}`, 400);
 }
@@ -53,6 +54,7 @@ const globalErrorMiddleware = function (
   res: Response,
   next: NextFunction
 ) {
+  console.log(error);
   if (process.env.NODE_ENV === "development") {
     sendDevelopment(error, res);
   } else {

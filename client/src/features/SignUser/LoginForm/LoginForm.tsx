@@ -73,6 +73,7 @@ export default function LoginForm({ isLoginActive }: Props) {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
           </div>
           <div>
@@ -90,6 +91,7 @@ export default function LoginForm({ isLoginActive }: Props) {
               placeholder="Šifra"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
             />
           </div>
           <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
