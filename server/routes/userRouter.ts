@@ -5,6 +5,7 @@ import {
   logout,
   newPassword,
   protect,
+  restirctTo,
   signup,
 } from "../controllers/authController";
 import {
@@ -32,10 +33,16 @@ userRouter.post("/newPassword/:token", newPassword);
 userRouter.get("/me", protect, getMe);
 
 // admin routes for CRUD
-userRouter.get("/", protect, getUsers);
-userRouter.get("/:id", protect, getUser);
-userRouter.post("/", protect, filterUserBody, createUser);
-userRouter.delete("/:id", protect, deleteUser);
-userRouter.patch("/", protect, filterUserBody, updateUser);
+userRouter.get("/", protect, restirctTo("admin"), getUsers);
+userRouter.get("/:id", protect, restirctTo("admin"), getUser);
+userRouter.post("/", protect, restirctTo("admin"), filterUserBody, createUser);
+userRouter.delete("/:id", protect, restirctTo("admin"), deleteUser);
+userRouter.patch(
+  "/",
+  protect,
+  restirctTo("admin, user"),
+  filterUserBody,
+  updateUser
+);
 
 export default userRouter;

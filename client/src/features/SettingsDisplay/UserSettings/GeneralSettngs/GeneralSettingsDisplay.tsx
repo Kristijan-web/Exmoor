@@ -13,17 +13,16 @@ type FormData = {
   phoneNumber?: number;
   city?: string;
   postalCode?: number;
-  adress?: string;
+  address?: string;
 };
 
 export default function GeneralSettings() {
   // popuni useForm sa korisnikovim podacima
   const { data: user } = useGetUser();
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, reset, getValues, formState } =
-    useForm<FormData>({
-      defaultValues: user ? user : undefined,
-    });
+  const { register, handleSubmit, getValues, formState } = useForm<FormData>({
+    defaultValues: user ? user : undefined,
+  });
   // const { errors } = formState;
   useDisplayGlobalLoader("Molimo sačekajte...", loading);
 
@@ -103,7 +102,7 @@ export default function GeneralSettings() {
             <label htmlFor="address">Adresa</label>
             <input
               disabled={loading}
-              {...register("adress")}
+              {...register("address")}
               id="address"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"

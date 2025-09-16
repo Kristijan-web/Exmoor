@@ -16,11 +16,18 @@ const filterUserBody = function (
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
     phoneNumber: req.body.phoneNumber,
+    city: req.body.city,
+    address: req.body.address,
+    postalCode: req.body.postalCode,
   };
+
+  // zabranjuje da korisnik posalje novu sifru preko endpoint-a za promenu ostalih informacija
+  if (req.method === "PATCH" && req.originalUrl === "/api/v1/users") {
+    req.body.password = undefined;
+  }
+
   next();
 };
-
-// Napravi restrictTo middleware da odredjuje ko sme da pristupi endpoint-u
 
 const getUsers = getAll(User);
 

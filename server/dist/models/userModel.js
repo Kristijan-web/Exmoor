@@ -46,6 +46,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     role: {
         type: String,
+        enum: ["user", "admin"],
         default: "user",
     },
     passwordChangedAt: {

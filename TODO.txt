@@ -2,14 +2,17 @@ TODO za sajt
 
 Server:
 
-1. Pogledaj u forgotPassowrd endpoint-u zasto ne stavlaj await kod sendMail!!!
+- Napravi funkcionalnost da korisnik moze da promeni sifru kada je ulogovan
+
+- Proveri vracanje polja na frontendu kao sto je __v i updatedAt
 
 Klijent:
 
 BITNO
 
+0.0.1 Zavrsi functionality da user moze da promeni sifru kad je ulogovan
 
-
+0.1 Napravi regexe na GeneralSettingsDisplay.tsx i ispisi error-e
 
 0.3 Napravi regexe u NewPasswordPageDisplay.tsx!!!
 

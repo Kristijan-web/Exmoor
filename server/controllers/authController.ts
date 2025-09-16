@@ -2,11 +2,16 @@ import catchAsync from "../utills/catchAsync";
 import User, { UserType } from "../models/userModel";
 import jwt from "jsonwebtoken";
 import { HydratedDocument } from "mongoose";
-import { Response } from "express";
+import { NextFunction, Response, Request } from "express";
 import AppError from "../utills/appError";
 import sendResponse from "../utills/sendResponse";
 import sendMail from "../helpers/sendMail";
 import crypto from "crypto";
+
+interface DecodedJWT {
+  id: string;
+  iat: number;
+}
 
 function mustEnv(key: string): string {
   const v = process.env[key];
@@ -36,10 +41,15 @@ function setJWTInHttpOnlyCookie(jwtToken: string, res: Response) {
   res.cookie("jwt", jwtToken, cookieOptions);
 }
 
-interface DecodedJWT {
-  id: string;
-  iat: number;
-}
+const restirctTo =
+  (...roles: [string]) =>
+  (req: Request, res: Response, next: NextFunction) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError("Access not allowed", 401));
+    }
+
+    next();
+  };
 
 const protect = catchAsync(async (req, res, next) => {
   // - Provera da li je korisnik ulogovan (Da li postoji JWT token)
@@ -199,4 +209,41 @@ const newPassword = catchAsync(async (req, res, next) => {
   sendResponse(res, user);
 });
 
-export { signup, protect, login, logout, forgotPassword, newPassword };
+const updatePassword = catchAsync(async (req, res, next) => {
+  // Edge cases
+  // - Uzima se trenutna sifra
+  // - Poredi se sa hash-ovanom sifrom u bazi
+  // - Upisuje se nova sifra
+  // - await User.save() da bi se sacuvala promena
+
+  // Trenutna sifra se uzima iz jwt-a
+
+  // const currentPassword = req.user.password;
+
+  // CurrentPassword ne sme da bude iz jwt-a preko da dodje preko frotnneda
+
+  const currentPassword = req.body.currentPassword;
+  if (!req.user.doPasswordsMatch(currentPassword)) {
+    // ako se sifre poklapaju
+    return next(new AppError("Stara šifra je ne tacna", 404));
+  }
+  req.user.password = req.body.password;
+  req.user.confirmPassword = req.body.confirmPassword;
+
+  await req.user.save();
+
+  req.user.password = undefined;
+
+  sendResponse(res, req.user);
+});
+
+export {
+  signup,
+  protect,
+  login,
+  logout,
+  forgotPassword,
+  newPassword,
+  updatePassword,
+  restirctTo,
+};

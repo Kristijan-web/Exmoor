@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newPassword = exports.forgotPassword = exports.logout = exports.login = exports.protect = exports.signup = void 0;
+exports.restirctTo = exports.updatePassword = exports.newPassword = exports.forgotPassword = exports.logout = exports.login = exports.protect = exports.signup = void 0;
 const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -35,6 +35,13 @@ function setJWTInHttpOnlyCookie(jwtToken, res) {
     };
     res.cookie("jwt", jwtToken, cookieOptions);
 }
+const restirctTo = (...roles) => (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+        return next(new appError_1.default("Access not allowed", 401));
+    }
+    next();
+};
+exports.restirctTo = restirctTo;
 const protect = (0, catchAsync_1.default)(async (req, res, next) => {
     // - Provera da li je korisnik ulogovan (Da li postoji JWT token)
     // - Validacija JWT tokena
@@ -165,3 +172,24 @@ const newPassword = (0, catchAsync_1.default)(async (req, res, next) => {
     (0, sendResponse_1.default)(res, user);
 });
 exports.newPassword = newPassword;
+const updatePassword = (0, catchAsync_1.default)(async (req, res, next) => {
+    // Edge cases
+    // - Uzima se trenutna sifra
+    // - Poredi se sa hash-ovanom sifrom u bazi
+    // - Upisuje se nova sifra
+    // - await User.save() da bi se sacuvala promena
+    // Trenutna sifra se uzima iz jwt-a
+    // const currentPassword = req.user.password;
+    // CurrentPassword ne sme da bude iz jwt-a preko da dodje preko frotnneda
+    const currentPassword = req.body.currentPassword;
+    if (!req.user.doPasswordsMatch(currentPassword)) {
+        // ako se sifre poklapaju
+        return next(new appError_1.default("Stara šifra je ne tacna", 404));
+    }
+    req.user.password = req.body.password;
+    req.user.confirmPassword = req.body.confirmPassword;
+    await req.user.save();
+    req.user.password = undefined;
+    (0, sendResponse_1.default)(res, req.user);
+});
+exports.updatePassword = updatePassword;

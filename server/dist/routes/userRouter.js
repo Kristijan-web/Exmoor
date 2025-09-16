@@ -17,9 +17,9 @@ userRouter.post("/newPassword/:token", authController_1.newPassword);
 // - /me je za korisnike da bi u njihovom browseru mogao da vratim njihove podatke sa servera preko jwt-a u httpOnly kolacicu i time oni ni ne znaju kako njihov id izgleda, tako da je "nemoguce" da im iko ukrade id jer nema nikakvog cuvanja id-a na njihovom browseru
 userRouter.get("/me", authController_1.protect, userController_1.getMe);
 // admin routes for CRUD
-userRouter.get("/", authController_1.protect, userController_1.getUsers);
-userRouter.get("/:id", authController_1.protect, userController_1.getUser);
-userRouter.post("/", authController_1.protect, userController_1.filterUserBody, userController_1.createUser);
-userRouter.delete("/:id", authController_1.protect, userController_1.deleteUser);
-userRouter.patch("/", authController_1.protect, userController_1.filterUserBody, userController_1.updateUser);
+userRouter.get("/", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.getUsers);
+userRouter.get("/:id", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.getUser);
+userRouter.post("/", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.filterUserBody, userController_1.createUser);
+userRouter.delete("/:id", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.deleteUser);
+userRouter.patch("/", authController_1.protect, (0, authController_1.restirctTo)("admin, user"), userController_1.filterUserBody, userController_1.updateUser);
 exports.default = userRouter;
