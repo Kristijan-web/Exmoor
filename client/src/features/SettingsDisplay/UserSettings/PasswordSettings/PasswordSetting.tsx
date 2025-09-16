@@ -1,8 +1,50 @@
+import { useForm } from "react-hook-form";
+import useCatchAsync from "../../../../utills/useCatchAsync";
+import { API_URL } from "../../../../utills/constants";
+import toast from "react-hot-toast";
+import useDisplayGlobalLoader from "../../../../hooks/ui/useDisplayGlobalLoader";
+import { useState } from "react";
+
+type FormData = {
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
+};
+
 export default function PasswordSetting() {
   // Pravi ponvo useForm() i salji request
+  // updatePassword endpoint
+
+  const { register, handleSubmit } = useForm<FormData>();
+  const [loading, isLoading] = useState<boolean>(false);
+
+  useDisplayGlobalLoader("Molimo sacekajte...", loading);
+
+  const onSuccess = (data: FormData) =>
+    useCatchAsync(async (signal) => {
+      const fetchData = await fetch(`${API_URL}/api/v1/users/updatePassword`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+        signal,
+      });
+      const response = await fetchData.json();
+
+      if (!fetchData.ok) {
+        throw response;
+      }
+      toast.success("Sifra uspesno promenjena.");
+    }, isLoading)();
+
   return (
     <div className="mx-auto flex h-full justify-center sm:p-7">
-      <form className="flex flex-col items-start justify-start gap-5 p-12">
+      <form
+        onSubmit={handleSubmit(onSuccess)}
+        className="flex flex-col items-start justify-start gap-5 p-12"
+      >
         <h3 className="mb-10 text-start">Promena šifre</h3>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -10,6 +52,9 @@ export default function PasswordSetting() {
               Stara šifra
             </label>
             <input
+              {...register("currentPassword", {
+                required: "Polje je obavezno",
+              })}
               type="text"
               id="old-password"
               placeholder="Stara šifra"
@@ -21,6 +66,9 @@ export default function PasswordSetting() {
               Nova šifra
             </label>
             <input
+              {...register("password", {
+                required: "Polje je obavezno",
+              })}
               type="text"
               id="new-password"
               placeholder="Nova šifra"
@@ -32,6 +80,9 @@ export default function PasswordSetting() {
               Ponovi novu šifru
             </label>
             <input
+              {...register("confirmPassword", {
+                required: "Polje je obavezno",
+              })}
               type="text"
               id="retype-new-password"
               placeholder="Ponovi novu šifru"
@@ -39,7 +90,10 @@ export default function PasswordSetting() {
             />
           </div>
           <div>
-            <button className="btn mt-4 flex h-10 w-25 items-center justify-center">
+            <button
+              type="submit"
+              className="btn mt-4 flex h-10 w-25 items-center justify-center"
+            >
               Potvrdi
             </button>
           </div>

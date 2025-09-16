@@ -72,7 +72,16 @@ userSchema.pre("save", async function (next) {
     if (this.isModified("password") || this.isNew) {
         this.password = await bcrypt_1.default.hash(this.password, 12);
     }
+    if (this.isModified("password")) {
+        // zbog cega oduzimam - 1000
+        // Zato sto iat u jwt-u moze biti pre upisa passwordChangeAt u bazi, i time osiguravan da se to ne desi
+        this.passwordChangedAt = new Date(Date.now() - 2000);
+    }
     this.confirmPassword = undefined;
+    next();
+});
+userSchema.pre(/^find/, function (next) {
+    this.select("-__v");
     next();
 });
 // Ako je jwt.iat manji od passwordChangedAt
@@ -86,8 +95,11 @@ userSchema.methods.isPasswordOld = function (JwtIatAt) {
     return false;
 };
 // instance metoda za proverevanja sifre iz baze sa poslatom sifrom
-userSchema.methods.doPasswordsMatch = function (frontendPassword) {
-    return bcrypt_1.default.compare(frontendPassword, this.password);
+userSchema.methods.doPasswordsMatch = async function (frontendPassword) {
+    // poredi se sifra sa frontned-a sa sifrom iz baze
+    // KAKO BRE OVO VRATI TRUE KAKO BRE
+    console.log(`Sifra sa frontend-a je ${frontendPassword}, sifra u bazi je ${this.password}`);
+    return await bcrypt_1.default.compare(frontendPassword, this.password);
 };
 userSchema.methods.setAndGetForgotPasswordToken = function () {
     // napravi reset token i encryptovanog ga upisi u bazuu
@@ -102,9 +114,5 @@ userSchema.methods.setAndGetForgotPasswordToken = function () {
     return resetToken;
 };
 // ts misli da this pokazuje na document objekat zbog overload-a i zato mora rucno da mu kazem da je query objekat koji vraca UserType ili UserType[] i da se izvrsava nad query objektom tipa UserType
-userSchema.pre(/^find/, function (next) {
-    this.select("-__v");
-    next();
-});
 const User = mongoose_1.default.model("User", userSchema);
 exports.default = User;

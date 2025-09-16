@@ -12,6 +12,7 @@ userRouter.post("/login", authController_1.login);
 userRouter.post("/logout", authController_1.logout);
 userRouter.post("/forgotPassword", authController_1.forgotPassword);
 userRouter.post("/newPassword/:token", authController_1.newPassword);
+userRouter.patch("/updatePassword", authController_1.protect, userController_1.filterUserBody, (0, authController_1.restirctTo)("user", "admin"), authController_1.updatePassword);
 // Zasto koristim /me umesto getUser endpoint-a?
 // - Zato sto je getUser endpoint za admina, i on tu moze  da vidi id bilo kog usera, moze da dohvati bilo cije podatke  i da posalje id endpoint-u getUser preko url-a
 // - /me je za korisnike da bi u njihovom browseru mogao da vratim njihove podatke sa servera preko jwt-a u httpOnly kolacicu i time oni ni ne znaju kako njihov id izgleda, tako da je "nemoguce" da im iko ukrade id jer nema nikakvog cuvanja id-a na njihovom browseru
@@ -21,5 +22,5 @@ userRouter.get("/", authController_1.protect, (0, authController_1.restirctTo)("
 userRouter.get("/:id", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.getUser);
 userRouter.post("/", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.filterUserBody, userController_1.createUser);
 userRouter.delete("/:id", authController_1.protect, (0, authController_1.restirctTo)("admin"), userController_1.deleteUser);
-userRouter.patch("/", authController_1.protect, (0, authController_1.restirctTo)("admin, user"), userController_1.filterUserBody, userController_1.updateUser);
+userRouter.patch("/", authController_1.protect, (0, authController_1.restirctTo)("admin", "user"), userController_1.filterUserBody, userController_1.updateUser);
 exports.default = userRouter;

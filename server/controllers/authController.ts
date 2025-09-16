@@ -42,12 +42,11 @@ function setJWTInHttpOnlyCookie(jwtToken: string, res: Response) {
 }
 
 const restirctTo =
-  (...roles: [string]) =>
+  (...roles: string[]) =>
   (req: Request, res: Response, next: NextFunction) => {
     if (!roles.includes(req.user.role)) {
       return next(new AppError("Access not allowed", 401));
     }
-
     next();
   };
 
@@ -116,11 +115,13 @@ const login = catchAsync(async (req, res, next) => {
     email: req.body.email,
   });
   if (!user) {
-    return next(new AppError("Email is incorrect", 404));
+    return next(new AppError("Email je netačan", 404));
   }
-  if (!user.doPasswordsMatch(req.body.password)) {
-    return next(new AppError("Passwordis incorrect", 404));
+  const doPasswordsMatch = await user.doPasswordsMatch(req.body.password);
+  if (!doPasswordsMatch) {
+    return next(new AppError("Sifra je netačna", 404));
   }
+
   const jwtToken = createJWT(user);
   setJWTInHttpOnlyCookie(jwtToken, res);
   sendResponse(res, user);
@@ -194,7 +195,7 @@ const newPassword = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError("Token has expired", 400));
+    return next(new AppError("Token je istekao", 400));
   }
   user.password = password;
   user.confirmPassword = confirmPassword;
@@ -210,30 +211,25 @@ const newPassword = catchAsync(async (req, res, next) => {
 });
 
 const updatePassword = catchAsync(async (req, res, next) => {
-  // Edge cases
-  // - Uzima se trenutna sifra
-  // - Poredi se sa hash-ovanom sifrom u bazi
-  // - Upisuje se nova sifra
-  // - await User.save() da bi se sacuvala promena
-
-  // Trenutna sifra se uzima iz jwt-a
-
-  // const currentPassword = req.user.password;
-
-  // CurrentPassword ne sme da bude iz jwt-a preko da dodje preko frotnneda
-
   const currentPassword = req.body.currentPassword;
-  if (!req.user.doPasswordsMatch(currentPassword)) {
+  const isPasswordMatchesDB = await req.user.doPasswordsMatch(currentPassword);
+
+  if (!isPasswordMatchesDB) {
     // ako se sifre poklapaju
-    return next(new AppError("Stara šifra je ne tacna", 404));
+    return next(new AppError("Stara šifra je ne tačna", 404));
   }
   req.user.password = req.body.password;
   req.user.confirmPassword = req.body.confirmPassword;
+  // req.user.passwordChangedAt = Date.now();
 
   await req.user.save();
 
   req.user.password = undefined;
 
+  // mora da se posalje novo update-ovani jwt token
+
+  const jwt = createJWT(req.user);
+  setJWTInHttpOnlyCookie(jwt, res);
   sendResponse(res, req.user);
 });
 

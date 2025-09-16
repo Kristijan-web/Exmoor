@@ -93,10 +93,11 @@ const login = (0, catchAsync_1.default)(async (req, res, next) => {
         email: req.body.email,
     });
     if (!user) {
-        return next(new appError_1.default("Email is incorrect", 404));
+        return next(new appError_1.default("Email je netačan", 404));
     }
-    if (!user.doPasswordsMatch(req.body.password)) {
-        return next(new appError_1.default("Passwordis incorrect", 404));
+    const doPasswordsMatch = await user.doPasswordsMatch(req.body.password);
+    if (!doPasswordsMatch) {
+        return next(new appError_1.default("Sifra je netačna", 404));
     }
     const jwtToken = createJWT(user);
     setJWTInHttpOnlyCookie(jwtToken, res);
@@ -158,7 +159,7 @@ const newPassword = (0, catchAsync_1.default)(async (req, res, next) => {
         },
     });
     if (!user) {
-        return next(new appError_1.default("Token has expired", 400));
+        return next(new appError_1.default("Token je istekao", 400));
     }
     user.password = password;
     user.confirmPassword = confirmPassword;
@@ -173,23 +174,20 @@ const newPassword = (0, catchAsync_1.default)(async (req, res, next) => {
 });
 exports.newPassword = newPassword;
 const updatePassword = (0, catchAsync_1.default)(async (req, res, next) => {
-    // Edge cases
-    // - Uzima se trenutna sifra
-    // - Poredi se sa hash-ovanom sifrom u bazi
-    // - Upisuje se nova sifra
-    // - await User.save() da bi se sacuvala promena
-    // Trenutna sifra se uzima iz jwt-a
-    // const currentPassword = req.user.password;
-    // CurrentPassword ne sme da bude iz jwt-a preko da dodje preko frotnneda
     const currentPassword = req.body.currentPassword;
-    if (!req.user.doPasswordsMatch(currentPassword)) {
+    const isPasswordMatchesDB = await req.user.doPasswordsMatch(currentPassword);
+    if (!isPasswordMatchesDB) {
         // ako se sifre poklapaju
-        return next(new appError_1.default("Stara šifra je ne tacna", 404));
+        return next(new appError_1.default("Stara šifra je ne tačna", 404));
     }
     req.user.password = req.body.password;
     req.user.confirmPassword = req.body.confirmPassword;
+    // req.user.passwordChangedAt = Date.now();
     await req.user.save();
     req.user.password = undefined;
+    // mora da se posalje novo update-ovani jwt token
+    const jwt = createJWT(req.user);
+    setJWTInHttpOnlyCookie(jwt, res);
     (0, sendResponse_1.default)(res, req.user);
 });
 exports.updatePassword = updatePassword;

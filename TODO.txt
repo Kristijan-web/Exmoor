@@ -1,16 +1,30 @@
 TODO za sajt
 
+
+MUST FIX
+
+- Dovojno je da korisnik samo unese email da bi se ulogovao
+
+
 Server:
+
+- Promeni sve operational greske na srpski jezik
 
 - Napravi funkcionalnost da korisnik moze da promeni sifru kada je ulogovan
 
 - Proveri vracanje polja na frontendu kao sto je __v i updatedAt
 
+- Uhvati gresku kada bcrypt biblioteka pukne
+
 Klijent:
 
 BITNO
 
+- Kod registracije na frontendu odmah uloguj usera
+
 0.0.1 Zavrsi functionality da user moze da promeni sifru kad je ulogovan
+
+0.1 Napravi regexe na PasswordSettings.tsx 
 
 0.1 Napravi regexe na GeneralSettingsDisplay.tsx i ispisi error-e
 

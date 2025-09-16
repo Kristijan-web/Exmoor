@@ -10,6 +10,7 @@ const filterUserBody = function (
   res: Response,
   next: NextFunction
 ) {
+  // currentPassword
   req.body = {
     name: req.body.name,
     email: req.body.email,
@@ -19,11 +20,27 @@ const filterUserBody = function (
     city: req.body.city,
     address: req.body.address,
     postalCode: req.body.postalCode,
+    // polje se korsiti samo kada se radi update korisnikove sifre
+    currentPassword: req.body.currentPassword,
   };
 
   // zabranjuje da korisnik posalje novu sifru preko endpoint-a za promenu ostalih informacija
+  // Problem sa metodom ispod je sta ako gadja /api/v1/users/updatePassword
+
   if (req.method === "PATCH" && req.originalUrl === "/api/v1/users") {
     req.body.password = undefined;
+  }
+
+  if (
+    req.method === "PATCH" &&
+    req.originalUrl === "/api/v1/users/updatePassword"
+  ) {
+    /// KAKO JE BRE currentPassword undefiend
+    req.body = {
+      currentPassword: req.body.currentPassword,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
+    };
   }
 
   next();
