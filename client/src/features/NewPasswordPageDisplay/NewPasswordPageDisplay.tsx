@@ -6,31 +6,72 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import useDisplayGlobalLoader from "../../hooks/ui/useDisplayGlobalLoader";
 
+type Errors = {
+  password?: string;
+  confirmPassword?: string;
+};
+
 export default function NewPasswordPageDisplay() {
-  const { id } = useParams();
+  const { token } = useParams();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  const [errors, setErrors] = useState<Errors>({});
+
+  // prikazuje se kada se izvrsava asinhrona operacija
   useDisplayGlobalLoader("Molimo sacekajte...", loading);
 
-  const setNewPassword = useCatchAsync(async (signal, e) => {
-    e?.preventDefault();
+  function regCheckPassword() {
+    const regex = /^[A-z\d]{8,}/;
 
-    const fetchData = await fetch(`${API_URL}/api/v1/users/newPassword/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
+    if (!regex.test(password)) {
+      setErrors((errors) => {
+        return { ...errors, password: "Minimalno 8 karaktera" };
+      });
+    } else {
+      setErrors((errors) => {
+        return { ...errors, password: undefined };
+      });
+    }
+  }
+
+  function checkIfPasswordsMatch() {
+    if (password !== confirmPassword) {
+      setErrors((errors) => {
+        return { ...errors, confirmPassword: "Sifre se ne poklapaju" };
+      });
+    } else {
+      setErrors((errors) => {
+        return { ...errors, confirmPassword: undefined };
+      });
+    }
+  }
+
+  function checkInputsBeforeSubmit(e: React.SyntheticEvent) {
+    e.preventDefault();
+    if (errors.password || errors.confirmPassword) return;
+    setNewPassword(e);
+  }
+
+  const setNewPassword = useCatchAsync(async (signal, e) => {
+    const fetchData = await fetch(
+      `${API_URL}/api/v1/users/newPassword/${token}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          password,
+          confirmPassword,
+        }),
+        credentials: "include",
+        signal,
       },
-      body: JSON.stringify({
-        password,
-        confirmPassword,
-      }),
-      credentials: "include",
-      signal,
-    });
+    );
 
     const response = await fetchData.json();
 
@@ -43,12 +84,10 @@ export default function NewPasswordPageDisplay() {
     navigate("/");
   }, setLoading);
 
-  // stavi loader dok se salje asinhron zahtev
-
   return (
     <div className="flex h-120 items-center justify-center">
       <form
-        onSubmit={(e) => setNewPassword(e)}
+        onSubmit={(e) => checkInputsBeforeSubmit(e)}
         className="mx-auto max-w-xs p-5"
       >
         <div className="flex flex-col gap-5">
@@ -56,26 +95,36 @@ export default function NewPasswordPageDisplay() {
             <label htmlFor="new-password">Nova sifra</label>
             <input
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              onBlur={() => regCheckPassword()}
               className="rounded-xs border-1 p-1"
               id="new-password"
               type="text"
               disabled={loading}
             />
+            {errors?.password && (
+              <p className="text-red-500">{errors.password}</p>
+            )}
           </div>
           <div className="flex flex-col gap-3">
             <label htmlFor="repeat-new-password">Ponovi novu sifru</label>
             <input
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              onBlur={() => checkIfPasswordsMatch()}
               className="rounded-xs border-1 p-1"
               id="repeat-new-password"
               type="text"
               disabled={loading}
             />
+            {errors?.confirmPassword && (
+              <p className="text-red-500">Šifre se ne poklapaju</p>
+            )}
           </div>
           <div>
-            <button className="btn" type="submit">
+            <button className="btn" type="submit" disabled={loading}>
               Posalji
             </button>
           </div>

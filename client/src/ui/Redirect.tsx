@@ -21,18 +21,10 @@ export default function Redirect({ children }: Props): ReactNode {
   const queryClient = useQueryClient();
   const cachedUser = queryClient.getQueryData(["user"]);
 
-  console.log("evo cached usera", cachedUser);
-
-  // KAKO je moguce da kada se fresh pristupa ovoj stranici da cacheduser ne postoji
-
-  // jer se izvrsi citanje cache-a dok podaci jos nisu stigli
-
   if (cachedUser) {
     // ako postoje podaci o useru onda radi redirect
-    console.log("upao u navigate");
     return <Navigate to="/" replace />;
   } else {
-    console.log("Upao u else");
     return children;
   }
 }

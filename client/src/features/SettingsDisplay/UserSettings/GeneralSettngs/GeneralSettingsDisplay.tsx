@@ -20,10 +20,14 @@ export default function GeneralSettings() {
   // popuni useForm sa korisnikovim podacima
   const { data: user } = useGetUser();
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, getValues, formState } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: user ? user : undefined,
+    mode: "onBlur",
   });
-  // const { errors } = formState;
   useDisplayGlobalLoader("Molimo sačekajte...", loading);
 
   const onSuccess = function (data: FormData) {
@@ -62,64 +66,120 @@ export default function GeneralSettings() {
             <label htmlFor="username">Ime i prezime</label>
             <input
               disabled={loading}
-              {...register("name")}
+              {...register("name", {
+                required: "Ime i prezime su obavezni",
+                pattern: {
+                  value: /^[A-Za-zÀ-ž' -]{2,50}$/,
+                  message: "Unesite valjano ime (slova, razmaci, - i ')",
+                },
+              })}
               id="username"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors.name && (
+              <small className="text-red-600">{errors.name.message}</small>
+            )}
           </div>
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="email">Email</label>
             <input
               disabled={loading}
-              {...register("email")}
+              {...register("email", {
+                required: "Email je obavezan",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Unesite ispravan email",
+                },
+              })}
               id="email"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors.email && (
+              <small className="text-red-600">{errors.email.message}</small>
+            )}
           </div>
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="city">Grad</label>
             <input
               disabled={loading}
-              {...register("city")}
+              {...register("city", {
+                pattern: {
+                  value: /^[A-Za-zÀ-ž' \-]{2,40}$/,
+                  message: "Unesite valjan naziv grada",
+                },
+              })}
               id="city"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors.city && (
+              <small className="text-red-600">{errors.city.message}</small>
+            )}
           </div>
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="postalCode">Poštanski broj</label>
             <input
               disabled={loading}
-              {...register("postalCode")}
+              {...register("postalCode", {
+                pattern: {
+                  value: /^\d{2,6}$/,
+                  message: "Poštanski broj mora biti 2-6 cifara",
+                },
+              })}
               id="postalCode"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors.postalCode && (
+              <small className="text-red-600">
+                {errors.postalCode.message}
+              </small>
+            )}
           </div>
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="address">Adresa</label>
             <input
               disabled={loading}
-              {...register("address")}
+              {...register("address", {
+                pattern: {
+                  value: /^[A-Za-z0-9À-ž' \-.,/]{4,50}$/,
+                  message: "Unesite valjanu adresu",
+                },
+              })}
               id="address"
               type="text"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors.address && (
+              <small className="text-red-600">{errors.address.message}</small>
+            )}
           </div>
           <div className="items-star flex flex-col gap-2">
             <label htmlFor="phone">Broj telefona</label>
             <input
               disabled={loading}
-              {...register("phoneNumber")}
+              {...register("phoneNumber", {
+                pattern: {
+                  value: /^[0-9+()\- ]{6,20}$/,
+                  message:
+                    "Unesite valjan broj (cifre, +, (), - i razmaci, 6-20 znakova)",
+                },
+              })}
               id="phone"
-              type="text"
+              type="tel"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors.phoneNumber && (
+              <small className="text-red-600">
+                {errors.phoneNumber.message}
+              </small>
+            )}
           </div>
           <div className="col-span-full flex items-center justify-start text-center">
             <button
+              type="submit"
               disabled={loading}
               className="btn flex h-10 w-25 items-center justify-center"
             >

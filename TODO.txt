@@ -1,10 +1,6 @@
 TODO za sajt
 
 
-MUST FIX
-
-- Dovojno je da korisnik samo unese email da bi se ulogovao
-
 
 Server:
 
@@ -16,28 +12,20 @@ Server:
 
 - Uhvati gresku kada bcrypt biblioteka pukne
 
+- Uradi regexe na back-u
+
+
 Klijent:
 
 BITNO
 
-- Kod registracije na frontendu odmah uloguj usera
+- Koristi mutate za login i signup umesto da rucno upisujem u react query cache
 
-0.0.1 Zavrsi functionality da user moze da promeni sifru kad je ulogovan
-
-0.1 Napravi regexe na PasswordSettings.tsx 
-
-0.1 Napravi regexe na GeneralSettingsDisplay.tsx i ispisi error-e
-
-0.3 Napravi regexe u NewPasswordPageDisplay.tsx!!!
+- Napravi bolju page not found stranicu
 
 1. OBAVEZNO DODAJ TRY CATRCH KOD getUser koji gadja /me endpoint
 
 2. Ispravi error handling u useQuery funkcijama 
-
-3. Uraditi autorizaciju za 
-
-- login i register page
-- admin
 
 
 Nadji nacin da asinhrone funkcije koje pozivaju custom hook-ovi wrapujes u useCatchAsync

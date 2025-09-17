@@ -15,7 +15,10 @@ export default function PasswordSetting() {
   // Pravi ponvo useForm() i salji request
   // updatePassword endpoint
 
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, getValues, formState } = useForm<FormData>({
+    mode: "onBlur",
+  });
+  const { errors } = formState;
   const [loading, isLoading] = useState<boolean>(false);
 
   useDisplayGlobalLoader("Molimo sacekajte...", loading);
@@ -60,6 +63,9 @@ export default function PasswordSetting() {
               placeholder="Stara šifra"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors?.currentPassword?.message && (
+              <p className="text-red-500">{errors.currentPassword.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="new-password" className="text-xl">
@@ -68,12 +74,19 @@ export default function PasswordSetting() {
             <input
               {...register("password", {
                 required: "Polje je obavezno",
+                pattern: {
+                  value: /^.{8,}$/,
+                  message: "Minimalno 8 karaktera",
+                },
               })}
               type="text"
               id="new-password"
               placeholder="Nova šifra"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors?.password?.message && (
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="retype-new-password" className="text-xl">
@@ -82,12 +95,20 @@ export default function PasswordSetting() {
             <input
               {...register("confirmPassword", {
                 required: "Polje je obavezno",
+                validate: (value) => {
+                  return (
+                    value === getValues().password || "Sifre se ne poklapaju"
+                  );
+                },
               })}
               type="text"
               id="retype-new-password"
               placeholder="Ponovi novu šifru"
               className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
+            {errors?.confirmPassword?.message && (
+              <p className="text-red-500">{errors.confirmPassword.message}</p>
+            )}
           </div>
           <div>
             <button

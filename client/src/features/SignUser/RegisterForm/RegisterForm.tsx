@@ -5,6 +5,7 @@ import { API_URL } from "../../../utills/constants";
 import Loader from "../../../ui/Loader";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   isLoginActive: boolean;
@@ -22,12 +23,12 @@ type FormTypes = {
 export default function RegisterForm({ isLoginActive }: Props) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
   const { register, handleSubmit, getValues, formState } = useForm<FormTypes>({
     mode: "onBlur",
   });
   const { errors } = formState;
   function onSuccess(data: FormTypes) {
-    console.log("UPA U SUCCESS");
     useCatchAsync(async (signal) => {
       const fetchData = await fetch(`${API_URL}/api/v1/users/signup`, {
         method: "POST",
@@ -45,6 +46,7 @@ export default function RegisterForm({ isLoginActive }: Props) {
         throw response;
       }
 
+      queryClient.setQueryData(["user"], response.data);
       toast.success("Uspesna registracija!");
       navigate("/");
     }, setLoading)();

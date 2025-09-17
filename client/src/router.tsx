@@ -51,7 +51,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/podesavanja",
-        element: <SettingsPage />,
+        element: (
+          <ProtectedRoute allowedRoles={["user", "admin"]}>
+            <SettingsPage />
+          </ProtectedRoute>
+        ),
         children: [
           {
             index: true,
@@ -86,11 +90,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/zaboravljena-sifra",
-        element: <ForgotPasswordPage />,
+        element: (
+          <Redirect>
+            <ForgotPasswordPage />
+          </Redirect>
+        ),
       },
       {
-        path: "/nova-sifra/:id",
-        element: <NewPasswordPage />,
+        path: "/nova-sifra/:token",
+        element: (
+          <Redirect>
+            <NewPasswordPage />
+          </Redirect>
+        ),
       },
       {
         path: "*",

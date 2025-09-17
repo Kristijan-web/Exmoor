@@ -3,7 +3,7 @@ import useGetUser from "../hooks/user/useGetUser";
 import { Navigate } from "react-router-dom";
 
 type Props = {
-  allowedRoles: [string];
+  allowedRoles: string[];
   children: ReactNode;
 };
 
