@@ -56,7 +56,7 @@ export default function NewPasswordPageDisplay() {
     setNewPassword(e);
   }
 
-  const setNewPassword = useCatchAsync(async (signal, e) => {
+  const setNewPassword = useCatchAsync(async (signal) => {
     const fetchData = await fetch(
       `${API_URL}/api/v1/users/newPassword/${token}`,
       {

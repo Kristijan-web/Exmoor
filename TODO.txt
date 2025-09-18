@@ -1,16 +1,16 @@
 TODO za sajt
 
+- Napravi admin page
 
+- Uradi logs za greske
+
+- Naparvi da kada se desi prodaja, da ima graph koji prikazuje informacije na admin panelu
+
+CSS:
+
+- Dodaj promenljivu za height hedera (84px) da bi se lakse razumelo zasto u calc oduzimam 84 pixela za visinu
 
 Server:
-
-- Promeni sve operational greske na srpski jezik
-
-- Napravi funkcionalnost da korisnik moze da promeni sifru kada je ulogovan
-
-- Proveri vracanje polja na frontendu kao sto je __v i updatedAt
-
-- Uhvati gresku kada bcrypt biblioteka pukne
 
 - Uradi regexe na back-u
 
@@ -19,13 +19,11 @@ Klijent:
 
 BITNO
 
+- Neka dugme odjavi se na /podesavanja radi
+
 - Koristi mutate za login i signup umesto da rucno upisujem u react query cache
 
-- Napravi bolju page not found stranicu
-
-1. OBAVEZNO DODAJ TRY CATRCH KOD getUser koji gadja /me endpoint
-
-2. Ispravi error handling u useQuery funkcijama 
+- Ispravi error handling u useQuery funkcijama 
 
 
 Nadji nacin da asinhrone funkcije koje pozivaju custom hook-ovi wrapujes u useCatchAsync

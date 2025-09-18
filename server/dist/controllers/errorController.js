@@ -7,14 +7,14 @@ const appError_1 = __importDefault(require("../utills/appError"));
 const mongodb_1 = require("mongodb");
 const mongoose_1 = __importDefault(require("mongoose"));
 function handleInvalidId() {
-    return new appError_1.default("Provided id is invalid", 400);
+    return new appError_1.default("Prosledjeni id ne postoji", 400);
 }
 function handleDuplicateKey(err) {
     let uniqueField;
     for (const prop in err.keyValue) {
         uniqueField = prop;
     }
-    return new appError_1.default(`${uniqueField} already exists`, 400);
+    return new appError_1.default(`${uniqueField} vec postoji`, 400);
 }
 function handleValidationError(err) {
     // Sta moze da pukne za validaciju?
@@ -34,7 +34,7 @@ function sendProduction(error, res) {
     else {
         res.status(500).send({
             status: "error",
-            message: "Something went wrong",
+            message: "Greska u sistemu...",
         });
     }
 }

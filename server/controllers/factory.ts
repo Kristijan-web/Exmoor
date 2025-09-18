@@ -14,7 +14,7 @@ const getOne = <T>(Model: Model<T>) =>
     const { id } = req.params;
     const document = await Model.findById(id);
     if (!document) {
-      return next(new AppError(`${Model.modelName} does not exist`, 404));
+      return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
     sendResponse(res, document);
   });
@@ -34,7 +34,7 @@ const deleteOne = <T>(Model: Model<T>) =>
     const deletedDocument = await Model.findByIdAndDelete(id);
 
     if (!deletedDocument) {
-      return next(new AppError(`${Model.modelName} does not exist`, 404));
+      return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
 
     // trebalo bi vrati statusCode 204 i message: 'success', umesto da se salje ceo user document
@@ -56,7 +56,7 @@ const updateOne = <T>(Model: Model<T>) =>
     });
 
     if (!updatedDocument) {
-      return next(new AppError(`${Model.modelName} does not exist`, 404));
+      return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
     sendResponse(res, updatedDocument);
   });

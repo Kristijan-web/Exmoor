@@ -37,7 +37,7 @@ function setJWTInHttpOnlyCookie(jwtToken, res) {
 }
 const restirctTo = (...roles) => (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-        return next(new appError_1.default("Access not allowed", 401));
+        return next(new appError_1.default("Pristup nije dozvoljen", 401));
     }
     next();
 };
@@ -50,18 +50,18 @@ const protect = (0, catchAsync_1.default)(async (req, res, next) => {
     // - Izmeni req objekat i dodaj user-a iz baze req.user = currentUser i na kraju next()
     const jwtToken = req.cookies.jwt;
     if (!jwtToken) {
-        return next(new appError_1.default("Not logged in!", 401));
+        return next(new appError_1.default("Nisi ulogovan!", 401));
     }
     // jwt.verify ce vratiti payload jwt-a
     const jwtPayload = jsonwebtoken_1.default.verify(jwtToken, mustEnv("JWT_SECRET_KEY"));
     const user = await userModel_1.default.findById(jwtPayload.id);
     if (!user) {
-        return next(new appError_1.default("User does not exist", 404));
+        return next(new appError_1.default("Korisnik ne postoji", 404));
     }
     // provera sifre da li je i dalje validan ovde mora da se koris ti:
     // Instance method -> poziva se na instanci document-a
     if (user.isPasswordOld(jwtPayload.iat)) {
-        return next(new appError_1.default("Old password found please log in again", 401));
+        return next(new appError_1.default("Pronadjena stara sifra, ulogujte se ponovo", 401));
     }
     req.user = user;
     next();
@@ -75,7 +75,7 @@ const signup = (0, catchAsync_1.default)(async (req, res, next) => {
         confirmPassword: req.body.confirmPassword,
     });
     if (!user) {
-        return next(new appError_1.default("Something went wrong creating a user, please contact developer", 404));
+        return next(new appError_1.default("Greska, kontaktirajte developera", 404));
     }
     const jwtToken = createJWT(user);
     setJWTInHttpOnlyCookie(jwtToken, res);
@@ -118,7 +118,7 @@ const forgotPassword = (0, catchAsync_1.default)(async (req, res, next) => {
         email: req.body.email,
     });
     if (!user) {
-        return next(new appError_1.default("Email does not exist", 404));
+        return next(new appError_1.default("Email adresa ne postoji", 404));
     }
     const resetToken = user.setAndGetForgotPasswordToken();
     // saljem reset token korisniku

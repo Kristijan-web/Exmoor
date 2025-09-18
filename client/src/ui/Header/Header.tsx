@@ -100,7 +100,7 @@ export default function Header() {
                 <NavLink to="/podesavanja">Podešavanja</NavLink>
               </li>
               <li className="cursor-pointer" onClick={() => handleLogout()}>
-                <p>Logout</p>
+                <p>Odjava</p>
               </li>
             </>
           ) : (

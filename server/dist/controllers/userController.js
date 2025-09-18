@@ -56,7 +56,7 @@ const updateUser = (0, catchAsync_1.default)(async (req, res, next) => {
         runValidators: true,
     });
     if (!updatedDocument) {
-        return next(new appError_1.default(`User does not exist`, 404));
+        return next(new appError_1.default(`Korisnik ne postoji`, 404));
     }
     (0, sendResponse_1.default)(res, updatedDocument);
 });

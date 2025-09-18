@@ -64,7 +64,7 @@ const updateUser = catchAsync(async (req, res, next) => {
   });
 
   if (!updatedDocument) {
-    return next(new AppError(`User does not exist`, 404));
+    return next(new AppError(`Korisnik ne postoji`, 404));
   }
   sendResponse(res, updatedDocument);
 });

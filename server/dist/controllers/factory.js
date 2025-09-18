@@ -16,7 +16,7 @@ const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     const { id } = req.params;
     const document = await Model.findById(id);
     if (!document) {
-        return next(new appError_1.default(`${Model.modelName} does not exist`, 404));
+        return next(new appError_1.default(`${Model.modelName} ne postoji`, 404));
     }
     (0, sendResponse_1.default)(res, document);
 });
@@ -32,7 +32,7 @@ const deleteOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
     const { id } = req.params;
     const deletedDocument = await Model.findByIdAndDelete(id);
     if (!deletedDocument) {
-        return next(new appError_1.default(`${Model.modelName} does not exist`, 404));
+        return next(new appError_1.default(`${Model.modelName} ne postoji`, 404));
     }
     // trebalo bi vrati statusCode 204 i message: 'success', umesto da se salje ceo user document
     res.status(204).json({
@@ -50,7 +50,7 @@ const updateOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
         runValidators: true,
     });
     if (!updatedDocument) {
-        return next(new appError_1.default(`${Model.modelName} does not exist`, 404));
+        return next(new appError_1.default(`${Model.modelName} ne postoji`, 404));
     }
     (0, sendResponse_1.default)(res, updatedDocument);
 });

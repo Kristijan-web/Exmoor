@@ -7,18 +7,16 @@ export interface IUserMethods {
   doPasswordsMatch(value: string): Promise<boolean>;
   setAndGetForgotPasswordToken(): string;
 }
-// city
-// postalCode
-// adress
+
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, "Ime i prezime je obavezno"],
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, "Email je obavezan"],
       unique: true,
     },
     city: {
@@ -32,11 +30,11 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, "Šifra je obavezna"],
     },
     confirmPassword: {
       type: String,
-      required: [true, "You must confirm your password"],
+      required: [true, "Morate da potvrdite šifru"],
       validate: {
         validator: function (this: any, value: string) {
           return value === this.password;
@@ -67,18 +65,13 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// NAPRAVI PRE-DOCUMENT Middleware sifrovanjekriki korisnikovog password-a i brisanje confirmPassword-a
-
-// sta ce raditi middleware
-// - Hashovace korisnikovu sifru
-// Kada treba da se izvrsi hashkovanje sifre?
-// - Pri pravljenju naloga i update-u sifre
-// Kada treba da se izvrsi provera da li je password isti kao i passwordConfirm
-// Pri pravljenju naloga i update-u sifre
-
 userSchema.pre("save", async function (next) {
   if (this.isModified("password") || this.isNew) {
-    this.password = await bcrypt.hash(this.password, 12);
+    try {
+      this.password = await bcrypt.hash(this.password, 12);
+    } catch (err) {
+      throw err;
+    }
   }
 
   if (this.isModified("password")) {
@@ -89,10 +82,11 @@ userSchema.pre("save", async function (next) {
   this.confirmPassword = undefined as any;
   next();
 });
+
 userSchema.pre<Query<UserType | UserType[], UserType>>(
   /^find/,
   function (this, next) {
-    this.select("-__v");
+    this.select("-__v -updatedAt -createdAt");
 
     next();
   }
@@ -114,17 +108,14 @@ userSchema.methods.isPasswordOld = function (JwtIatAt: number) {
 userSchema.methods.doPasswordsMatch = async function (
   frontendPassword: string
 ): Promise<boolean> {
-  // poredi se sifra sa frontned-a sa sifrom iz baze
-  // KAKO BRE OVO VRATI TRUE KAKO BRE
-  console.log(
-    `Sifra sa frontend-a je ${frontendPassword}, sifra u bazi je ${this.password}`
-  );
-  return await bcrypt.compare(frontendPassword, this.password);
+  try {
+    return await bcrypt.compare(frontendPassword, this.password);
+  } catch (err) {
+    throw err;
+  }
 };
 
 userSchema.methods.setAndGetForgotPasswordToken = function () {
-  // napravi reset token i encryptovanog ga upisi u bazuu
-  // koristi se crypt build in biblioteka
   const resetToken = crypto.randomBytes(32).toString("hex");
   const encryptedToken = crypto
     .createHash("sha256")
@@ -132,7 +123,7 @@ userSchema.methods.setAndGetForgotPasswordToken = function () {
     .digest("hex");
 
   this.passwordResetToken = encryptedToken;
-  this.passwordResetTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
+  this.passwordResetTokenExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minuta
 
   return resetToken;
 };

@@ -16,13 +16,13 @@ const useCatchAsync = function <T>(
         console.log("Error u useCatchAsync", err);
         if (err.name === "AbortError") {
           return toast.error(
-            "Request was aborted (timeout). Please check your connection.",
+            "Zahtev je prekinut(timeout). Molimo proverite vasu konekciju.",
           );
         }
         if (err.isOperational) {
           return toast.error(err.message);
         } else {
-          return toast.error("Something went wrong, please contact developer");
+          return toast.error("Greska u sistemu...");
         }
       })
       .finally(() => {

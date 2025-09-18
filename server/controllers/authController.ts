@@ -45,7 +45,7 @@ const restirctTo =
   (...roles: string[]) =>
   (req: Request, res: Response, next: NextFunction) => {
     if (!roles.includes(req.user.role)) {
-      return next(new AppError("Access not allowed", 401));
+      return next(new AppError("Pristup nije dozvoljen", 401));
     }
     next();
   };
@@ -60,7 +60,7 @@ const protect = catchAsync(async (req, res, next) => {
   const jwtToken = req.cookies.jwt;
 
   if (!jwtToken) {
-    return next(new AppError("Not logged in!", 401));
+    return next(new AppError("Nisi ulogovan!", 401));
   }
 
   // jwt.verify ce vratiti payload jwt-a
@@ -71,12 +71,14 @@ const protect = catchAsync(async (req, res, next) => {
 
   const user = await User.findById(jwtPayload.id);
   if (!user) {
-    return next(new AppError("User does not exist", 404));
+    return next(new AppError("Korisnik ne postoji", 404));
   }
   // provera sifre da li je i dalje validan ovde mora da se koris ti:
   // Instance method -> poziva se na instanci document-a
   if (user.isPasswordOld(jwtPayload.iat)) {
-    return next(new AppError("Old password found please log in again", 401));
+    return next(
+      new AppError("Pronadjena stara sifra, ulogujte se ponovo", 401)
+    );
   }
 
   (req as any).user = user;
@@ -91,12 +93,7 @@ const signup = catchAsync(async (req, res, next) => {
     confirmPassword: req.body.confirmPassword,
   });
   if (!user) {
-    return next(
-      new AppError(
-        "Something went wrong creating a user, please contact developer",
-        404
-      )
-    );
+    return next(new AppError("Greska, kontaktirajte developera", 404));
   }
   const jwtToken = createJWT(user);
   setJWTInHttpOnlyCookie(jwtToken, res);
@@ -143,7 +140,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError("Email does not exist", 404));
+    return next(new AppError("Email adresa ne postoji", 404));
   }
 
   const resetToken = user.setAndGetForgotPasswordToken();

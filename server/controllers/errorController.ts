@@ -4,7 +4,7 @@ import { MongoServerError } from "mongodb";
 import mongoose from "mongoose";
 
 function handleInvalidId() {
-  return new AppError("Provided id is invalid", 400);
+  return new AppError("Prosledjeni id ne postoji", 400);
 }
 
 function handleDuplicateKey(err: MongoServerError) {
@@ -14,7 +14,7 @@ function handleDuplicateKey(err: MongoServerError) {
     uniqueField = prop;
   }
 
-  return new AppError(`${uniqueField} already exists`, 400);
+  return new AppError(`${uniqueField} vec postoji`, 400);
 }
 
 function handleValidationError(err: mongoose.Error.ValidationError) {
@@ -34,7 +34,7 @@ function sendProduction(error: AppError | Error, res: Response) {
   } else {
     res.status(500).send({
       status: "error",
-      message: "Something went wrong",
+      message: "Greska u sistemu...",
     });
   }
 }

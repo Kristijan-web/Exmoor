@@ -25,23 +25,23 @@ const saleSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, "Title is required"],
+    required: [true, "Naziv je obavezan"],
   },
   brand: {
     type: String,
-    required: [true, "Brand is required"],
+    required: [true, "Brend je obavezan"],
   },
   water: {
     type: String,
-    required: [true, "Water type is required"],
+    required: [true, "Vrsta vode je obavezna"],
   },
   price: {
     type: Number,
-    required: [true, "Price is required"],
+    required: [true, "Cena je obavezna"],
   },
   quantity: {
     type: Number,
-    required: [true, "Quantity is required"],
+    required: [true, "Količina je obavezna"],
   },
   // sale ce morati embedovanje
   sale: saleSchema,
