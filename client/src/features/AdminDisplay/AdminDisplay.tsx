@@ -1,16 +1,29 @@
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar/AdminSidebar";
+import AdminHeader from "./AdminHeader/AdminHeader";
+import { useState } from "react";
 
-// Razmisli o tome kako ce izgledati state menagment, i prop drilling
-// Mozda je bolje 2 grid diva ne budu u <Outlet/> vec da se header izvadi i stavi ovde, jer bi on samo prikazivao naslov content-a
+// Da li bi bilo bolje da sam korstio contex API?
+
+// Sta znaci bolje?
+// - Citljivije
+
+// Da li je sa propo-vima citljiv ovaj kod?
+// =
 
 export default function AdminDisplay() {
-  // koristi 3x grid,za header admin page, za sidebar sa leve strane i prikaz proizvoda
+  const [showOutlet, setShowOutlet] = useState<boolean>(false);
+
   return (
     <>
       <section className="grid h-[calc(100vh-84px)] grid-cols-[300px_1fr] grid-rows-[100px_1fr]">
-        <AdminSidebar />
-        <Outlet />
+        {!showOutlet && <AdminSidebar handleShowOutlet={setShowOutlet} />}
+        {showOutlet && (
+          <>
+            <AdminHeader handleHideOutlet={setShowOutlet} />
+            <Outlet />
+          </>
+        )}
       </section>
     </>
   );
