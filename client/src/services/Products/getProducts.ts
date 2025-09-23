@@ -1,54 +1,17 @@
-import supabase from "../Supabase";
-type Sale = {
-  id: number;
-  sale_discount: number;
-  valid_from: string;
-  valid_to: string;
-};
-type ProductType = {
-  id: number;
-  type: string;
-};
+import { API_URL } from "../../utills/constants";
 
-type Brand = {
-  id: number;
-  name: string;
-};
-type Gender = {
-  gender: "string";
-  id: number;
-};
 type Product = {
-  id: number;
   title: string;
-  image: string;
+  brand: string;
+  water: string;
   price: number;
-  category_id: number;
-  Gender: Gender;
-  Brand: Brand;
-  Product_type: ProductType;
-  Sale: Sale;
+  quantity: number;
 };
 
-export default async function getProducts(): Promise<Product[]> {
-  const { data: products, error } = await supabase.from("Products").select(`
-    *,
-    Gender (
-      *
-    ),
-    Brand(
-    *
-    ),
-    Product_type (
-    *
-    ),
-    Sale (
-      *
-    )
-  `);
-  console.log(products);
-  if (error) {
-    throw new Error(`Failed to get products ${error.message}`);
-  }
-  return products as Product[];
+async function getProducts() {
+  const fetchData = await fetch(`${API_URL}/api/v1/products`);
+  const response = await fetchData.json();
+  return response;
 }
+
+export default getProducts;

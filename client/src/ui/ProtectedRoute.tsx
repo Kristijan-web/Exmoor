@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import useGetUser from "../hooks/user/useGetUser";
+import useGetUser from "../hooks/User/useGetUser";
 import { Navigate } from "react-router-dom";
 
 type Props = {

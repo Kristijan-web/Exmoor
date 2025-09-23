@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useCatchAsync from "../../../../utills/useCatchAsync";
 import { API_URL } from "../../../../utills/constants";
 import toast from "react-hot-toast";
-import useDisplayGlobalLoader from "../../../../hooks/ui/useDisplayGlobalLoader";
+import useDisplayGlobalLoader from "../../../../hooks/Ui/useDisplayGlobalLoader";
 import { useState } from "react";
 
 type FormData = {

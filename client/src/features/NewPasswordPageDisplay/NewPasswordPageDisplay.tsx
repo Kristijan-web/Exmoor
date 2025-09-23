@@ -4,7 +4,7 @@ import useCatchAsync from "../../utills/useCatchAsync";
 import { API_URL } from "../../utills/constants";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-import useDisplayGlobalLoader from "../../hooks/ui/useDisplayGlobalLoader";
+import useDisplayGlobalLoader from "../../hooks/Ui/useDisplayGlobalLoader";
 
 type Errors = {
   password?: string;

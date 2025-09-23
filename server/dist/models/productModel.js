@@ -5,23 +5,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 // u slucaju da je sale definisan onda moraju i ostala polja
+// Znaci uopste ne drzim istroiju popusta?
 const saleSchema = new mongoose_1.default.Schema({
     discount: {
         type: String,
-        required: function () {
-            return this.sale != null;
+        // Ne dozvoljava da se unese vrednost za discount ako nije defisano polje sale
+        validate: {
+            validator: function (val) {
+                // ako korisnik setuje sale_end, proveravamo da li postoji sale
+                if (val && !this.sale) {
+                    return false;
+                }
+                return true;
+            },
+            message: "Ne možeš uneti discount ako prvo nije unet sale.",
         },
     },
     sale_start: {
         type: Date,
-        required: function () {
-            return this.sale != null;
+        validate: {
+            validator: function (val) {
+                // ako korisnik setuje sale_end, proveravamo da li postoji sale
+                if (val && !this.sale) {
+                    return false;
+                }
+                return true;
+            },
+            message: "Ne možeš uneti sale_start ako prvo nije unet sale.",
         },
     },
     sale_end: {
         type: Date,
-        required: function () {
-            return this.sale != null;
+        validate: {
+            validator: function (val) {
+                // ako korisnik setuje sale_end, proveravamo da li postoji sale
+                if (val && !this.sale) {
+                    return false;
+                }
+                return true;
+            },
+            message: "Ne možeš uneti sale_end ako prvo nije unet sale.",
+        },
+    },
+    // treba da se doda polje sold_total, da kad istekne akcija znamo koliko smo proizvoda prodali
+    sold: {
+        type: Number,
+        validate: {
+            validator: function (val) {
+                // ako korisnik setuje sale_end, proveravamo da li postoji sale
+                if (val && !this.sale) {
+                    return false;
+                }
+                return true;
+            },
+            message: "Ne možeš uneti sold ako prvo nije unet sale.",
         },
     },
 });
