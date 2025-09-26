@@ -13,7 +13,7 @@ import { useState } from "react";
 
 export default function AdminDisplay() {
   const [showOutlet, setShowOutlet] = useState<boolean>(false);
-
+  console.log("test");
   return (
     <>
       <section className="grid h-[calc(100vh-84px)] grid-cols-[300px_1fr] grid-rows-[100px_1fr]">

@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages{
+        stage("Get repo") {
+           steps {
+                git url: "https://github.com/Kristijan-web/Exmoor.git",
+                branch: "main"
+           } 
+        }
+        stage("Install dependencys") {
+            steps {
+                dir('client') {
+                    bat 'npm install'
+                }
+            }
+         
+        }
+        stage("Run tests") {
+            steps {
+                dir('client') {
+                    bat "npm test"
+                }
+                
+            }
+       
+        }
+    }
+}
