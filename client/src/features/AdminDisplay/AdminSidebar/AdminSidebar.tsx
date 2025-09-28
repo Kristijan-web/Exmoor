@@ -1,6 +1,12 @@
+import { NavLink } from "react-router-dom";
+import AdminProducts from "./Products/AdminProducts";
+
 type Props = {
   handleShowOutlet: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+// TODO
+// - Napravi pod opcije za proizvode
 
 export default function AdminSidebar({ handleShowOutlet }: Props) {
   return (
@@ -15,10 +21,16 @@ export default function AdminSidebar({ handleShowOutlet }: Props) {
             }
           }}
         >
-          <li className="text-2xl">Products</li>
-          <li className="text-2xl">Users</li>
-          <li className="text-2xl">Stats</li>
-          <li className="text-2xl">Graph</li>
+          <AdminProducts />
+          <li className="text-2xl">
+            <NavLink to="korisnici">Korisnici</NavLink>
+          </li>
+          <li className="text-2xl">
+            <NavLink to="stats">Stats</NavLink>
+          </li>
+          <li className="text-2xl">
+            <NavLink to="graf">Graf</NavLink>
+          </li>
         </ul>
       </div>
     </div>
