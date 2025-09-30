@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 
 export default function AdminProducts() {
   const [showProductOptions, setShowProductOptions] = useState<boolean>(false);
-
   return (
-    <li className="flex flex-col items-center justify-center gap-3 text-2xl">
+    <li
+      className={`flex flex-col items-center justify-center gap-3 text-2xl ${showProductOptions ? "" : ""}`}
+    >
       <NavLink
         onClick={() => setShowProductOptions((value) => !value)}
         to="proizvodi"
