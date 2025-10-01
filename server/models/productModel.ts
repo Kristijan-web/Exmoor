@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 
 // Znaci uopste ne drzim istroiju popusta?
 
+console.log("yo");
+
 const saleSchema = new mongoose.Schema({
   discount: {
     type: String,
