@@ -1,4 +1,4 @@
-Exmoor parfemi E-commerce
+Exmoor parfemi (perfumes) E-commerce
 
 URL: https://exmoorparfemi.netlify.app
 
