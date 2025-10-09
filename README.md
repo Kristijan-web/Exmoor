@@ -1,4 +1,4 @@
-Exmoor parfemi (perfumes) E-commerce
+Exmoor parfemi (perfumes) E-commerce **In development**
 
 URL: https://exmoorparfemi.netlify.app
 
@@ -17,6 +17,25 @@ Backend
 Database
 - MongoDB (MongoDB Atlas)
 
+Functionalities
+- Password reset functionality, and ability to reset a forgotten password (link is send via email)
+- Diffrent ui displays based on user role (admins get access to admin panel)
+- Login & Signup
+- Authorization & Authentication
+- Done whole regex for frontend (still need to do backend)
+
+Things left to do
+- Create data-modeling for products 
+- Add products data
+- Validation on backend
+- A way to store images of products
+- Local storage for selected products, their filters, etc...
+- Admin panel
+- Add more ways to signup
+- Add more security 
+
+
+
 I have also read the book "Pragmmatic programer", which taught me how to type code that is ortogonal, easier to change, scalable, importance of proper naming, DRY concepts and much more.
 
 Main reason the project takes this much time is that it goes thorugh a lot of refactoring. Sometimes I learn something better and try to apply it to the project or I just get a better idea.
@@ -24,6 +43,8 @@ Main reason the project takes this much time is that it goes thorugh a lot of re
 This project taught me a lot about working with JWT, specifically about how it is used for authorization and authentication.The main thing that was interesting to me is the fact that the server does not store the JWT itself. Instead, the server only keeps the secret key
 used to sign the JWT. When the client on the frontend tries to change the payload of the token, it won’t match the one on the backend. That’s because the backend takes the payload sent from the client, combines it with the server’s secret key, generates a new signature,
 and then compares that signature with the one sent by the client. The whole idea was very interesting to me.
+
+
 
 🛠️ Run Locally
 
