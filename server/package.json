@@ -8,8 +8,9 @@
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc ",
-    "start": "nodemon ./dist/server.js"
+    "build": "npx tsc && nodemon ./dist/server.js",
+    "build-r": "npx tsc ",
+    "start-r": "node ./dist/server.js"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",
