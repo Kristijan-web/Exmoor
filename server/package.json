@@ -8,7 +8,7 @@
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc && nodemon ./dist/server.js",
+    "build": "npx tsc ",
     "start": "nodemon ./dist/server.js"
   },
   "devDependencies": {
