@@ -12,7 +12,7 @@ const productRouter_1 = __importDefault(require("./routes/productRouter"));
 const app = (0, express_1.default)();
 // omoguci parsiranje body-a
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:5173", "https://exmoorparfemi.netlify.app/"],
+    origin: ["http://localhost:5173", "https://exmoorparfemi.netlify.app"],
     credentials: true,
 }));
 app.use(express_1.default.json({ limit: "10kb" }));
