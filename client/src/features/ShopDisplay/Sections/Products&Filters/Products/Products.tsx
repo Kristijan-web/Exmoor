@@ -1,5 +1,5 @@
-import toast from "react-hot-toast";
-import ProductItem from "./ProductItem";
+// import toast from "react-hot-toast";
+// import ProductItem from "./ProductItem";
 // grid grid-cols-1 justify-self-center sm:grid-cols-2 md:grid-cols-3 lg:col-start-4 lg:col-end-14 lg:mt-0
 export default function Products() {
   if (true)

@@ -1,4 +1,4 @@
-import ProductItem from "../../../ShopDisplay/Sections/Products&Filters/Products/ProductItem";
+// import ProductItem from "../../../ShopDisplay/Sections/Products&Filters/Products/ProductItem";
 
 export default function FavoriteProducts() {
   return (
@@ -8,9 +8,9 @@ export default function FavoriteProducts() {
       </div>
       <div className="flex flex-col gap-10">
         <div className="grid grid-cols-1 gap-5 sm:mx-auto sm:w-[70%] md:w-full md:grid-cols-3 lg:grid-cols-3">
+          {/* <ProductItem />
           <ProductItem />
-          <ProductItem />
-          <ProductItem />
+          <ProductItem /> */}
         </div>
         <div className="flex items-center justify-center gap-5">
           <span className="flex items-center justify-center text-2xl">

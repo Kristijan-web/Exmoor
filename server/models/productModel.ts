@@ -4,16 +4,6 @@ import mongoose from "mongoose";
 
 // Znaci uopste ne drzim istroiju popusta?
 
-const x = {
-  Servers: [
-    {
-      name: "Server1",
-      owner: "kris",
-      status: "active",
-    },
-  ],
-};
-
 const saleSchema = new mongoose.Schema({
   discount: {
     type: String,

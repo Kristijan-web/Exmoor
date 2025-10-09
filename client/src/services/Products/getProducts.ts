@@ -8,7 +8,7 @@ type Product = {
   quantity: number;
 };
 
-async function getProducts() {
+async function getProducts(): Promise<Product[]> {
   const fetchData = await fetch(`${API_URL}/api/v1/products`);
   const response = await fetchData.json();
   return response;

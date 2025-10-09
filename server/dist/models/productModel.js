@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 // u slucaju da je sale definisan onda moraju i ostala polja
 // Znaci uopste ne drzim istroiju popusta?
-console.log("yo");
 const saleSchema = new mongoose_1.default.Schema({
     discount: {
         type: String,
