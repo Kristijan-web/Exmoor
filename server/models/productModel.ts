@@ -3,61 +3,24 @@ import mongoose from "mongoose";
 // u slucaju da je sale definisan onda moraju i ostala polja
 
 // Znaci uopste ne drzim istroiju popusta?
-
+// - Kada se zavrsi sale_end onda taj proizvod sa njegovim "sales" ide u posebni tabelu sales_history (koristi se biblioteka node-cron)
 const saleSchema = new mongoose.Schema({
   discount: {
     type: String,
-    // Ne dozvoljava da se unese vrednost za discount ako nije defisano polje sale
-    validate: {
-      validator: function (this: any, val: Date) {
-        // ako korisnik setuje sale_end, proveravamo da li postoji sale
-        if (val && !this.sale) {
-          return false;
-        }
-        return true;
-      },
-      message: "Ne možeš uneti discount ako prvo nije unet sale.",
-    },
+    required: true,
   },
   sale_start: {
     type: Date,
-    validate: {
-      validator: function (this: any, val: Date) {
-        // ako korisnik setuje sale_end, proveravamo da li postoji sale
-        if (val && !this.sale) {
-          return false;
-        }
-        return true;
-      },
-      message: "Ne možeš uneti sale_start ako prvo nije unet sale.",
-    },
+    required: true,
   },
   sale_end: {
     type: Date,
-    validate: {
-      validator: function (this: any, val: Date) {
-        // ako korisnik setuje sale_end, proveravamo da li postoji sale
-        if (val && !this.sale) {
-          return false;
-        }
-        return true;
-      },
-      message: "Ne možeš uneti sale_end ako prvo nije unet sale.",
-    },
+    required: true,
   },
-  // treba da se doda polje sold_total, da kad istekne akcija znamo koliko smo proizvoda prodali
+  // treba da se doda polje sold, da kad istekne akcija znamo koliko smo proizvoda prodali
   sold: {
     type: Number,
-    validate: {
-      validator: function (this: any, val: Date) {
-        // ako korisnik setuje sale_end, proveravamo da li postoji sale
-        if (val && !this.sale) {
-          return false;
-        }
-        return true;
-      },
-      message: "Ne možeš uneti sold ako prvo nije unet sale.",
-    },
+    required: true,
   },
 });
 
