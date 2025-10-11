@@ -47,6 +47,10 @@ const productSchema = new mongoose_1.default.Schema({
         type: Number,
         required: [true, "Količina je obavezna"],
     },
+    image: {
+        type: String,
+        required: [true, "Slika je obavezna"],
+    },
     // sale ce morati embedovanje
     sale: saleSchema,
 });

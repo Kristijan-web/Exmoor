@@ -18,7 +18,7 @@ const multerFilter = (
 };
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/img/users");
+    cb(null, "./public/img/products");
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.split("/")[1];

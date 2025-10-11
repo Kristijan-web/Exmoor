@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = exports.getProduct = void 0;
+exports.upload = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = exports.getProduct = void 0;
 const productModel_1 = __importDefault(require("../models/productModel"));
 const appError_1 = __importDefault(require("../utills/appError"));
 const factory_1 = require("./factory");
@@ -13,12 +13,13 @@ const multerFilter = (req, file, cb) => {
         cb(null, true);
     }
     else {
-        cb(new appError_1.default("Not an image! Please upload only images.", 400), false);
+        // cb(new AppError("Not an image! Please upload only images.", 400), false);
+        cb(new appError_1.default("Not an image! Please upload only images.", 400));
     }
 };
 const multerStorage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/img/users");
+        cb(null, "./public/img/products");
     },
     filename: (req, file, cb) => {
         const extension = file.mimetype.split("/")[1];
@@ -29,6 +30,7 @@ const upload = (0, multer_1.default)({
     storage: multerStorage,
     fileFilter: multerFilter,
 });
+exports.upload = upload;
 // crud operations for admin
 const getProduct = (0, factory_1.getOne)(productModel_1.default);
 exports.getProduct = getProduct;

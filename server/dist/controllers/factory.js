@@ -23,6 +23,9 @@ const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
 exports.getOne = getOne;
 const createOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
+    if (req.file) {
+        req.body.image = `./public/img/products/${req.file.filename}`;
+    }
     const newDocument = await Model.create(req.body);
     (0, sendResponse_1.default)(res, newDocument);
 });
