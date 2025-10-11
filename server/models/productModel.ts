@@ -28,6 +28,7 @@ const productSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "Naziv je obavezan"],
+    unique: true,
   },
   brand: {
     type: String,
@@ -48,6 +49,7 @@ const productSchema = new mongoose.Schema({
   image: {
     type: String,
     required: [true, "Slika je obavezna"],
+    unique: true,
   },
   // sale ce morati embedovanje
   sale: saleSchema,

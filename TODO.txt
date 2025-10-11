@@ -19,6 +19,8 @@ Klijent:
 
 BITNO
 
+- U asinhronim funkcijama koje se nalaze u services folderu dodaj AbortController
+
 - Neka dugme odjavi se na /podesavanja radi
 
 - Koristi mutate za login i signup umesto da rucno upisujem u react query cache

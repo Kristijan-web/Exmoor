@@ -2,7 +2,16 @@ import Product from "../models/productModel";
 import AppError from "../utills/appError";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./factory";
 import multer, { FileFilterCallback } from "multer";
-import { Request } from "express";
+import { NextFunction, Request, Response } from "express";
+
+function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
+  if (req.file) {
+    // ovaj if je samo ako je slika za proizvod u pitanju
+    req.body.image = `./public/img/products/${req.file.filename}`;
+    req.body.sale = JSON.parse(req.body.sale);
+  }
+  next();
+}
 
 const multerFilter = (
   req: Request,
@@ -16,6 +25,7 @@ const multerFilter = (
     cb(new AppError("Not an image! Please upload only images.", 400));
   }
 };
+
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public/img/products");
@@ -50,5 +60,6 @@ export {
   createProduct,
   updateProduct,
   deleteProduct,
+  parseProductBodyData,
   upload,
 };

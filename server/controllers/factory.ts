@@ -21,11 +21,16 @@ const getOne = <T>(Model: Model<T>) =>
 
 const createOne = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
+    // const sale = {
+    //   discount: 20,
+    //   sale_start: "2025-11-11",
+    //   sale_end: "2025-12-12",
+    //   sold: 20,
+    // };
+    // console.log(JSON.stringify(sale));
+
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
 
-    if (req.file) {
-      req.body.image = `./public/img/products/${req.file.filename}`;
-    }
     const newDocument = await Model.create(req.body);
     sendResponse(res, newDocument);
   });

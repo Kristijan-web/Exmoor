@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   upload,
+  parseProductBodyData,
 } from "../controllers/productController";
 import { protect, restirctTo } from "../controllers/authController";
 
@@ -18,6 +19,7 @@ productRouter.post(
   protect,
   restirctTo("admin"),
   upload.single("image"),
+  parseProductBodyData,
   createProduct
 );
 productRouter.put("/:id", protect, restirctTo("admin"), updateProduct);

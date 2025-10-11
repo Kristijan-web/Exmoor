@@ -4,10 +4,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.upload = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = exports.getProduct = void 0;
+exports.parseProductBodyData = parseProductBodyData;
 const productModel_1 = __importDefault(require("../models/productModel"));
 const appError_1 = __importDefault(require("../utills/appError"));
 const factory_1 = require("./factory");
 const multer_1 = __importDefault(require("multer"));
+function parseProductBodyData(req, res, next) {
+    if (req.file) {
+        // ovaj if je samo ako je slika za proizvod u pitanju
+        req.body.image = `./public/img/products/${req.file.filename}`;
+        req.body.sale = JSON.parse(req.body.sale);
+    }
+    next();
+}
 const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
         cb(null, true);

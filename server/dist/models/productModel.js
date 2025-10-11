@@ -30,6 +30,7 @@ const productSchema = new mongoose_1.default.Schema({
     title: {
         type: String,
         required: [true, "Naziv je obavezan"],
+        unique: true,
     },
     brand: {
         type: String,
@@ -50,6 +51,7 @@ const productSchema = new mongoose_1.default.Schema({
     image: {
         type: String,
         required: [true, "Slika je obavezna"],
+        unique: true,
     },
     // sale ce morati embedovanje
     sale: saleSchema,
