@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
-  const { title, image, price, gender, brand: name, water: type } = product;
+  const { title, image, price, gender, brand, water: type } = product;
 
   const sale_discount = product.sale?.discount ?? null;
   const discountedPrice = sale_discount
@@ -16,19 +16,19 @@ export default function ProductItem({ product }: Props) {
     console.log(discountedPrice);
   }
   return (
-    <div className="shadow-my-shadow relative flex h-[524px] w-full flex-col items-center justify-between gap-3 overflow-hidden rounded-sm p-10">
+    <div className="shadow-my-shadow relative flex w-full flex-col items-center justify-between gap-3 overflow-hidden rounded-sm p-10">
       {sale_discount && (
         <div className="text-secondary-color absolute top-5 -right-7 w-[120px] rotate-45 bg-black text-center">
           {sale_discount}%
         </div>
       )}
       <img
-        className="mb-5 w-[60%] rounded-sm"
+        className="440pixels:w-[50%] mb-5 w-[100%] rounded-sm sm:w-[100%]"
         src={`${API_URL}${image}`}
         alt="zara perfume"
       />
       <p className="text-xl">
-        {name} {title}
+        {brand} {title}
       </p>
       <span className="text-main-color-shade/70">{gender}</span>
       <span className="text-main-color-shade/70">{type}</span>

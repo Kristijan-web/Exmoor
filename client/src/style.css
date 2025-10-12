@@ -13,6 +13,7 @@ spacing system 2/4/8/12/16/24/32/48/64/80/96/128 */
 
 @theme inline {
   /* property ispod treba da ide u @layer utilities */
+  --breakpoint-440pixels: 27.5rem;
   --color-main-color-shade: var(--color-neutral-950);
   /* className='text-main-color-shade' */
   /* property ispod treba da ide u @layer utilities */

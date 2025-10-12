@@ -12,8 +12,10 @@ const multer_1 = __importDefault(require("multer"));
 function parseProductBodyData(req, res, next) {
     if (req.file) {
         // ovaj if je samo ako je slika za proizvod u pitanju
-        req.body.image = `./public/img/products/${req.file.filename}`;
-        req.body.sale = JSON.parse(req.body.sale);
+        req.body.image = `/public/img/products/${req.file.filename}`;
+        if (req.body.sale) {
+            req.body.sale = JSON.parse(req.body.sale);
+        }
     }
     next();
 }
@@ -28,7 +30,7 @@ const multerFilter = (req, file, cb) => {
 };
 const multerStorage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./public/img/products");
+        cb(null, "./dist/public/img/products");
     },
     filename: (req, file, cb) => {
         const extension = file.mimetype.split("/")[1];

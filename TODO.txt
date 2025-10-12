@@ -27,6 +27,7 @@ BITNO
 
 - Ispravi error handling u useQuery funkcijama 
 
+- Resi u shop page-u responsive za proizvode od 440px do 640px
 
 Nadji nacin da asinhrone funkcije koje pozivaju custom hook-ovi wrapujes u useCatchAsync
 
