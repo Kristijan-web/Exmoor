@@ -36,6 +36,10 @@ const productSchema = new mongoose_1.default.Schema({
         type: String,
         required: [true, "Brend je obavezan"],
     },
+    gender: {
+        type: String,
+        required: [true, "Pol je obavezan"],
+    },
     water: {
         type: String,
         required: [true, "Vrsta vode je obavezna"],

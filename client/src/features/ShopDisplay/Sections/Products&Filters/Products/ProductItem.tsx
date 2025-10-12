@@ -1,50 +1,13 @@
-type Sale = {
-  id: number;
-  sale_discount: number;
-  valid_from: string;
-  valid_to: string;
-};
+import { Product } from "../../../../../types/products/productsType";
 
-type ProductType = {
-  id: number;
-  type: string;
-};
-
-type Brand = {
-  id: number;
-  name: string;
-};
-
-type Gender = {
-  gender: string;
-  id: number;
-};
-type Product = {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  category_id: number;
-  Gender: Gender;
-  Brand: Brand;
-  Product_type: ProductType;
-  Sale?: Sale | null;
-};
 type Props = {
   product: Product;
 };
 
 export default function ProductItem({ product }: Props) {
-  const {
-    title,
-    image,
-    price,
-    Gender: { gender },
-    Brand: { name },
-    Product_type: { type },
-  } = product;
+  const { title, image, price, gender, brand: name, water: type } = product;
 
-  const sale_discount = product.Sale?.sale_discount ?? null;
+  const sale_discount = product.sale?.discount ?? null;
   const discountedPrice = sale_discount
     ? price - Math.round((price * sale_discount) / 100)
     : null;
@@ -69,7 +32,7 @@ export default function ProductItem({ product }: Props) {
       ) : (
         <p>{price} RSD</p>
       )}
-      {sale_discount && <p>{discountedPrice} RSD</p>}
+      {sale_discount && <p>{discountedPrice?.toFixed(2)} RSD</p>}
       <span className="text-main-color-tint absolute top-[10px] right-[15px] text-xl">
         {/* @ts-expect-error  Typescript ne propaznaje iconu kao validan jsx element*/}
         <ion-icon name="heart"></ion-icon>
