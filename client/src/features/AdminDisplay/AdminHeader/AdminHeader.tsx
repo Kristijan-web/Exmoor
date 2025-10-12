@@ -8,7 +8,7 @@ type Props = {
 export default function AdminHeader({ setToggleSidebar }: Props) {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   return (
-    <div className="bg-green-500 p-10">
+    <div className="col-start-1 col-end-3 bg-green-500 p-10 lg:col-start-2 lg:col-end-3">
       <div className="flex h-full items-center justify-between">
         {!isDesktop && (
           <div>

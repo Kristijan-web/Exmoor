@@ -6,14 +6,6 @@ type Props = {
   setToggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// TODO
-// - Napravi pod opcije za proizvode
-
-// IDEJA
-// - Kada se klikne na element, elementi ispod kliknut su gurnuti dole da bi se prikazali novi elementi
-// Koje alate da koristim?
-// - ili transform ili margin
-// Koja je razlika izmedju margin i padding?
 export default function AdminSidebar({ setToggleSidebar }: Props) {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
