@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-type Props = {
-  handleShowOutlet: React.Dispatch<React.SetStateAction<boolean>>;
-};
-export default function ProductsSidebar({ handleShowOutlet }: Props) {
+export default function ProductsSidebar() {
   const [showProductOptions, setShowProductOptions] = useState<boolean>(false);
   return (
     <li
@@ -17,16 +14,7 @@ export default function ProductsSidebar({ handleShowOutlet }: Props) {
         Proizvodi
       </NavLink>
       {showProductOptions && (
-        <ul
-          className="flex flex-col items-center justify-center gap-3"
-          onClick={(e: React.MouseEvent<HTMLUListElement>) => {
-            const target = e.target as HTMLElement;
-            console.log(target.tagName);
-            if (target.tagName === "A") {
-              handleShowOutlet((bool) => !bool);
-            }
-          }}
-        >
+        <ul className="flex flex-col items-center justify-center gap-3">
           <li>
             <NavLink to="proizvodi/svi-proizvodi" relative="path">
               Svi proizvodi

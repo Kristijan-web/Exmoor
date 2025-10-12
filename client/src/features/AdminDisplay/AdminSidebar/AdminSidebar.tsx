@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import ProductsSidebar from "./ProductsSidebar/ProductsSidebar";
+import { useMediaQuery } from "react-responsive";
 
 type Props = {
-  handleShowOutlet: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // TODO
@@ -13,14 +14,28 @@ type Props = {
 // Koje alate da koristim?
 // - ili transform ili margin
 // Koja je razlika izmedju margin i padding?
+export default function AdminSidebar({ setToggleSidebar }: Props) {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-export default function AdminSidebar({ handleShowOutlet }: Props) {
   return (
     <div className="col-start-1 col-end-3 row-start-1 row-end-3 bg-red-500 p-8 lg:col-start-1 lg:col-end-2">
       <div className="flex h-full items-center justify-center">
         <div className="h-50">
-          <ul className="flex flex-col items-center justify-center gap-5 lg:gap-8">
-            <ProductsSidebar handleShowOutlet={handleShowOutlet} />
+          <ul
+            className="flex flex-col items-center justify-center gap-5 lg:gap-8"
+            onClick={(e: React.MouseEvent<HTMLUListElement>) => {
+              const target = e.target as HTMLElement;
+              console.log(target.tagName);
+              if (
+                target.tagName === "A" &&
+                target.textContent === "Svi proizvodi" &&
+                !isDesktop
+              ) {
+                setToggleSidebar((bool) => !bool);
+              }
+            }}
+          >
+            <ProductsSidebar />
             <li className="text-2xl">
               <NavLink to="korisnici">Korisnici</NavLink>
             </li>

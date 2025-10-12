@@ -2,24 +2,19 @@ import { Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar/AdminSidebar";
 import AdminHeader from "./AdminHeader/AdminHeader";
 import { useState } from "react";
-
-// Da li bi bilo bolje da sam korstio contex API?
-
-// Sta znaci bolje?
-// - Citljivije
-
-// Da li je sa propo-vima citljiv ovaj kod?
-// =
+import { useMediaQuery } from "react-responsive";
 
 export default function AdminDisplay() {
-  const [showOutlet, setShowOutlet] = useState<boolean>(false);
+  // state treba sam da zakljuci
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
   return (
     <>
       <section className="grid h-[calc(100vh-84px)] grid-cols-[300px_1fr] grid-rows-[100px_1fr]">
-        {!showOutlet && <AdminSidebar handleShowOutlet={setShowOutlet} />}
-        {showOutlet && (
+        {toggleSidebar && <AdminSidebar setToggleSidebar={setToggleSidebar} />}
+        {(!toggleSidebar || isDesktop) && (
           <>
-            <AdminHeader handleHideOutlet={setShowOutlet} />
+            <AdminHeader setToggleSidebar={setToggleSidebar} />
             <Outlet />
           </>
         )}
