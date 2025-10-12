@@ -1,4 +1,5 @@
 import { Product } from "../../../../../types/products/productsType";
+import { API_URL } from "../../../../../utills/constants";
 
 type Props = {
   product: Product;
@@ -21,7 +22,11 @@ export default function ProductItem({ product }: Props) {
           {sale_discount}%
         </div>
       )}
-      <img className="mb-5 w-[60%] rounded-sm" src={image} alt="zara perfume" />
+      <img
+        className="mb-5 w-[60%] rounded-sm"
+        src={`${API_URL}${image}`}
+        alt="zara perfume"
+      />
       <p className="text-xl">
         {name} {title}
       </p>

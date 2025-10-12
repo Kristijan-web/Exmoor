@@ -9,12 +9,14 @@ const errorController_1 = __importDefault(require("./controllers/errorController
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const productRouter_1 = __importDefault(require("./routes/productRouter"));
+const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 // omoguci parsiranje body-a
 app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://exmoorparfemi.netlify.app"],
     credentials: true,
 }));
+app.use("/public", express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use(express_1.default.json({ limit: "10kb" }));
 app.use((0, cookie_parser_1.default)());
 app.use("/api/v1/users", userRouter_1.default);
