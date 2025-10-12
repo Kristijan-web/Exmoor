@@ -17,7 +17,7 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import NewPasswordPage from "./pages/NewPasswordPage";
 import PageNotFound from "./pages/PageNotFound";
-import ProductsPanel from "./features/AdminDisplay/AdminPanels/ProductsPanel/ProductsPanel";
+import DisplayProducts from "./features/AdminDisplay/AdminPanels/ProductsPanel/DisplayProducts";
 
 // Nakon logovanja/signup-a ne bi trebalo da moze ponovo da se pristupi tim stranicama
 const router = createBrowserRouter([
@@ -50,13 +50,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         children: [
-          {
-            index: true,
-            element: <Navigate to="proizvodi" replace />,
-          },
+          // {
+          //   index: true,
+          //   element: <Navigate to="proizvodi" replace />,
+          // },
           {
             path: "proizvodi",
-            element: <ProductsPanel />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="svi-proizvodi" replace />,
+              },
+              {
+                path: "svi-proizvodi",
+                element: <DisplayProducts />,
+              },
+            ],
           },
         ],
       },
