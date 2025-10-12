@@ -17,28 +17,30 @@ type Props = {
 export default function AdminSidebar({ handleShowOutlet }: Props) {
   return (
     <div className="col-start-1 col-end-3 row-start-1 row-end-3 bg-red-500 p-8 lg:col-start-1 lg:col-end-2">
-      <div className="my-auto h-full">
-        <ul
-          className="my-auto flex flex-col items-center justify-start gap-5 lg:gap-8"
-          onClick={(e: React.MouseEvent<HTMLUListElement>) => {
-            const target = e.target as HTMLElement;
-            if (target.tagName === "LI") {
-              handleShowOutlet((bool) => !bool);
-            }
-          }}
-        >
-          <AdminProducts />
-          <li className="text-2xl">
-            <NavLink to="korisnici">Korisnici</NavLink>
-          </li>
-          <li className="text-2xl">
-            <NavLink to="stats">Stats</NavLink>
-          </li>
+      <div className="flex h-full items-center justify-center">
+        <div className="h-50">
+          <ul
+            className="flex flex-col items-center justify-center gap-5 lg:gap-8"
+            onClick={(e: React.MouseEvent<HTMLUListElement>) => {
+              const target = e.target as HTMLElement;
+              if (target.tagName === "LI") {
+                handleShowOutlet((bool) => !bool);
+              }
+            }}
+          >
+            <AdminProducts />
+            <li className="text-2xl">
+              <NavLink to="korisnici">Korisnici</NavLink>
+            </li>
+            <li className="text-2xl">
+              <NavLink to="stats">Stats</NavLink>
+            </li>
 
-          <li className="text-2xl">
-            <NavLink to="graf">Graf</NavLink>
-          </li>
-        </ul>
+            <li className="text-2xl">
+              <NavLink to="graf">Graf</NavLink>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
