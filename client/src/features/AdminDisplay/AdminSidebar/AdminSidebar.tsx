@@ -17,7 +17,6 @@ export default function AdminSidebar({ setToggleSidebar }: Props) {
             className="flex flex-col items-center justify-center gap-5 lg:gap-8"
             onClick={(e: React.MouseEvent<HTMLUListElement>) => {
               const target = e.target as HTMLElement;
-              console.log(target.tagName);
               if (
                 target.tagName === "A" &&
                 target.textContent === "Svi proizvodi" &&

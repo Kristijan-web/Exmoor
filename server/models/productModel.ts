@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 // - Kada se zavrsi sale_end onda taj proizvod sa njegovim "sales" ide u posebni tabelu sales_history (koristi se biblioteka node-cron)
 const saleSchema = new mongoose.Schema({
   discount: {
-    type: String,
+    type: Number,
     required: true,
   },
   sale_start: {
