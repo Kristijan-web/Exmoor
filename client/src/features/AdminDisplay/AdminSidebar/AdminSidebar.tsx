@@ -10,7 +10,7 @@ export default function AdminSidebar({ setToggleSidebar }: Props) {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
   return (
-    <div className="col-start-1 col-end-3 row-start-1 row-end-3 bg-red-500 p-8 lg:col-start-1 lg:col-end-2">
+    <div className="lg:border-main-color-tint col-start-1 col-end-3 row-start-1 row-end-3 p-8 lg:col-start-1 lg:col-end-2 lg:border-t-2 lg:border-r-2">
       <div className="flex h-full items-center justify-center">
         <div className="h-50">
           <ul
