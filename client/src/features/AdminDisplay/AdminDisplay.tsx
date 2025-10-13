@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 export default function AdminDisplay() {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
+
   return (
     <>
       <section className="grid h-[calc(100vh-84px)] grid-cols-[300px_1fr] grid-rows-[100px_1fr]">

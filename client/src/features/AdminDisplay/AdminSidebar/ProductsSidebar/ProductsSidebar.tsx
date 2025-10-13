@@ -9,7 +9,7 @@ export default function ProductsSidebar() {
     >
       <NavLink
         onClick={() => setShowProductOptions((value) => !value)}
-        to="proizvodi"
+        to="proizvodi/svi-proizvodi"
       >
         Proizvodi
       </NavLink>

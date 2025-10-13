@@ -1,4 +1,5 @@
 import type { Product } from "../../../../types/products/productsType";
+import { API_URL } from "../../../../utills/constants";
 import { Sale } from "./DisplayProducts";
 
 type Props = {
@@ -8,9 +9,8 @@ type Props = {
 const rsd = new Intl.NumberFormat("sr-RS", {
   style: "currency",
   currency: "RSD",
-  maximumFractionDigits: 0,
+  maximumFractionDigits: 2,
 });
-
 function formatDate(d?: string) {
   if (!d) return "—";
   const date = new Date(d);
@@ -21,7 +21,7 @@ function formatDate(d?: string) {
   });
 }
 
-function isOnSale(sale?: Product["sale"] | null) {
+function isOnSale(sale?: Sale | null) {
   if (!sale) return false;
   const now = Date.now();
   return (
@@ -31,10 +31,10 @@ function isOnSale(sale?: Product["sale"] | null) {
 }
 
 function priceWithDiscount(price: number, sale?: Sale | null) {
-  if (!sale || !isOnSale(sale)) return price;
-  const match = /([0-9]+(?:\.[0-9]+)?)%/.exec(String(sale.discount));
+  if (!sale) return price;
+  const match = /([0-9]+(?:\.[0-9]+)?)/.exec(String(sale.discount));
   const pct = match ? parseFloat(match[1]) : 0;
-  return Math.round(price * (1 - pct / 100));
+  return price * (1 - pct / 100);
 }
 
 export default function ProductItem({ p }: Props) {
@@ -45,7 +45,7 @@ export default function ProductItem({ p }: Props) {
       <td className="px-4 py-3">
         <div className="flex items-center gap-3">
           <img
-            src={p.image}
+            src={`${API_URL}${p.image}`}
             alt={p.title}
             className="h-12 w-12 rounded-xl object-cover ring-1 ring-gray-200"
           />
@@ -67,7 +67,7 @@ export default function ProductItem({ p }: Props) {
               {rsd.format(p.price)}
             </span>
             <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-700">
-              -{p.sale!.discount}
+              -{p.sale!.discount}%
             </span>
           </div>
         ) : (

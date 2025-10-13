@@ -22,6 +22,7 @@ export type Product = {
 };
 
 export default function DisplayProducts() {
+  console.log("TEST");
   const { data: products, isLoading } = useGetProducts();
   if (isLoading) return <Loader />;
   return (

@@ -50,10 +50,10 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         children: [
-          // {
-          //   index: true,
-          //   element: <Navigate to="proizvodi" replace />,
-          // },
+          {
+            index: true,
+            element: <Navigate to="proizvodi" replace />,
+          },
           {
             path: "proizvodi",
             children: [
