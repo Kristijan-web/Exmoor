@@ -8,27 +8,33 @@ type Props = {
 export default function AdminHeader({ setToggleSidebar }: Props) {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   return (
-    <div className="border-main-color-tint col-start-1 col-end-3 border-t-2 border-b-2 p-10 lg:col-start-2 lg:col-end-3">
-      <div className="flex h-full items-center justify-between">
+    <div className="border-main-color-tint col-start-1 col-end-3 border-t-2 border-b-2 p-4 lg:col-start-2 lg:col-end-3 lg:p-10">
+      <div className="grid h-full grid-cols-2 grid-rows-2 items-center justify-center gap-10 pb-2 lg:gap-0">
         {!isDesktop && (
-          <div>
+          <div className="col-start-1 col-end-2">
             <p onClick={() => setToggleSidebar((bool) => !bool)}>
-              <NavLink to="proizvodi">Back</NavLink>
+              <NavLink to="proizvodi" className={"no-underline"}>
+                Back
+              </NavLink>
             </p>
           </div>
         )}
-        <div>
-          <p className="text-3xl">Products</p>
+        <div className="col-start-2 col-end-3 justify-items-end lg:col-start-1 lg:col-end-2 lg:justify-items-start">
+          <p className="text-3xl">Proizvodi</p>
         </div>
-        <div className="relative flex items-center justify-center">
-          <input
-            type="text"
-            placeholder="search"
-            className="rounded-sm bg-gray-100 p-1.5"
-          />
-          <span className="absolute right-2">
-            <FaSearch />
-          </span>
+        {/* dodaj je ispod margin top to skini */}
+        <div className="col-start-1 col-end-3 row-start-2 row-end-3 flex items-center justify-end lg:col-start-2 lg:col-end-3 lg:justify-end">
+          <div className="relative flex w-full items-center justify-center lg:w-auto">
+            <input
+              name="search"
+              type="text"
+              placeholder="Pretrazi..."
+              className="w-full rounded-sm bg-gray-100 p-1.5 pl-4 lg:w-auto"
+            />
+            <span className="absolute right-3">
+              <FaSearch />
+            </span>
+          </div>
         </div>
       </div>
     </div>
