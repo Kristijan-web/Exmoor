@@ -17,11 +17,13 @@ export default function AdminSidebar({ setToggleSidebar }: Props) {
             className="flex flex-col items-center justify-center gap-5 lg:gap-8"
             onClick={(e: React.MouseEvent<HTMLUListElement>) => {
               const target = e.target as HTMLElement;
-              if (
-                target.tagName === "A" &&
-                target.textContent === "Svi proizvodi" &&
-                !isDesktop
-              ) {
+              if (!Boolean(target.tagName === "A") && isDesktop) {
+                return;
+              }
+              if (target.textContent === "Svi proizvodi") {
+                setToggleSidebar((bool) => !bool);
+              }
+              if (target.textContent === "Dodaj proizvod") {
                 setToggleSidebar((bool) => !bool);
               }
             }}

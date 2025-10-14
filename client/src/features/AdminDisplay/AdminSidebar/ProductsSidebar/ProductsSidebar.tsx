@@ -23,9 +23,6 @@ export default function ProductsSidebar() {
           <li>
             <NavLink to="proizvodi/dodaj-proizvod">Dodaj proizvod</NavLink>
           </li>
-          <li>
-            <NavLink to="proizvodi/izmeni-proizvod">Izmeni proizvod</NavLink>
-          </li>
         </ul>
       )}
     </li>

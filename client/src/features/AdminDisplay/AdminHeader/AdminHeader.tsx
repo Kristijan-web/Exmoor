@@ -22,7 +22,6 @@ export default function AdminHeader({ setToggleSidebar }: Props) {
         <div className="col-start-2 col-end-3 justify-items-end lg:col-start-1 lg:col-end-2 lg:justify-items-start">
           <p className="text-3xl">Proizvodi</p>
         </div>
-        {/* dodaj je ispod margin top to skini */}
         <div className="col-start-1 col-end-3 row-start-2 row-end-3 flex items-center justify-end lg:col-start-2 lg:col-end-3 lg:justify-end">
           <div className="relative flex w-full items-center justify-center lg:w-auto">
             <input

@@ -18,6 +18,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import NewPasswordPage from "./pages/NewPasswordPage";
 import PageNotFound from "./pages/PageNotFound";
 import DisplayProducts from "./features/AdminDisplay/AdminPanels/ProductsPanel/DisplayProducts";
+import AddProduct from "./features/AdminDisplay/AdminPanels/ProductsPanel/AddProduct";
 
 // Nakon logovanja/signup-a ne bi trebalo da moze ponovo da se pristupi tim stranicama
 const router = createBrowserRouter([
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
               {
                 path: "svi-proizvodi",
                 element: <DisplayProducts />,
+              },
+              {
+                path: "dodaj-proizvod",
+                element: <AddProduct />,
               },
             ],
           },
