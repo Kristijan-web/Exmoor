@@ -34,9 +34,9 @@ pipeline {
         }
         stage("Deploy on netlify") {
             steps {
-                dir('client') [
+                dir('client') {
                     bat "netlify deploy --prod --dir=dist"
-                ]
+                }
             }
         }
     }
