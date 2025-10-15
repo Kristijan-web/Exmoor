@@ -25,5 +25,19 @@ pipeline {
             }
        
         }
+        stage("Build") {
+            steps {
+                dir('client') {
+                    bat "npm run build"
+                }
+            }
+        }
+        stage("Deploy on netlify") {
+            steps {
+                dir('client') [
+                    bat "netlify deploy --prod --dir=dist"
+                ]
+            }
+        }
     }
 }
