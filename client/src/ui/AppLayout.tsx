@@ -5,7 +5,7 @@ import CartPage from "../pages/CartPage";
 import { useCart } from "../contexts/GlobalContexts/CartContext";
 import ScrollToTopOnURLChange from "./ScrollToTopOnURLCange";
 import Loader from "./Loader";
-import useGetUser from "../hooks/User/useGetUser";
+import useGetUser from "../hooks/user2/useGetUser";
 
 export default function AppLayout() {
   const { isCartOpen } = useCart();

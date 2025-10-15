@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import useGetUser from "../../../../hooks/User/useGetUser";
+import useGetUser from "../../../../hooks/user2/useGetUser";
 import useCatchAsync from "../../../../utills/useCatchAsync";
 import { API_URL } from "../../../../utills/constants";
-import useDisplayGlobalLoader from "../../../../hooks/Ui/useDisplayGlobalLoader";
+import useDisplayGlobalLoader from "../../../../hooks/ui2/useDisplayGlobalLoader";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -13,6 +13,7 @@ type FormData = {
   phoneNumber?: number;
   city?: string;
   postalCode?: number;
+
   address?: string;
 };
 

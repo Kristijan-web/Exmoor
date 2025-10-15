@@ -5,11 +5,11 @@ import { useCart } from "../../contexts/GlobalContexts/CartContext";
 import { useHeader } from "../../contexts/GlobalContexts/HeaderContext";
 import { FaRegUser } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
-import useGetUser from "../../hooks/User/useGetUser";
+import useGetUser from "../../hooks/user2/useGetUser";
 import useCatchAsync from "../../utills/useCatchAsync";
 import { API_URL } from "../../utills/constants";
 import { useQueryClient } from "@tanstack/react-query";
-import useDisplayGlobalLoader from "../../hooks/Ui/useDisplayGlobalLoader";
+import useDisplayGlobalLoader from "../../hooks/ui2/useDisplayGlobalLoader";
 
 export default function Header() {
   const { interceptingElement } = useHeader();

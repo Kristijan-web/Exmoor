@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages{
+
         stage("Get repo") {
            steps {
                 git url: "https://github.com/Kristijan-web/Exmoor.git",

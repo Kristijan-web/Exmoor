@@ -2,7 +2,7 @@ import { useState } from "react";
 import { API_URL } from "../../utills/constants";
 import useCatchAsync from "../../utills/useCatchAsync";
 import toast from "react-hot-toast";
-import useDisplayGlobalLoader from "../../hooks/Ui/useDisplayGlobalLoader";
+import useDisplayGlobalLoader from "../../hooks/ui2/useDisplayGlobalLoader";
 
 export default function ForgotPasswordDisplay() {
   // Kada se klikne na dugme gadja se api za koji se salje email
