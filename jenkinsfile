@@ -33,12 +33,18 @@ pipeline {
                 }
             }
         }
-        stage("Deploy on netlify") {
-            steps {
-                dir('client') {
-                    bat "netlify deploy --prod --dir=dist"
-                }
-            }
-        }
+        stage('Deploy to Netlify') {
+          steps {
+          withCredentials([
+            string(credentialsId: 'NETLIFY_AUTH_TOKEN', variable: 'NETLIFY_AUTH_TOKEN'),
+            string(credentialsId: 'NETLIFY_SITE_ID', variable: 'NETLIFY_SITE_ID')
+          ]) {
+            dir('client') {
+             bat 'npx netlify-cli deploy --prod --dir=dist --site=%NETLIFY_SITE_ID%'
+           }
+         }
+  }
+}
+
     }
 }
