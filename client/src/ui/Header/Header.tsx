@@ -78,9 +78,9 @@ export default function Header() {
           <li>
             <NavLink to="/">Početna</NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/shop">Shop</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to="/kontakt">Kontakt</NavLink>
           </li>
