@@ -1,7 +1,7 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self' https://unpkg.com https://cdn.jsdelivr.net https://exmoor.onrender.com; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://exmoor.onrender.com; https://res.cloudinary.com;"
+    Content-Security-Policy = "default-src 'self' https://unpkg.com https://cdn.jsdelivr.net https://exmoor.onrender.com; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://exmoor.onrender.com; img-src 'self' https://res.cloudinary.com data: blob:;"
 
 [[redirects]]
   from = "/*"
