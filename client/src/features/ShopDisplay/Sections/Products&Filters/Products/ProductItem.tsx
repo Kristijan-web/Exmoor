@@ -24,7 +24,7 @@ export default function ProductItem({ product }: Props) {
       )}
       <img
         className="440pixels:w-[50%] mb-5 w-[100%] rounded-sm sm:w-[100%]"
-        src={`${API_URL}${image}`}
+        src={`${image}`}
         alt="zara perfume"
       />
       <p className="text-xl">
