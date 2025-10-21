@@ -1,5 +1,5 @@
 import { Product } from "../../../../../types/products/productsType";
-import { API_URL } from "../../../../../utills/constants";
+// import { API_URL } from "../../../../../utills/constants";
 
 type Props = {
   product: Product;
