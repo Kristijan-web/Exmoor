@@ -5,6 +5,8 @@ type Props = {
   setToggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+console.log("yo");
+
 export default function AdminHeader({ setToggleSidebar }: Props) {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   return (
