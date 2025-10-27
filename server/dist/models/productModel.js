@@ -39,10 +39,12 @@ const productSchema = new mongoose_1.default.Schema({
     gender: {
         type: String,
         required: [true, "Pol je obavezan"],
+        enum: ["Muški", "Ženski"],
     },
     water: {
         type: String,
         required: [true, "Vrsta vode je obavezna"],
+        enum: ["Parfem", "Toaletna", "Kolonjska"],
     },
     price: {
         type: Number,

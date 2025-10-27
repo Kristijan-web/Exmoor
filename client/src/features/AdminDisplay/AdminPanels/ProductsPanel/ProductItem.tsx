@@ -1,5 +1,4 @@
 import type { Product } from "../../../../types/products/productsType";
-import { API_URL } from "../../../../utills/constants";
 import { Sale } from "./DisplayProducts";
 
 type Props = {
@@ -45,7 +44,7 @@ export default function ProductItem({ p }: Props) {
       <td className="px-4 py-3">
         <div className="flex items-center gap-3">
           <img
-            src={`${API_URL}${p.image}`}
+            src={`${p.image}`}
             alt={p.title}
             className="h-12 w-12 rounded-xl object-cover ring-1 ring-gray-200"
           />
