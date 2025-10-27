@@ -35,7 +35,7 @@ export default function AddProduct() {
               <input
                 id="brend"
                 type="text"
-                placeholder="npr. Zara"
+                placeholder="npr. Zara, Davidoff"
                 className="rounded-md border border-gray-300 px-3 py-2"
               />
             </div>
@@ -58,8 +58,26 @@ export default function AddProduct() {
               >
                 <option value="Parfem">Parfemska voda</option>
                 <option value="Toaletna">Toaletna voda</option>
-                <option value="Kolonjska  ">Kolonjska voda</option>
+                <option value="Kolonjska">Kolonjska voda</option>
               </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="price">Cena *</label>
+              <input
+                placeholder="npr. 1999"
+                id="price"
+                type="number"
+                className="rounded-md border border-gray-300 px-3 py-2"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="quantity">Kolicina</label>
+              <input
+                placeholder="npr. 100"
+                id="quantity"
+                type="number"
+                className="rounded-md border border-gray-300 px-3 py-2"
+              />
             </div>
           </div>
 
@@ -92,9 +110,9 @@ export default function AddProduct() {
                 Popust(%) *
               </label>
               <input
+                placeholder="npr. 10"
                 id="popust"
                 type="text"
-                placeholder="npr. Zara"
                 className="rounded-md border border-gray-300 px-3 py-2"
               />
             </div>
@@ -104,8 +122,7 @@ export default function AddProduct() {
               </label>
               <input
                 id="pocetak_akcije"
-                type="text"
-                placeholder="npr. Zara"
+                type="date"
                 className="rounded-md border border-gray-300 px-3 py-2"
               />
             </div>
@@ -115,8 +132,7 @@ export default function AddProduct() {
               </label>
               <input
                 id="kraj_akcije"
-                type="text"
-                placeholder="npr. Zara"
+                type="date"
                 className="rounded-md border border-gray-300 px-3 py-2"
               />
             </div>
