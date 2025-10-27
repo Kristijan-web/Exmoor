@@ -17,7 +17,7 @@ export default function AddProduct() {
         >
           {/* Pocetak */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="flex flex-col items-start gap-2">
+            <div className="flex flex-col gap-2">
               <label htmlFor="naziv" className="font-semibold">
                 Naziv *
               </label>
@@ -28,7 +28,7 @@ export default function AddProduct() {
                 className="rounded-md border border-gray-300 px-3 py-2"
               />
             </div>
-            <div className="flex flex-col items-start gap-2">
+            <div className="flex flex-col gap-2">
               <label htmlFor="naziv" className="font-semibold">
                 Brend *
               </label>
@@ -76,6 +76,13 @@ export default function AddProduct() {
                 placeholder="npr. 100"
                 id="quantity"
                 type="number"
+                className="rounded-md border border-gray-300 px-3 py-2"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label>Slika *</label>
+              <input
+                type="file"
                 className="rounded-md border border-gray-300 px-3 py-2"
               />
             </div>
