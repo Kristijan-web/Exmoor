@@ -17,7 +17,7 @@ export default function Loader({ size }: Props) {
     <ClipLoader
       cssOverride={override}
       size={size ? size : 50}
-      speedMultiplier={1}
+      speedMultiplier={2}
       aria-label="Loading Spinner"
       data-testid="loader"
     />
