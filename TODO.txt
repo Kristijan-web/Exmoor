@@ -1,14 +1,11 @@
 TODO za sajt
 
-- Napravi admin page
 
 - Uradi logs za greske
 
 - Naparvi da kada se desi prodaja, da ima graph koji prikazuje informacije na admin panelu
 
-CSS:
 
-- Dodaj promenljivu za height hedera (84px) da bi se lakse razumelo zasto u calc oduzimam 84 pixela za visinu
 
 Server:
 
@@ -20,10 +17,6 @@ Klijent:
 BITNO
 
 - U asinhronim funkcijama koje se nalaze u services folderu dodaj AbortController
-
-- Neka dugme odjavi se na /podesavanja radi
-
-- Koristi mutate za login i signup umesto da rucno upisujem u react query cache
 
 - Ispravi error handling u useQuery funkcijama 
 
