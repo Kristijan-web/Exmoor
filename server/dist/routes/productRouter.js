@@ -9,7 +9,7 @@ const authController_1 = require("../controllers/authController");
 const productRouter = express_1.default.Router();
 productRouter.get("/", productController_1.getProducts);
 productRouter.get("/:id", productController_1.getProduct);
-productRouter.post("/", authController_1.protect, (0, authController_1.restirctTo)("admin"), productController_1.upload.single("image"), productController_1.parseProductBodyData, productController_1.createProduct);
+productRouter.post("/", authController_1.protect, (0, authController_1.restirctTo)("admin"), productController_1.upload.single("image"), productController_1.parseProductBodyData, productController_1.uploadToCloudinary, productController_1.createProduct);
 productRouter.put("/:id", authController_1.protect, (0, authController_1.restirctTo)("admin"), productController_1.updateProduct);
 productRouter.delete("/:id", authController_1.protect, (0, authController_1.restirctTo)("admin"), productController_1.deleteProduct);
 exports.default = productRouter;

@@ -3,22 +3,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.upload = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = exports.getProduct = void 0;
+exports.upload = exports.uploadToCloudinary = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = exports.getProduct = void 0;
 exports.parseProductBodyData = parseProductBodyData;
 const productModel_1 = __importDefault(require("../models/productModel"));
 const appError_1 = __importDefault(require("../utills/appError"));
 const factory_1 = require("./factory");
 const multer_1 = __importDefault(require("multer"));
+const catchAsync_1 = __importDefault(require("../utills/catchAsync"));
+const cloudinary_1 = __importDefault(require("../utills/cloudinary"));
 function parseProductBodyData(req, res, next) {
     if (req.file) {
         // ovaj if je samo ako je slika za proizvod u pitanju
-        req.body.image = `/public/img/products/${req.file.filename}`;
+        req.body.image = `https://res.cloudinary.com/dyzvpvlgb/image/upload/v1761091272/${req.file.filename}`;
         if (req.body.sale) {
             req.body.sale = JSON.parse(req.body.sale);
         }
     }
     next();
 }
+const uploadToCloudinary = (0, catchAsync_1.default)(async (req, res, next) => {
+    // Use the uploaded file's name as the asset's public ID and
+    // allow overwriting the asset with new versions
+    const options = {
+        use_filename: true,
+        unique_filename: false,
+        overwrite: true,
+    };
+    // Upload the image
+    if (!req.file?.filename) {
+        return next(new appError_1.default("No file uploaded", 400));
+    }
+    console.log("EVO NAZIVA FAJLA", req.file.filename);
+    await cloudinary_1.default.uploader.upload(req.file.filename, options);
+    next();
+});
+exports.uploadToCloudinary = uploadToCloudinary;
 const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
         cb(null, true);
@@ -34,7 +53,8 @@ const multerStorage = multer_1.default.diskStorage({
     },
     filename: (req, file, cb) => {
         const extension = file.mimetype.split("/")[1];
-        cb(null, `user-${req.user.id}-${Date.now()}.${extension}`);
+        const filename = `user-${req.user.id}-${Date.now()}.${extension}`;
+        cb(null, filename);
     },
 });
 const upload = (0, multer_1.default)({

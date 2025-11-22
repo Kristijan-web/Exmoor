@@ -22,14 +22,8 @@ const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
 });
 exports.getOne = getOne;
 const createOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
-    // const sale = {
-    //   discount: 20,
-    //   sale_start: "2025-11-11",
-    //   sale_end: "2025-12-12",
-    //   sold: 20,
-    // };
-    // console.log(JSON.stringify(sale));
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
+    console.log("ALOOOOOOOOOOOOOOOOOOO", req.body);
     const newDocument = await Model.create(req.body);
     (0, sendResponse_1.default)(res, newDocument);
 });

@@ -3,17 +3,39 @@ import AppError from "../utills/appError";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./factory";
 import multer, { FileFilterCallback } from "multer";
 import { NextFunction, Request, Response } from "express";
+import catchAsync from "../utills/catchAsync";
+import cloudinary from "../utills/cloudinary";
 
 function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   if (req.file) {
     // ovaj if je samo ako je slika za proizvod u pitanju
-    req.body.image = `/public/img/products/${req.file.filename}`;
+    req.body.image = `https://res.cloudinary.com/dyzvpvlgb/image/upload/v1761091272/${req.file.filename}`;
     if (req.body.sale) {
       req.body.sale = JSON.parse(req.body.sale);
     }
   }
   next();
 }
+
+const uploadToCloudinary = catchAsync(async (req, res, next) => {
+  // Use the uploaded file's name as the asset's public ID and
+  // allow overwriting the asset with new versions
+  const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+  };
+
+  // Upload the image
+  if (!req.file?.filename) {
+    return next(new AppError("No file uploaded", 400));
+  }
+  console.log("EVO NAZIVA FAJLA", req.file.filename);
+
+  await cloudinary.uploader.upload(req.file.filename, options);
+
+  next();
+});
 
 const multerFilter = (
   req: Request,
@@ -34,7 +56,9 @@ const multerStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.split("/")[1];
-    cb(null, `user-${req.user.id}-${Date.now()}.${extension}`);
+    const filename = `user-${req.user.id}-${Date.now()}.${extension}`;
+
+    cb(null, filename);
   },
 });
 
@@ -63,5 +87,6 @@ export {
   updateProduct,
   deleteProduct,
   parseProductBodyData,
+  uploadToCloudinary,
   upload,
 };

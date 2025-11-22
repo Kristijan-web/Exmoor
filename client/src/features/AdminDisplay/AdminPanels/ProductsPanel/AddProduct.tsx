@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { API_URL } from "../../../../utills/constants";
+import useCatchAsync from "../../../../utills/useCatchAsync";
+import Loader from "../../../../ui/Loader";
 
 type Sale = {
   discount: number;
@@ -21,11 +24,39 @@ type FormData = {
 
 export default function AddProduct() {
   const { register, formState, handleSubmit } = useForm<FormData>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { errors } = formState;
   const [showSale, setshowSale] = useState(false);
 
   function onSuccess(data: FormData) {
-    console.log("Evo podataka iz forme", data);
+    const formData = new FormData();
+
+    formData.append("image", data.image[0]);
+    formData.append("title", data.title);
+    formData.append("brand", data.brand);
+    formData.append("gender", data.gender);
+    formData.append("water", data.water);
+    formData.append("price", data.price.toString());
+    formData.append("quantity", data.quantity.toString());
+    formData.append("sale", JSON.stringify(data.sale));
+
+    useCatchAsync(async function createProduct(signal) {
+      const fetchData = await fetch(`${API_URL}/api/v1/products`, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+        signal,
+      });
+
+      if (!fetchData.ok) {
+        if (fetchData.status < 500) {
+          const response = await fetchData.json();
+          throw new Error(response.message);
+        } else {
+          throw new Error("Greska na serveru...");
+        }
+      }
+    }, setIsLoading)();
   }
 
   // Fix bitan
@@ -78,13 +109,16 @@ export default function AddProduct() {
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("gender", {
                   required: "Ovo polje je obavezno",
-                  validate: (value) =>
-                    value === "Izaberi..." || "Ovo polje je obavezno",
+                  validate: (value) => {
+                    if (value === "default") {
+                      return "Ovo polje je obavezno";
+                    }
+                  },
                 })}
               >
                 <option value="default">Izaberi...</option>
-                <option value="muski">Muški</option>
-                <option>Ženski</option>
+                <option value="Muški">Muški</option>
+                <option value="Ženski">Ženski</option>
               </select>
               {errors?.gender?.message && (
                 <p className="text-red-500">{errors.gender.message}</p>
@@ -97,11 +131,14 @@ export default function AddProduct() {
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("water", {
                   required: "Ovo polje je obavezno",
-                  validate: (value) =>
-                    value === "Izaberi..." || "Ovo polje je obavezno ",
+                  validate: (value) => {
+                    if (value === "default") {
+                      return "Ovo polje je obavezno";
+                    }
+                  },
                 })}
               >
-                <option>Izaberi...</option>
+                <option value="default">Izaberi...</option>
                 <option value="Parfem">Parfemska voda</option>
                 <option value="Toaletna">Toaletna voda</option>
                 <option value="Kolonjska">Kolonjska voda</option>
@@ -224,7 +261,9 @@ export default function AddProduct() {
             </div>
           </div>
           <div>
-            <button className="btn mt-4">Pošalji</button>
+            <button className="btn mt-4">
+              {isLoading ? <Loader /> : "Posalji"}
+            </button>
           </div>
         </form>
       </div>

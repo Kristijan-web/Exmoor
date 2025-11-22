@@ -7,6 +7,7 @@ import {
   deleteProduct,
   upload,
   parseProductBodyData,
+  uploadToCloudinary,
 } from "../controllers/productController";
 import { protect, restirctTo } from "../controllers/authController";
 
@@ -20,6 +21,7 @@ productRouter.post(
   restirctTo("admin"),
   upload.single("image"),
   parseProductBodyData,
+  uploadToCloudinary,
   createProduct
 );
 productRouter.put("/:id", protect, restirctTo("admin"), updateProduct);

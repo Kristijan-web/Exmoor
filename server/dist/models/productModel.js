@@ -23,7 +23,6 @@ const saleSchema = new mongoose_1.default.Schema({
     // treba da se doda polje sold, da kad istekne akcija znamo koliko smo proizvoda prodali
     sold: {
         type: Number,
-        required: true,
     },
 });
 const productSchema = new mongoose_1.default.Schema({
