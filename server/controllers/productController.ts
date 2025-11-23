@@ -27,12 +27,11 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   };
 
   // Upload the image
-  if (!req.file?.filename) {
+  if (!req.file?.path) {
     return next(new AppError("No file uploaded", 400));
   }
-  console.log("EVO NAZIVA FAJLA", req.file.filename);
 
-  await cloudinary.uploader.upload(req.file.filename, options);
+  await cloudinary.uploader.upload(req.file.path, options);
 
   next();
 });
