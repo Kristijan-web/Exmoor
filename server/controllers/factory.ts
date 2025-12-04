@@ -22,7 +22,6 @@ const getOne = <T>(Model: Model<T>) =>
 const createOne = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
-    console.log("ALOOOOOOOOOOOOOOOOOOO", req.body);
     const newDocument = await Model.create(req.body);
     sendResponse(res, newDocument);
   });

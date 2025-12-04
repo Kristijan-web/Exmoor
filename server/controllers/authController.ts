@@ -13,21 +13,21 @@ interface DecodedJWT {
   iat: number;
 }
 
-function mustEnv(key: string): string {
-  const v = process.env[key];
-  if (!v) throw new Error(`Missing env var: ${key}`);
-  return v;
+function checkIfEnvExists(key: string): string {
+  const env = process.env[key];
+  if (!env) throw new Error(`Missing env var: ${key}`);
+  return env;
 }
 
-const JWT_SECRET_KEY = mustEnv("JWT_SECRET_KEY");
-const JWT_EXPIRES_IN_HOURS = Number(mustEnv("JWT_EXPIRES_IN")); // npr. 5 (sati)
+const JWT_SECRET_KEY = checkIfEnvExists("JWT_SECRET_KEY");
+const JWT_EXPIRES_IN_HOURS = Number(checkIfEnvExists("JWT_EXPIRES_IN")); // npr. 5 (sati)
 
 // sendResponse funkcije je prebacena u utills folder
 
 // prosledjeni argument mora biti instanca user modela znaci treba mi HydratedDocument
 function createJWT(user: HydratedDocument<UserType>) {
   return jwt.sign({ id: user._id }, JWT_SECRET_KEY, {
-    expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima, trenutno je stavljeno na 2 sata
+    expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima, trenutno je stavljeno na 5 sati
   });
 }
 
@@ -57,7 +57,7 @@ const protect = catchAsync(async (req, res, next) => {
   // - Provera da li je sifra i dalje validna, to jest ako je korisnik promenio sifru, onda ne bih trebao da moze da radi stari jwt token
   // - Izmeni req objekat i dodaj user-a iz baze req.user = currentUser i na kraju next()
 
-  const jwtToken = req.cookies.jwt;
+  const jwtToken = req?.cookies?.jwt;
 
   if (!jwtToken) {
     return next(new AppError("Nisi ulogovan!", 401));
@@ -66,7 +66,7 @@ const protect = catchAsync(async (req, res, next) => {
   // jwt.verify ce vratiti payload jwt-a
   const jwtPayload = jwt.verify(
     jwtToken,
-    mustEnv("JWT_SECRET_KEY")
+    checkIfEnvExists("JWT_SECRET_KEY")
   ) as DecodedJWT;
 
   const user = await User.findById(jwtPayload.id);

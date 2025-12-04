@@ -91,7 +91,6 @@ userSchema.pre<Query<UserType | UserType[], UserType>>(
     next();
   }
 );
-
 // Ako je jwt.iat manji od passwordChangedAt
 // Onda se pokusava pristupiti ukradenom jwt-u
 userSchema.methods.isPasswordOld = function (JwtIatAt: number) {
