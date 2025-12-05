@@ -23,7 +23,6 @@ const getOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
 exports.getOne = getOne;
 const createOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) => {
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
-    console.log("ALOOOOOOOOOOOOOOOOOOO", req.body);
     const newDocument = await Model.create(req.body);
     (0, sendResponse_1.default)(res, newDocument);
 });
@@ -33,6 +32,7 @@ const deleteOne = (Model) => (0, catchAsync_1.default)(async (req, res, next) =>
     const { id } = req.params;
     const deletedDocument = await Model.findByIdAndDelete(id);
     if (!deletedDocument) {
+        console.log("UPAO OVDE EE");
         return next(new appError_1.default(`${Model.modelName} ne postoji`, 404));
     }
     // trebalo bi vrati statusCode 204 i message: 'success', umesto da se salje ceo user document

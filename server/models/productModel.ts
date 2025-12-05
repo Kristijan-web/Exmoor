@@ -22,42 +22,55 @@ const saleSchema = new mongoose.Schema({
     type: Number,
   },
 });
-const productSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Naziv je obavezan"],
-    unique: true,
+const productSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Naziv je obavezan"],
+      unique: true,
+    },
+    brand: {
+      type: String,
+      required: [true, "Brend je obavezan"],
+    },
+    gender: {
+      type: String,
+      required: [true, "Pol je obavezan"],
+      enum: ["Muški", "Ženski"],
+    },
+    water: {
+      type: String,
+      required: [true, "Vrsta vode je obavezna"],
+      enum: ["Parfem", "Toaletna", "Kolonjska"],
+    },
+    price: {
+      type: Number,
+      required: [true, "Cena je obavezna"],
+    },
+    quantity: {
+      type: Number,
+      required: [true, "Količina je obavezna"],
+    },
+    image: {
+      type: String,
+      required: [true, "Slika je obavezna"],
+      unique: true,
+    },
+    // sale ce morati embedovanje
+    sale: saleSchema,
   },
-  brand: {
-    type: String,
-    required: [true, "Brend je obavezan"],
-  },
-  gender: {
-    type: String,
-    required: [true, "Pol je obavezan"],
-    enum: ["Muški", "Ženski"],
-  },
-  water: {
-    type: String,
-    required: [true, "Vrsta vode je obavezna"],
-    enum: ["Parfem", "Toaletna", "Kolonjska"],
-  },
-  price: {
-    type: Number,
-    required: [true, "Cena je obavezna"],
-  },
-  quantity: {
-    type: Number,
-    required: [true, "Količina je obavezna"],
-  },
-  image: {
-    type: String,
-    required: [true, "Slika je obavezna"],
-    unique: true,
-  },
-  // sale ce morati embedovanje
-  sale: saleSchema,
-});
+  {
+    toJSON: {
+      virtuals: true,
+      transform(doc, ret: any) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+    },
+  }
+);
 
 const Product = mongoose.model("Product", productSchema);
 

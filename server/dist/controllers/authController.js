@@ -11,19 +11,19 @@ const appError_1 = __importDefault(require("../utills/appError"));
 const sendResponse_1 = __importDefault(require("../utills/sendResponse"));
 const sendMail_1 = __importDefault(require("../helpers/sendMail"));
 const crypto_1 = __importDefault(require("crypto"));
-function mustEnv(key) {
-    const v = process.env[key];
-    if (!v)
+function checkIfEnvExists(key) {
+    const env = process.env[key];
+    if (!env)
         throw new Error(`Missing env var: ${key}`);
-    return v;
+    return env;
 }
-const JWT_SECRET_KEY = mustEnv("JWT_SECRET_KEY");
-const JWT_EXPIRES_IN_HOURS = Number(mustEnv("JWT_EXPIRES_IN")); // npr. 5 (sati)
+const JWT_SECRET_KEY = checkIfEnvExists("JWT_SECRET_KEY");
+const JWT_EXPIRES_IN_HOURS = Number(checkIfEnvExists("JWT_EXPIRES_IN")); // npr. 5 (sati)
 // sendResponse funkcije je prebacena u utills folder
 // prosledjeni argument mora biti instanca user modela znaci treba mi HydratedDocument
 function createJWT(user) {
     return jsonwebtoken_1.default.sign({ id: user._id }, JWT_SECRET_KEY, {
-        expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima, trenutno je stavljeno na 2 sata
+        expiresIn: +JWT_EXPIRES_IN_HOURS * 60 * 60, // JWT_EXPIRES su satima, trenutno je stavljeno na 5 sati
     });
 }
 function setJWTInHttpOnlyCookie(jwtToken, res) {
@@ -48,12 +48,12 @@ const protect = (0, catchAsync_1.default)(async (req, res, next) => {
     // - Provera da li je korisniku u medjuvremenu obrisan nalog
     // - Provera da li je sifra i dalje validna, to jest ako je korisnik promenio sifru, onda ne bih trebao da moze da radi stari jwt token
     // - Izmeni req objekat i dodaj user-a iz baze req.user = currentUser i na kraju next()
-    const jwtToken = req.cookies.jwt;
+    const jwtToken = req?.cookies?.jwt;
     if (!jwtToken) {
         return next(new appError_1.default("Nisi ulogovan!", 401));
     }
     // jwt.verify ce vratiti payload jwt-a
-    const jwtPayload = jsonwebtoken_1.default.verify(jwtToken, mustEnv("JWT_SECRET_KEY"));
+    const jwtPayload = jsonwebtoken_1.default.verify(jwtToken, checkIfEnvExists("JWT_SECRET_KEY"));
     const user = await userModel_1.default.findById(jwtPayload.id);
     if (!user) {
         return next(new appError_1.default("Korisnik ne postoji", 404));

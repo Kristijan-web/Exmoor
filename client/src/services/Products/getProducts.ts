@@ -6,12 +6,12 @@ async function getProducts(): Promise<Product[] | null> {
   try {
     const fetchData = await fetch(`${API_URL}/api/v1/products`);
 
-    const response = await fetchData.json();
-
     if (!fetchData.ok) {
       toast.error("Dohvatanje proizvoda nije uspelo, osvezite stranicu");
       return null;
     }
+
+    const response = await fetchData.json();
 
     return response.data;
   } catch (err) {

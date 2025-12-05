@@ -60,6 +60,16 @@ const productSchema = new mongoose_1.default.Schema({
     },
     // sale ce morati embedovanje
     sale: saleSchema,
+}, {
+    toJSON: {
+        virtuals: true,
+        transform(doc, ret) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+            return ret;
+        },
+    },
 });
 const Product = mongoose_1.default.model("Product", productSchema);
 exports.default = Product;

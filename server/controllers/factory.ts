@@ -32,6 +32,7 @@ const deleteOne = <T>(Model: Model<T>) =>
     const deletedDocument = await Model.findByIdAndDelete(id);
 
     if (!deletedDocument) {
+      console.log("UPAO OVDE EE");
       return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
 

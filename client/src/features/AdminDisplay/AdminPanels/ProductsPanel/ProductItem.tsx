@@ -1,3 +1,4 @@
+import useDeleteProduct from "../../../../hooks/Products/useDeteleProduct";
 import type { Product } from "../../../../types/products/productsType";
 import { Sale } from "./DisplayProducts";
 
@@ -36,9 +37,15 @@ function priceWithDiscount(price: number, sale?: Sale | null) {
   return price * (1 - pct / 100);
 }
 
+// Verovatno cu koristi mutate iz react query-a da obrisem proizvod (jer vec koristim react query da dohvatim proizvode)
+
 export default function ProductItem({ p }: Props) {
+  const { isPending, mutate: deleteProduct } = useDeleteProduct();
   const discounted = priceWithDiscount(p.price, p.sale);
   const onSale = isOnSale(p.sale);
+
+  console.log(p);
+
   return (
     <tr key={p.id} className="hover:bg-gray-50">
       <td className="px-4 py-3">
@@ -108,6 +115,15 @@ export default function ProductItem({ p }: Props) {
         {p.sale
           ? `${formatDate(String(p.sale.sale_start))} → ${formatDate(String(p.sale.sale_end))}`
           : "—"}
+      </td>
+      <td>
+        <button
+          onClick={() => deleteProduct(p.id)}
+          disabled={isPending}
+          className="cursor-pointer rounded-sm bg-red-600 p-3 text-white"
+        >
+          Obrisi
+        </button>
       </td>
     </tr>
   );
