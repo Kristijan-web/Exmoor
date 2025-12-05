@@ -117,10 +117,15 @@ export default function ProductItem({ p }: Props) {
           : "—"}
       </td>
       <td>
+        <button className="cursor-pointer rounded-sm bg-blue-600 p-2 text-white">
+          Izmeni
+        </button>
+      </td>
+      <td>
         <button
           onClick={() => deleteProduct(p.id)}
           disabled={isPending}
-          className="cursor-pointer rounded-sm bg-red-600 p-3 text-white"
+          className="cursor-pointer rounded-sm bg-red-600 p-2 text-white"
         >
           Obrisi
         </button>

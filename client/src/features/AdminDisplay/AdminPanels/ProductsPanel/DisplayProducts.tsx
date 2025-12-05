@@ -37,6 +37,7 @@ export default function DisplayProducts() {
               <th className="px-4 py-3">Stanje</th>
               <th className="px-4 py-3">Akcija</th>
               <th className="px-4 py-3">Akcija period</th>
+              <th className="px-4 py-3">Izmeni</th>
               <th className="px-4 py-3">Obrisi</th>
             </tr>
           </thead>
