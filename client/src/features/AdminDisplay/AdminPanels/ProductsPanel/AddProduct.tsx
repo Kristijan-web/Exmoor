@@ -3,6 +3,8 @@ import { useState } from "react";
 import { API_URL } from "../../../../utills/constants";
 import useCatchAsync from "../../../../utills/useCatchAsync";
 import Loader from "../../../../ui/Loader";
+import useCreateProduct from "../../../../hooks/Products/useCreateProduct";
+import { Product } from "./DisplayProducts";
 
 type Sale = {
   discount: number;
@@ -11,24 +13,16 @@ type Sale = {
   sold: number;
 };
 
-type FormData = {
-  title: string;
-  brand: string;
-  gender: string;
-  water: string;
-  price: number;
-  quantity: number;
-  image: FileList;
-  sale: Sale | null;
-};
+// Ako je showSale true onda polja nisu obavezna!!!
 
 export default function AddProduct() {
-  const { register, formState, handleSubmit } = useForm<FormData>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { register, formState, handleSubmit } = useForm<Product>();
   const { errors } = formState;
   const [showSale, setshowSale] = useState(false);
+  const { mutate: createProduct, isPending } = useCreateProduct();
 
-  function onSuccess(data: FormData) {
+  function onSuccess(data: Product) {
+    console.log("EE");
     const formData = new FormData();
 
     formData.append("image", data.image[0]);
@@ -40,23 +34,26 @@ export default function AddProduct() {
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
 
-    useCatchAsync(async function createProduct(signal) {
-      const fetchData = await fetch(`${API_URL}/api/v1/products`, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-        signal,
-      });
+    console.log("EEE");
+    createProduct(formData);
+    console.log("ALOO");
+    // useCatchAsync(async function createProduct(signal) {
+    //   const fetchData = await fetch(`${API_URL}/api/v1/products`, {
+    //     method: "POST",
+    //     credentials: "include",
+    //     body: formData,
+    //     signal,
+    //   });
 
-      if (!fetchData.ok) {
-        if (fetchData.status < 500) {
-          const response = await fetchData.json();
-          throw new Error(response.message);
-        } else {
-          throw new Error("Greska na serveru...");
-        }
-      }
-    }, setIsLoading)();
+    //   if (!fetchData.ok) {
+    //     if (fetchData.status < 500) {
+    //       const response = await fetchData.json();
+    //       throw new Error(response.message);
+    //     } else {
+    //       throw new Error("Greska na serveru...");
+    //     }
+    //   }
+    // }, setIsLoading)();
   }
 
   // Fix bitan
@@ -220,7 +217,7 @@ export default function AddProduct() {
                 type="text"
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
                 {...register("sale.discount", {
-                  required: "Ovo polje je obavezno",
+                  required: showSale ? "Ovo polje je obavezno" : false,
                 })}
               />
               {errors?.sale?.discount?.message && (
@@ -236,7 +233,7 @@ export default function AddProduct() {
                 type="date"
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
                 {...register("sale.sale_start", {
-                  required: "Ovo polje je obavezno",
+                  required: showSale ? "Ovo polje je obavezno" : false,
                 })}
               />
               {errors?.sale?.sale_start?.message && (
@@ -252,7 +249,7 @@ export default function AddProduct() {
                 type="date"
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
                 {...register("sale.sale_end", {
-                  required: "Ovo polje je obavezno",
+                  required: showSale ? "Ovo polje je obavezno" : false,
                 })}
               />
               {errors?.sale?.sale_end?.message && (
@@ -261,8 +258,8 @@ export default function AddProduct() {
             </div>
           </div>
           <div>
-            <button className="btn mt-4">
-              {isLoading ? <Loader /> : "Posalji"}
+            <button disabled={isPending} className="btn mt-4 w-25">
+              {isPending ? <Loader size={30} borderColor="white" /> : "Posalji"}
             </button>
           </div>
         </form>

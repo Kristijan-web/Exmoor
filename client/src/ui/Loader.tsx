@@ -10,13 +10,15 @@ const override: CSSProperties = {
 type Props = {
   size?: number;
   position?: string;
+  borderColor?: string;
 };
 
-export default function Loader({ size }: Props) {
+export default function Loader({ size, borderColor }: Props) {
   return (
     <ClipLoader
       cssOverride={override}
       size={size ? size : 50}
+      color={borderColor ? borderColor : "blue"}
       speedMultiplier={2}
       aria-label="Loading Spinner"
       data-testid="loader"

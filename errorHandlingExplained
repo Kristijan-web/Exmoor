@@ -1,0 +1,4 @@
+U slucaju da se desi greska na serveru, bez obzira da li je operational ili programmatic server ce vratiti objekat.
+Frontend ce da procita daj objekat i proveri property isOperational.
+Ukoliko je isOperational: true -> frontend prikazuje gresku sa servera.
+Ukoliko je isOperational: false -> frontend vraca genericku gresku tipa "Something went wrong..."
