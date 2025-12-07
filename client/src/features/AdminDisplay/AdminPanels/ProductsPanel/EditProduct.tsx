@@ -29,6 +29,7 @@ export default function EditProduct() {
   function onSuccess(data: Product) {
     const formData = new FormData();
 
+    formData.append("id", data.id);
     formData.append("image", data.image[0]);
     formData.append("title", data.title);
     formData.append("brand", data.brand);
@@ -37,6 +38,8 @@ export default function EditProduct() {
     formData.append("price", data.price.toString());
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
+
+    console.log(data);
 
     updateProduct(formData);
   }
@@ -158,7 +161,7 @@ export default function EditProduct() {
               <input
                 type="file"
                 className="rounded-md border border-gray-300 px-3 py-2"
-                {...register("image", { required: "Ovo polje je obavezno" })}
+                {...register("image")}
               />
               {errors?.image?.message && (
                 <p className="text-red-500">{errors.image.message}</p>
@@ -171,7 +174,10 @@ export default function EditProduct() {
                     src={productToEdit?.image}
                   />
                   <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
-                    <button className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800">
+                    <button
+                      type="button"
+                      className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800"
+                    >
                       Obrisi
                     </button>
                   </div>

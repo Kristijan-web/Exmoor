@@ -24,7 +24,15 @@ productRouter.post(
   uploadToCloudinary,
   createProduct
 );
-productRouter.put("/:id", protect, restirctTo("admin"), updateProduct);
+// Sta ako admin update-uje sliku
+productRouter.patch(
+  "/:id",
+  protect,
+  restirctTo("admin"),
+  upload.single("image"),
+  parseProductBodyData,
+  updateProduct
+);
 productRouter.delete("/:id", protect, restirctTo("admin"), deleteProduct);
 
 export default productRouter;

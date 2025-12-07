@@ -8,15 +8,14 @@ import cloudinary from "../utills/cloudinary";
 
 function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   if (req.file) {
-    // ovaj if je samo ako je slika za proizvod u pitanju
+    // Ova linija dole ce morati refacture
     req.body.image = `https://res.cloudinary.com/dyzvpvlgb/image/upload/v1761091272/${req.file.filename}`;
-    if (req.body.sale) {
-      req.body.sale = JSON.parse(req.body.sale);
-    }
+  }
+  if (req.body.sale) {
+    req.body.sale = JSON.parse(req.body.sale);
   }
   next();
 }
-
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
   // Use the uploaded file's name as the asset's public ID and
   // allow overwriting the asset with new versions
@@ -41,11 +40,21 @@ const multerFilter = (
   file: Express.Multer.File,
   cb: FileFilterCallback
 ) => {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
+  if (req.method === "POST" && file.mimetype.startsWith("image")) {
+    return cb(null, true);
+  }
+  if (req.method === "PATCH") {
+    if (!file) {
+      return cb(null, true);
+    }
+    if (file.mimetype.startsWith("image")) return cb(null, true);
+    else {
+      cb(new AppError("Not an image! Please upload only images.", 400));
+    }
   } else {
-    // cb(new AppError("Not an image! Please upload only images.", 400), false);
-    cb(new AppError("Not an image! Please upload only images.", 400));
+    console.log("HELOOO");
+
+    return cb(new AppError("Not an image! Please upload only images.", 400));
   }
 };
 
@@ -54,8 +63,10 @@ const multerStorage = multer.diskStorage({
     cb(null, "./dist/public/img/products");
   },
   filename: (req, file, cb) => {
+    // ovde moze nastati bug ako korisnik ne prosledi sliku
     const extension = file.mimetype.split("/")[1];
     const filename = `user-${req.user.id}-${Date.now()}.${extension}`;
+    req.body.image = `https://res.cloudinary.com/dyzvpvlgb/image/upload/v1761091272/${filename}`;
 
     cb(null, filename);
   },
