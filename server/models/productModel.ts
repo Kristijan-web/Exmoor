@@ -7,15 +7,12 @@ import mongoose from "mongoose";
 const saleSchema = new mongoose.Schema({
   discount: {
     type: Number,
-    required: true,
   },
   sale_start: {
     type: Date,
-    required: true,
   },
   sale_end: {
     type: Date,
-    required: true,
   },
   // treba da se doda polje sold, da kad istekne akcija znamo koliko smo proizvoda prodali
   sold: {
