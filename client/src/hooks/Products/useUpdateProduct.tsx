@@ -1,22 +1,20 @@
 import { useMutation } from "@tanstack/react-query";
-import createProduct from "../../services/Products/createProduct";
+import updateProduct from "../../services/Products/updatePorduct";
 import toast from "react-hot-toast";
 
-export default function useCreateProduct() {
+export default function useUpdateProduct() {
   const { mutate, isPending } = useMutation({
-    mutationFn: (product: FormData) => createProduct(product),
-
+    mutationFn: (product: FormData) => updateProduct(product),
+    onSuccess: () => {
+      toast.success("Product je uspesno azuriran");
+    },
     onError: (err) => {
       if ("isOperational" in err && err.isOperational) {
         toast.error(err.message);
       } else {
-        toast.error("Something went wrong...");
+        toast.error("Something went wrong....");
       }
     },
-    onSuccess: () => {
-      toast.success("Product created successfully");
-    },
   });
-
   return { mutate, isPending };
 }

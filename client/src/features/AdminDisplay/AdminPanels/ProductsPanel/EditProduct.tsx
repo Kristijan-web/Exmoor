@@ -1,34 +1,32 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { API_URL } from "../../../../utills/constants";
-import useCatchAsync from "../../../../utills/useCatchAsync";
+import { useEffect, useState } from "react";
 import Loader from "../../../../ui/Loader";
-
-type Sale = {
-  discount: number;
-  sale_start: string;
-  sale_end: string;
-  sold: number;
-};
-
-type FormData = {
-  title: string;
-  brand: string;
-  gender: string;
-  water: string;
-  price: number;
-  quantity: number;
-  image: FileList;
-  sale: Sale | null;
-};
+import { Product } from "./DisplayProducts";
+import useGetProducts from "../../../../hooks/Products/useGetProducts";
+import { useParams } from "react-router-dom";
+import useUpdateProduct from "../../../../hooks/Products/useUpdateProduct";
 
 export default function EditProduct() {
-  const { register, formState, handleSubmit } = useForm<FormData>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // Uzimaju se svi proizvodi i filtrira se onaj koji  je izabran
+  const { data: products } = useGetProducts();
+  const { mutate: updateProduct, isPending } = useUpdateProduct();
+  const { register, formState, handleSubmit, reset } = useForm<Product>();
   const { errors } = formState;
+  const { id } = useParams();
   const [showSale, setshowSale] = useState(false);
 
-  function onSuccess(data: FormData) {
+  const productToEdit = products?.filter((product) => product.id === id)[0];
+
+  useEffect(
+    function fillFormInputs() {
+      if (productToEdit) {
+        reset(productToEdit);
+      }
+    },
+    [productToEdit, reset],
+  );
+
+  function onSuccess(data: Product) {
     const formData = new FormData();
 
     formData.append("image", data.image[0]);
@@ -40,32 +38,13 @@ export default function EditProduct() {
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
 
-    useCatchAsync(async function createProduct(signal) {
-      const fetchData = await fetch(`${API_URL}/api/v1/products`, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-        signal,
-      });
-
-      if (!fetchData.ok) {
-        if (fetchData.status < 500) {
-          const response = await fetchData.json();
-          throw new Error(response.message);
-        } else {
-          throw new Error("Greska na serveru...");
-        }
-      }
-    }, setIsLoading)();
+    updateProduct(formData);
   }
-
-  // Fix bitan
-  // - Kada sale nije oznacen onda polja ispod njega ne treba da budu obavezna
 
   return (
     <section className="col-start-1 col-end-3 flex h-full items-center justify-center p-4 lg:col-start-2 lg:col-end-3">
       <div className="flex flex-col gap-6 rounded-lg border-1 border-gray-400 p-6">
-        <h2 className="text-3xl font-medium">Dodaj novi proizvod</h2>
+        <h2 className="text-3xl font-medium">Izmeni proizvod</h2>
         <form
           className="flex flex-col items-start gap-4"
           onSubmit={handleSubmit(onSuccess)}
@@ -153,6 +132,7 @@ export default function EditProduct() {
                 placeholder="npr. 1999"
                 id="price"
                 type="number"
+                step="any"
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("price", { required: "Ovo polje je obavezno" })}
               />
@@ -183,6 +163,20 @@ export default function EditProduct() {
               {errors?.image?.message && (
                 <p className="text-red-500">{errors.image.message}</p>
               )}
+              <div className="flex flex-col items-start justify-center">
+                <label>Trenutna slika</label>
+                <div className="group relative inline-block">
+                  <img
+                    className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
+                    src={productToEdit?.image}
+                  />
+                  <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
+                    <button className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800">
+                      Obrisi
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -220,7 +214,7 @@ export default function EditProduct() {
                 type="text"
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
                 {...register("sale.discount", {
-                  required: "Ovo polje je obavezno",
+                  required: showSale ? "Ovo polje je obavezno" : false,
                 })}
               />
               {errors?.sale?.discount?.message && (
@@ -236,7 +230,7 @@ export default function EditProduct() {
                 type="date"
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
                 {...register("sale.sale_start", {
-                  required: "Ovo polje je obavezno",
+                  required: showSale ? "Ovo polje je obavezno" : false,
                 })}
               />
               {errors?.sale?.sale_start?.message && (
@@ -252,7 +246,7 @@ export default function EditProduct() {
                 type="date"
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
                 {...register("sale.sale_end", {
-                  required: "Ovo polje je obavezno",
+                  required: showSale ? "Ovo polje je obavezno" : false,
                 })}
               />
               {errors?.sale?.sale_end?.message && (
@@ -261,8 +255,8 @@ export default function EditProduct() {
             </div>
           </div>
           <div>
-            <button className="btn mt-4">
-              {isLoading ? <Loader /> : "Posalji"}
+            <button className="btn mt-4 w-25">
+              {isPending ? <Loader size={30} borderColor="white" /> : "Izmeni"}
             </button>
           </div>
         </form>

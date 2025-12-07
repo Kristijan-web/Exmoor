@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useDeleteProduct from "../../../../hooks/Products/useDeteleProduct";
 import type { Product } from "../../../../types/products/productsType";
 import { Sale } from "./DisplayProducts";
@@ -117,9 +118,12 @@ export default function ProductItem({ p }: Props) {
           : "—"}
       </td>
       <td>
-        <button className="cursor-pointer rounded-sm bg-blue-600 p-2 text-white">
+        <Link
+          to={`/admin/proizvodi/izmeni-proizvod/${p.id}`}
+          className="cursor-pointer rounded-sm bg-blue-600 p-2 text-white"
+        >
           Izmeni
-        </button>
+        </Link>
       </td>
       <td>
         <button

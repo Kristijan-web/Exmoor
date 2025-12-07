@@ -1,17 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { API_URL } from "../../../../utills/constants";
-import useCatchAsync from "../../../../utills/useCatchAsync";
 import Loader from "../../../../ui/Loader";
 import useCreateProduct from "../../../../hooks/Products/useCreateProduct";
 import { Product } from "./DisplayProducts";
-
-type Sale = {
-  discount: number;
-  sale_start: string;
-  sale_end: string;
-  sold: number;
-};
 
 // Ako je showSale true onda polja nisu obavezna!!!
 
@@ -34,30 +25,8 @@ export default function AddProduct() {
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
 
-    console.log("EEE");
     createProduct(formData);
-    console.log("ALOO");
-    // useCatchAsync(async function createProduct(signal) {
-    //   const fetchData = await fetch(`${API_URL}/api/v1/products`, {
-    //     method: "POST",
-    //     credentials: "include",
-    //     body: formData,
-    //     signal,
-    //   });
-
-    //   if (!fetchData.ok) {
-    //     if (fetchData.status < 500) {
-    //       const response = await fetchData.json();
-    //       throw new Error(response.message);
-    //     } else {
-    //       throw new Error("Greska na serveru...");
-    //     }
-    //   }
-    // }, setIsLoading)();
   }
-
-  // Fix bitan
-  // - Kada sale nije oznacen onda polja ispod njega ne treba da budu obavezna
 
   return (
     <section className="col-start-1 col-end-3 flex h-full items-center justify-center p-4 lg:col-start-2 lg:col-end-3">

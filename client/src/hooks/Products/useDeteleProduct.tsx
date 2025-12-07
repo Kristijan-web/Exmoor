@@ -9,7 +9,6 @@ export default function useDeleteProduct() {
     mutationFn: (id: string) => deleteProduct(id),
     onSuccess: () => {
       toast.success("Proizvod izbrisan");
-      // mora da se invalidira cache
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: () => {
