@@ -167,7 +167,6 @@ export default function EditProduct() {
                 <p className="text-red-500">{errors.image.message}</p>
               )}
               <div className="flex flex-col items-start justify-center">
-                <label>Trenutna slika</label>
                 <div className="group relative inline-block">
                   <img
                     className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
