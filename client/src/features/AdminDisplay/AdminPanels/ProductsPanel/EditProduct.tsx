@@ -29,8 +29,13 @@ export default function EditProduct() {
   function onSuccess(data: Product) {
     const formData = new FormData();
 
+    // Ako je korisnik uploado sliku onda korsitit tu, a ako nije koristi staru iz prodductToEdit
+
+    if (data.image) {
+      formData.append("image", data.image[0]);
+    }
+
     formData.append("id", data.id);
-    formData.append("image", data.image[0]);
     formData.append("title", data.title);
     formData.append("brand", data.brand);
     formData.append("gender", data.gender);

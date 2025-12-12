@@ -48,12 +48,15 @@ const multerFilter = (
       return cb(null, true);
     }
     if (file.mimetype.startsWith("image")) return cb(null, true);
-    else {
+
+    if (typeof file === "string") {
+      // ako admin nije promenio trenutnu sliku
+      // Ali ako nije admin promenio trenutku sliku onda nema potrebe da saljem sliku back-u
+      cb(null, true);
+    } else {
       cb(new AppError("Not an image! Please upload only images.", 400));
     }
   } else {
-    console.log("HELOOO");
-
     return cb(new AppError("Not an image! Please upload only images.", 400));
   }
 };

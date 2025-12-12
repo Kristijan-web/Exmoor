@@ -111,7 +111,7 @@ const login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     email: req.body.email,
   });
-
+  console.log("Evo mail-a", req.body.email);
   if (!user) {
     return next(new AppError("Email je netačan", 404));
   }

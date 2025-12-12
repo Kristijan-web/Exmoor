@@ -36,6 +36,7 @@ export default function LoginForm({ isLoginActive }: Props) {
     });
 
     const response = await fetchData.json();
+    console.log("Evo greske", response)
 
     if (!fetchData.ok) {
       // response je objekat greske
