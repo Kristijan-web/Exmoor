@@ -35,50 +35,36 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   next();
 });
 
-const multerFilter = (
-  req: Request,
-  file: Express.Multer.File,
-  cb: FileFilterCallback
-) => {
-  if (req.method === "POST" && file.mimetype.startsWith("image")) {
-    return cb(null, true);
-  }
-  if (req.method === "PATCH") {
-    if (!file) {
-      return cb(null, true);
-    }
-    if (file.mimetype.startsWith("image")) return cb(null, true);
+// const multerFilter = (
+//   req: Request,
+//   file: Express.Multer.File,
+//   cb: FileFilterCallback
+// ) => {
+//   if (file.mimetype.startsWith("image")) {
+//     return cb(null, true);
+//   } else {
+//     return cb(new AppError("Not an image! Please upload only images.", 400));
+//   }
+// };
 
-    if (typeof file === "string") {
-      // ako admin nije promenio trenutnu sliku
-      // Ali ako nije admin promenio trenutku sliku onda nema potrebe da saljem sliku back-u
-      cb(null, true);
-    } else {
-      cb(new AppError("Not an image! Please upload only images.", 400));
-    }
-  } else {
-    return cb(new AppError("Not an image! Please upload only images.", 400));
-  }
-};
+// const multerStorage = multer.memoryStorage({
+//   // nema smisla da stoji ovaj destination jer se slika upload-uje na cloudinary i odatle prikazuje korisniku
+//   destination: (req, file, cb) => {
+//     cb(null, "./dist/public/img/products");
+//   },
+//   filename: (req, file, cb) => {
+//     // ovde moze nastati bug ako korisnik ne prosledi sliku
+//     const extension = file.mimetype.split("/")[1];
+//     const filename = `user-${req.user.id}-${Date.now()}.${extension}`;
+//     req.body.image = `https://res.cloudinary.com/dyzvpvlgb/image/upload/v1761091272/${filename}`;
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./dist/public/img/products");
-  },
-  filename: (req, file, cb) => {
-    // ovde moze nastati bug ako korisnik ne prosledi sliku
-    const extension = file.mimetype.split("/")[1];
-    const filename = `user-${req.user.id}-${Date.now()}.${extension}`;
-    req.body.image = `https://res.cloudinary.com/dyzvpvlgb/image/upload/v1761091272/${filename}`;
+//     cb(null, filename);
+//   },
+// });
 
-    cb(null, filename);
-  },
-});
-
+// Radi filtraciju u middleware-u za cloduinary i tu upload da se izvrsi
 const upload = multer({
-  storage: multerStorage,
-
-  fileFilter: multerFilter,
+  storage: multer.memoryStorage(),
 });
 
 // crud operations for admin

@@ -31,7 +31,7 @@ export default function EditProduct() {
 
     // Ako je korisnik uploado sliku onda korsitit tu, a ako nije koristi staru iz prodductToEdit
 
-    if (data.image) {
+    if (typeof data.image[0] !== "string") {
       formData.append("image", data.image[0]);
     }
 
