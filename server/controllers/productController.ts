@@ -26,11 +26,21 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   };
 
   // Upload the image
-  if (!req.file?.path) {
+  // req.file.path je putanja fajla na racunaru
+  // sad je buffer jer je multer memory storage
+  console.log("EVO SLIKE", req.file);
+
+  if (!req.file?.buffer) {
     return next(new AppError("No file uploaded", 400));
   }
 
-  await cloudinary.uploader.upload(req.file.path, options);
+  const cloudinaryResponse = cloudinary.uploader
+    .upload_stream(options)
+    .end(req.file.buffer);
+
+  console.log("EVO ODGOVORA OD CLOUDINARY", cloudinaryResponse);
+
+  // Ako je upload na clodinary-u uspesan onda u req.body.image treba da se upise putanja slike na cloduinary-u
 
   next();
 });
