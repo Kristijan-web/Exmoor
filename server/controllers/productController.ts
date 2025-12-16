@@ -5,7 +5,7 @@ import multer, { FileFilterCallback } from "multer";
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utills/catchAsync";
 import cloudinary from "../utills/cloudinary";
-
+import type { UploadApiResponse } from "cloudinary";
 function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   if (req.file) {
     // Ova linija dole ce morati refacture
@@ -17,30 +17,38 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   next();
 }
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
-  // Use the uploaded file's name as the asset's public ID and
-  // allow overwriting the asset with new versions
-  const options = {
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-  };
+  const file = req.file;
 
-  // Upload the image
-  // req.file.path je putanja fajla na racunaru
-  // sad je buffer jer je multer memory storage
-  console.log("EVO SLIKE", req.file);
+  console.log("EVO FAJLA", file);
 
-  if (!req.file?.buffer) {
+  if (!file?.buffer) {
     return next(new AppError("No file uploaded", 400));
   }
 
-  const cloudinaryResponse = cloudinary.uploader
-    .upload_stream(options)
-    .end(req.file.buffer);
+  const publicId = `user-${req.user.id}-${Date.now()}`;
 
-  console.log("EVO ODGOVORA OD CLOUDINARY", cloudinaryResponse);
+  const options = {
+    folder: "users",
+    public_id: publicId,
+    overwrite: true,
+  };
 
-  // Ako je upload na clodinary-u uspesan onda u req.body.image treba da se upise putanja slike na cloduinary-u
+  const cloudinaryResult = await new Promise<UploadApiResponse>(
+    (resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        options,
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result as UploadApiResponse);
+        }
+      );
+
+      stream.end(file.buffer);
+    }
+  );
+  // ✅ Always use secure_url from Cloudinary response
+  req.body.image = cloudinaryResult.secure_url;
+  // req.body.imagePublicId = cloudinaryResult.public_id; // store this for deletes
 
   next();
 });
