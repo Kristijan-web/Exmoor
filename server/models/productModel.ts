@@ -48,10 +48,12 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Količina je obavezna"],
     },
-    image: {
-      type: String,
-      unique: true,
-    },
+    image: [
+      {
+        type: String,
+        unique: true,
+      },
+    ],
     // sale ce morati embedovanje
     sale: saleSchema,
   },

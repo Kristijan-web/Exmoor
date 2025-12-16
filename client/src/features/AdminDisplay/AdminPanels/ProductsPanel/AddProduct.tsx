@@ -13,9 +13,8 @@ export default function AddProduct() {
   const { mutate: createProduct, isPending } = useCreateProduct();
 
   function onSuccess(data: Product) {
-    console.log("EE");
     const formData = new FormData();
-
+    console.log("EVO podataka iz forme", data);
     formData.append("image", data.image[0]);
     formData.append("title", data.title);
     formData.append("brand", data.brand);
@@ -143,6 +142,7 @@ export default function AddProduct() {
               <label>Slika *</label>
               <input
                 type="file"
+                multiple
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("image", { required: "Ovo polje je obavezno" })}
               />

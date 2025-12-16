@@ -19,7 +19,7 @@ productRouter.post(
   "/",
   protect,
   restirctTo("admin"),
-  upload.single("image"),
+  upload.array("images", 5),
   parseProductBodyData,
   uploadToCloudinary,
   createProduct
@@ -29,8 +29,9 @@ productRouter.patch(
   "/:id",
   protect,
   restirctTo("admin"),
-  upload.single("image"),
+  upload.array("images", 5),
   parseProductBodyData,
+  uploadToCloudinary,
   updateProduct
 );
 productRouter.delete("/:id", protect, restirctTo("admin"), deleteProduct);
