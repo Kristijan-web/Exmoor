@@ -7,6 +7,15 @@ import catchAsync from "../utills/catchAsync";
 import cloudinary from "../utills/cloudinary";
 import type { UploadApiResponse } from "cloudinary";
 
+type FileCheck = Express.Multer.File | Express.Multer.File[];
+
+// Sta fileArray moze biti?
+// - Moze biti jedan objekat fajla
+// - Moze biti niz objekata fajla
+// - Moze biti prazan niz
+
+// - Kako se zove tip multer fajla?
+
 function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   if (req.body.sale) {
     req.body.sale = JSON.parse(req.body.sale);
@@ -14,27 +23,39 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+// Sta ako radim single file upload umesto multiple? Da li logiku za multiple i single drzim u jednoj funkciji?
+// - Ako je single fajl samo cu da ga ubacim u array i tjt, da bude array sa jednim objektom
+
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
-  const file = req.files;
+  let filesArray: FileCheck = [];
 
-  if (req.method === "PATCH" && !file) return next();
+  if (req.method === "PATCH" && filesArray?.length === 0) return next();
 
-  if (!file?.mimetype.startsWith("image/")) {
-    return next(new AppError("No image uploaded", 400));
+  if (req.files && Array.isArray(req.files)) {
+    filesArray = req.files;
   }
 
-  const publicId = `user-${req.user.id}-${Date.now()}`;
+  if (req.file) {
+    filesArray.push(req.file);
+  }
 
-  const options = {
-    folder: "users",
-    public_id: publicId,
-    overwrite: true,
-  };
+  filesArray.forEach((file) => {
+    if (!file?.mimetype.startsWith("image/")) {
+      return next(new AppError("Upload only images uploaded", 400));
+    }
+  });
 
-  const cloudinaryResult = await new Promise<UploadApiResponse>(
-    (resolve, reject) => {
+  req.body.image = [];
+  const uploadPromises = filesArray.map((file, i) => {
+    const publicId = `user-${req.user.id}-${Date.now()}-${i}`;
+
+    return new Promise<UploadApiResponse>((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        options,
+        {
+          folder: "users",
+          public_id: publicId,
+          overwrite: true,
+        },
         (error, result) => {
           if (error) return reject(error);
           resolve(result as UploadApiResponse);
@@ -42,10 +63,12 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
       );
 
       stream.end(file.buffer);
-    }
-  );
-  req.body.image = cloudinaryResult.secure_url;
-  // req.body.imagePublicId = cloudinaryResult.public_id; // store this for deletes
+    });
+  });
+
+  const results = await Promise.all(uploadPromises);
+
+  req.body.image = results.map((r) => r.secure_url);
 
   next();
 });

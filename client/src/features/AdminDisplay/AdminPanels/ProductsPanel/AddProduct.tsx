@@ -15,7 +15,7 @@ export default function AddProduct() {
   function onSuccess(data: Product) {
     const formData = new FormData();
     console.log("EVO podataka iz forme", data);
-    formData.append("image", data.image[0]);
+    formData.append("images", data.image[0]);
     formData.append("title", data.title);
     formData.append("brand", data.brand);
     formData.append("gender", data.gender);
