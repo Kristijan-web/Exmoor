@@ -13,7 +13,7 @@ export type Product = {
   water: string;
   price: number;
   quantity: number;
-  image: string;
+  images: string[];
   mainImage: string;
   sale?: Sale | null;
 };

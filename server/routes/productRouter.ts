@@ -19,7 +19,10 @@ productRouter.post(
   "/",
   protect,
   restirctTo("admin"),
-  upload.array("images", 5),
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "images", maxCount: 5 },
+  ]),
   parseProductBodyData,
   uploadToCloudinary,
   createProduct

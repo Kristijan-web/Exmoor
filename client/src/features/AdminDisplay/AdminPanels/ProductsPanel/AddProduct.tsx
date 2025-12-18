@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Loader from "../../../../ui/Loader";
 import useCreateProduct from "../../../../hooks/Products/useCreateProduct";
-import { Product } from "./DisplayProducts";
+import { Product } from "../../../../types/products/productsType";
 
 // Ako je showSale true onda polja nisu obavezna!!!
 
@@ -15,7 +15,8 @@ export default function AddProduct() {
   function onSuccess(data: Product) {
     const formData = new FormData();
     console.log("EVO podataka iz forme", data);
-    formData.append("images", data.image[0]);
+    formData.append("mainImage", data.mainImage[0]);
+    formData.append("images", data.images[0]);
     formData.append("title", data.title);
     formData.append("brand", data.brand);
     formData.append("gender", data.gender);
@@ -139,15 +140,28 @@ export default function AddProduct() {
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <label>Slika *</label>
+              <label>Glavna slika *</label>
+              <input
+                type="file"
+                className="rounded-md border border-gray-300 px-3 py-2"
+                {...register("mainImage", {
+                  required: "Ovo polje je obavezno",
+                })}
+              />
+              {errors?.mainImage?.message && (
+                <p className="text-red-500">{errors.mainImage.message}</p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label>Ostale slike (opciono) *</label>
               <input
                 type="file"
                 multiple
                 className="rounded-md border border-gray-300 px-3 py-2"
-                {...register("image", { required: "Ovo polje je obavezno" })}
+                {...register("images", { required: "Ovo polje je obavezno" })}
               />
-              {errors?.image?.message && (
-                <p className="text-red-500">{errors.image.message}</p>
+              {errors?.images?.message && (
+                <p className="text-red-500">{errors.images.message}</p>
               )}
             </div>
           </div>

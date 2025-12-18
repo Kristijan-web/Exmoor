@@ -7,7 +7,8 @@ import catchAsync from "../utills/catchAsync";
 import cloudinary from "../utills/cloudinary";
 import type { UploadApiResponse } from "cloudinary";
 
-type FileCheck = Express.Multer.File | Express.Multer.File[];
+// { [fieldname: string]: File[] }
+type FileCheck = Express.Multer.File[];
 
 // Sta fileArray moze biti?
 // - Moze biti jedan objekat fajla
@@ -27,17 +28,39 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
 // - Ako je single fajl samo cu da ga ubacim u array i tjt, da bude array sa jednim objektom
 
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
+  // Sad se sve menja jer imam jednu sliku i vise slika
+  // Gde se one nalaze?
+  // - u req.files.mainImage i req.files.images
+
+  // Da li mogu da ostavim istu logiku?
+  // - Za req.files.images mogu
+  // - To jest mogu za sve fajkjl is req.files.mainImage ubacim u filesArray na prvom mestu i tjt, promise ce se nalazi na istom mestu bez obzira koji se prvi izvrsi u Promise.all
+
+  // kod mene je sada req.files tipa { [fieldname: string]: File[] }
   let filesArray: FileCheck = [];
+
+  // const mainImage = req.files.mainImage;
+  // const images = req.file.images;
+
+  if (req.files && !Array.isArray(req.files) && req.files.images) {
+    filesArray = [...req.files.images];
+  }
+
+  if (req.files && !Array.isArray(req.files) && req.files.mainImage) {
+    filesArray.push(...req.files.mainImage);
+  }
 
   if (req.method === "PATCH" && filesArray?.length === 0) return next();
 
-  if (req.files && Array.isArray(req.files)) {
-    filesArray = req.files;
-  }
+  // if (req.files) {
+  //   // ovde se ts buni jer u nesto sto ocekuje niz upisujem { [fieldname: string]: File[] }
+  //   filesArray = req.files;
+  //   filesArray.push(req.files.mainImage);
+  // }
 
-  if (req.file) {
-    filesArray.push(req.file);
-  }
+  // if (req.file) {
+  //   filesArray.push(req.file);
+  // }
 
   filesArray.forEach((file) => {
     if (!file?.mimetype.startsWith("image/")) {

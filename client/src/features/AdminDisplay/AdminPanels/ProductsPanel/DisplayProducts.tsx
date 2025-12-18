@@ -2,25 +2,6 @@ import useGetProducts from "../../../../hooks/Products/useGetProducts";
 import Loader from "../../../../ui/Loader";
 import ProductItem from "./ProductItem";
 
-export type Sale = {
-  discount: number;
-  sale_start: Date;
-  sale_end: Date;
-  sold: number;
-};
-
-export type Product = {
-  id: string;
-  title: string;
-  brand: string;
-  gender: string;
-  water: string;
-  price: number;
-  quantity: number;
-  image: string;
-  sale?: Sale | null;
-};
-
 export default function DisplayProducts() {
   const { data: products, isLoading } = useGetProducts();
   if (isLoading) return <Loader />;
