@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import useDeleteProduct from "../../../../hooks/Products/useDeteleProduct";
-import type { Product } from "../../../../types/products/productsType";
-import { Sale } from "./DisplayProducts";
+import type { Product, Sale } from "../../../../types/products/productsType";
 
 type Props = {
   p: Product;
@@ -52,7 +51,7 @@ export default function ProductItem({ p }: Props) {
       <td className="px-4 py-3">
         <div className="flex items-center gap-3">
           <img
-            src={`${p.image}`}
+            src={`${p.mainImage}`}
             alt={p.title}
             className="h-12 w-12 rounded-xl object-cover ring-1 ring-gray-200"
           />

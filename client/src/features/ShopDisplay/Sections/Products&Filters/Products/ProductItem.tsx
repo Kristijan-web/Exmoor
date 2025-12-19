@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
-  const { title, image, price, gender, brand, water: type } = product;
+  const { title, mainImage, price, gender, brand, water: type } = product;
 
   const sale_discount = product.sale?.discount ?? null;
   const discountedPrice = sale_discount
@@ -24,7 +24,7 @@ export default function ProductItem({ product }: Props) {
       )}
       <img
         className="440pixels:w-[50%] mb-5 w-[100%] rounded-sm sm:w-[100%]"
-        src={`${image}`}
+        src={`${mainImage}`}
         alt="zara perfume"
       />
       <p className="text-xl">

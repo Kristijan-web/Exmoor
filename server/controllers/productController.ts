@@ -10,13 +10,6 @@ import type { UploadApiResponse } from "cloudinary";
 // { [fieldname: string]: File[] }
 type FileCheck = Express.Multer.File[];
 
-// Sta fileArray moze biti?
-// - Moze biti jedan objekat fajla
-// - Moze biti niz objekata fajla
-// - Moze biti prazan niz
-
-// - Kako se zove tip multer fajla?
-
 function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   if (req.body.sale) {
     req.body.sale = JSON.parse(req.body.sale);
@@ -24,43 +17,31 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-// Sta ako radim single file upload umesto multiple? Da li logiku za multiple i single drzim u jednoj funkciji?
-// - Ako je single fajl samo cu da ga ubacim u array i tjt, da bude array sa jednim objektom
-
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
-  // Sad se sve menja jer imam jednu sliku i vise slika
-  // Gde se one nalaze?
-  // - u req.files.mainImage i req.files.images
+  // Funkcija radi sve, i upload i update prima jednu i prima vise slika
+  // Cela ideja je da se req.file.mainImage nalazi na kraju niza filesArray
 
-  // Da li mogu da ostavim istu logiku?
-  // - Za req.files.images mogu
-  // - To jest mogu za sve fajkjl is req.files.mainImage ubacim u filesArray na prvom mestu i tjt, promise ce se nalazi na istom mestu bez obzira koji se prvi izvrsi u Promise.all
+  if (
+    req.files &&
+    req.method === "POST" &&
+    !Array.isArray(req.files) &&
+    !req.files.mainImage
+  ) {
+    return next(new AppError("Glavna slika mora da postoji", 400));
+  }
 
-  // kod mene je sada req.files tipa { [fieldname: string]: File[] }
+  // Ako je POST request onda mora da postoji mainImage
   let filesArray: FileCheck = [];
-
-  // const mainImage = req.files.mainImage;
-  // const images = req.file.images;
-
   if (req.files && !Array.isArray(req.files) && req.files.images) {
-    filesArray = [...req.files.images];
+    filesArray.push(...req.files.images);
   }
 
   if (req.files && !Array.isArray(req.files) && req.files.mainImage) {
     filesArray.push(...req.files.mainImage);
   }
 
+  // poslao si update zahtev bez slike
   if (req.method === "PATCH" && filesArray?.length === 0) return next();
-
-  // if (req.files) {
-  //   // ovde se ts buni jer u nesto sto ocekuje niz upisujem { [fieldname: string]: File[] }
-  //   filesArray = req.files;
-  //   filesArray.push(req.files.mainImage);
-  // }
-
-  // if (req.file) {
-  //   filesArray.push(req.file);
-  // }
 
   filesArray.forEach((file) => {
     if (!file?.mimetype.startsWith("image/")) {
@@ -91,8 +72,11 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
 
   const results = await Promise.all(uploadPromises);
 
-  req.body.image = results.map((r) => r.secure_url);
+  // mora da se doda req.body.mainImage i req.body.images
+  req.body.mainImage = results.pop()?.secure_url;
+  req.body.images = results.map((r) => r.secure_url);
 
+  console.log("EVO req.body.images", req.body.images);
   next();
 });
 

@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Loader from "../../../../ui/Loader";
-import { Product } from "./DisplayProducts";
 import useGetProducts from "../../../../hooks/Products/useGetProducts";
 import { useParams } from "react-router-dom";
 import useUpdateProduct from "../../../../hooks/Products/useUpdateProduct";
+import { Product } from "../../../../types/products/productsType";
 
 export default function EditProduct() {
   // Uzimaju se svi proizvodi i filtrira se onaj koji  je izabran
@@ -31,8 +31,8 @@ export default function EditProduct() {
 
     // Ako je korisnik uploado sliku onda korsitit tu, a ako nije koristi staru iz prodductToEdit
 
-    if (typeof data.image[0] !== "string") {
-      formData.append("image", data.image[0]);
+    if (typeof data.mainImage[0] !== "string") {
+      formData.append("mainImage", data.mainImage[0]);
     }
 
     formData.append("id", data.id);
@@ -162,20 +162,20 @@ export default function EditProduct() {
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <label>Slika *</label>
+              <label>Glavna Slika *</label>
               <input
                 type="file"
                 className="rounded-md border border-gray-300 px-3 py-2"
-                {...register("image")}
+                {...register("mainImage")}
               />
-              {errors?.image?.message && (
-                <p className="text-red-500">{errors.image.message}</p>
+              {errors?.mainImage?.message && (
+                <p className="text-red-500">{errors.mainImage.message}</p>
               )}
               <div className="flex flex-col items-start justify-center">
                 <div className="group relative inline-block">
                   <img
                     className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
-                    src={productToEdit?.image}
+                    src={productToEdit?.mainImage}
                   />
                   <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
                     <button
@@ -186,6 +186,39 @@ export default function EditProduct() {
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* part 2 */}
+            <div className="flex flex-col gap-2">
+              <label>Ostale Slike *</label>
+              <input
+                type="file"
+                className="rounded-md border border-gray-300 px-3 py-2"
+                {...register("images")}
+              />
+              {errors?.images?.message && (
+                <p className="text-red-500">{errors.images.message}</p>
+              )}
+              <div className="flex items-start justify-start gap-3">
+                {productToEdit?.images.map((image) => {
+                  return (
+                    <div className="group relative inline-block">
+                      <img
+                        className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
+                        src={image}
+                      />
+                      <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
+                        <button
+                          type="button"
+                          className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800"
+                        >
+                          Obrisi
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
