@@ -13,7 +13,10 @@ export type Product = {
   water: string;
   price: number;
   quantity: number;
-  images: string[];
-  mainImage: string;
+  images: FileList;
+  mainImage: FileList | string;
   sale?: Sale | null;
 };
+
+// MainImage je tipa File ako korisnik nije izabrao novu sliku
+// MainImage moze biti string samo kada se proizvod update-uje a korisnik nije izabrao novu sliku

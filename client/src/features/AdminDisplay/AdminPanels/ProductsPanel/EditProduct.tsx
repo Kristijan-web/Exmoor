@@ -31,6 +31,8 @@ export default function EditProduct() {
 
     // Ako je korisnik uploado sliku onda korsitit tu, a ako nije koristi staru iz prodductToEdit
 
+    console.log([1, 2, 3].toString()); // dobice se "1,2,3" a ne "[1,2,3]"
+
     if (typeof data.mainImage[0] !== "string") {
       formData.append("mainImage", data.mainImage[0]);
     }
@@ -43,6 +45,24 @@ export default function EditProduct() {
     formData.append("price", data.price.toString());
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
+    for (const file of data.images) {
+      formData.append("images", file);
+    }
+
+    // Sta me muci, cemu zastoj?
+    // - kod tipa podatke ce biti data.images? bice niz objekata file
+
+    // Zasto uopste prevatram niz objekata tipa file u string?
+    // - Zato sto backend to ocekuje, ali ako prosledim string onda necu moci da citam vrednosti iz objekta
+
+    // Resenje:
+    // - Mora da se promeni tipizacija podatak za images
+
+    // Moguci problem
+    // Sta backend ocekuje
+    // - Multer ocekuje objekat sa property images koji sadrzi niz slika
+    // Da li ce multer to dobiti?
+    // -
 
     console.log(data);
 
@@ -194,6 +214,7 @@ export default function EditProduct() {
               <label>Ostale Slike *</label>
               <input
                 type="file"
+                multiple
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("images")}
               />
@@ -201,6 +222,7 @@ export default function EditProduct() {
                 <p className="text-red-500">{errors.images.message}</p>
               )}
               <div className="flex items-start justify-start gap-3">
+                {/* Problem je sto ts i dalje misli da ce images biti FileList a ne niz stringova */}
                 {productToEdit?.images.map((image) => {
                   return (
                     <div className="group relative inline-block">

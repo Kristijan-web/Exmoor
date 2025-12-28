@@ -14,9 +14,10 @@ export default function AddProduct() {
 
   function onSuccess(data: Product) {
     const formData = new FormData();
-    console.log("EVO podataka iz forme", data);
     formData.append("mainImage", data.mainImage[0]);
-    formData.append("images", data.images[0]);
+    for (const file of data.images) {
+      formData.append("images", file);
+    }
     formData.append("title", data.title);
     formData.append("brand", data.brand);
     formData.append("gender", data.gender);
@@ -158,7 +159,7 @@ export default function AddProduct() {
                 type="file"
                 multiple
                 className="rounded-md border border-gray-300 px-3 py-2"
-                {...register("images", { required: "Ovo polje je obavezno" })}
+                {...register("images")}
               />
               {errors?.images?.message && (
                 <p className="text-red-500">{errors.images.message}</p>

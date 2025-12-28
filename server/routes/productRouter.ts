@@ -27,12 +27,14 @@ productRouter.post(
   uploadToCloudinary,
   createProduct
 );
-// Sta ako admin update-uje sliku
 productRouter.patch(
   "/:id",
   protect,
   restirctTo("admin"),
-  upload.array("images", 5),
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "images", maxCount: 5 },
+  ]),
   parseProductBodyData,
   uploadToCloudinary,
   updateProduct
