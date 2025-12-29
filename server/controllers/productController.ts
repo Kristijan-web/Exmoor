@@ -20,7 +20,6 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
   // Funkcija radi sve, i upload i update prima jednu i prima vise slika
   // Cela ideja je da se req.file.mainImage nalazi na kraju niza filesArray
-  console.log("EVO REQ FILES", req.files);
   if (
     req.files &&
     req.method === "POST" &&
@@ -50,7 +49,6 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   });
 
   req.body.image = [];
-  console.log("EVO filesArray", filesArray);
   const uploadPromises = filesArray.map((file, i) => {
     const publicId = `user-${req.user.id}-${Date.now()}-${i}`;
 
@@ -72,16 +70,19 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   });
 
   const results = await Promise.all(uploadPromises);
-  console.log("EVO RESULTS", results);
 
   // mora da se doda req.body.mainImage i req.body.images
   // problem je kada se uradi samo izmena "ostalih slika" onda .pop mutira originalni niz i izmeni se glavna slika
   // Koja su resenja?
   // - Koristiti pop samo ako je prosledjen mainImage
+
+  // Kada se uploaduje samo mainImage ona skine ostale slike
   if (req.files && !Array.isArray(req.files) && req.files.mainImage) {
     req.body.mainImage = results.pop()?.secure_url;
   }
-  req.body.images = results.map((r) => r.secure_url);
+  if (req.files && !Array.isArray(req.files) && req.files.images) {
+    req.body.images = results.map((r) => r.secure_url);
+  }
 
   console.log("EVO req.body.images", req.body.images);
   next();
