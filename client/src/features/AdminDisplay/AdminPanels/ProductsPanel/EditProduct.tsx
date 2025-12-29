@@ -5,6 +5,7 @@ import useGetProducts from "../../../../hooks/Products/useGetProducts";
 import { useParams } from "react-router-dom";
 import useUpdateProduct from "../../../../hooks/Products/useUpdateProduct";
 import { Product } from "../../../../types/products/productsType";
+import toast from "react-hot-toast";
 
 export default function EditProduct() {
   // Uzimaju se svi proizvodi i filtrira se onaj koji  je izabran
@@ -28,15 +29,27 @@ export default function EditProduct() {
     [productToEdit, reset],
   );
 
+  if (!productToEdit) {
+    return <Loader size={35} />;
+  }
+
   function onSuccess(data: Product) {
     const formData = new FormData();
 
-    // Ako je korisnik uploado sliku onda korsitit tu, a ako nije koristi staru iz prodductToEdit
+    if (!productToEdit) {
+      toast.error("Doslo je do greske, pokusajte ponovo.");
+      return;
+    }
 
-    console.log([1, 2, 3].toString()); // dobice se "1,2,3" a ne "[1,2,3]"
-
+    // NEXT TO DO:
+    // Otici do backenda i dodati na fields Muletra .oldImages
     if (typeof data.mainImage[0] !== "string") {
       formData.append("mainImage", data.mainImage[0]);
+    }
+
+    // ovde se nalaze stare slike
+    for (const fileLocation of productToEdit.images) {
+      formData.append("oldImages", fileLocation);
     }
 
     formData.append("id", data.id);
@@ -48,12 +61,12 @@ export default function EditProduct() {
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
     for (const file of data.images) {
-      console.log("EVO GA FILE", file);
       formData.append("images", file);
     }
-    // formData.append("images", data.images[0]);
 
     updateProduct(formData);
+
+    // Treba da se doda .oldImages polje ovde
   }
 
   return (

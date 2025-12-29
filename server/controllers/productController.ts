@@ -17,9 +17,36 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+const deleteImageFromCloudinary = async function (public_id: string) {
+  const options = { resource_type: "image" };
+  const result = await cloudinary.uploader.destroy(public_id, options);
+  console.log("Evo rezultata brisanja slike", result);
+};
+
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
   // Funkcija radi sve, i upload i update prima jednu i prima vise slika
   // Cela ideja je da se req.file.mainImage nalazi na kraju niza filesArray
+
+  // Brisanje slike
+  // Kako korisnik brise sliku?
+  // - Tako sto na frontu klikne na sliku koju hoce da obrise
+
+  // Kako korisnik dodaje nove slike na postojece?
+  // Kada ode na upload image dugme onda tu ubace slike i one ce se dodati
+
+  // Resenja:
+
+  // 1. Kada se upload-uje slika mora da se ode do baze i na trenutni rezultat iz baze doda a ne da se sve overwrite-uje
+  // - Znaci ovde treba da imam pristupu images iz baze, i taj images array da se doda
+
+  // 2. Mada zar nije bolje da uzmem url-ove i sliku?
+  // - Na frontu za data.images bi trebao da mi bude objekat koji ce imati property-e oldImages i newImages, oldImages ce sadrzati url-ove vec uploadanih slika a newImages su nove slike
+  // (fajlovi)
+
+  // Kako bih to obradio na back-u?
+  // - Imao bih req.files.oldImages koji bi bio niz objekata uploadanih slika (stringovi)
+  // - Imao bih req.files.newImages koji bi bio niz objkeata novih slika (fajlova)
+
   if (
     req.files &&
     req.method === "POST" &&

@@ -13,8 +13,9 @@ export type Product = {
   water: string;
   price: number;
   quantity: number;
-  images: FileList | string[];
+  images: FileList | string;
   mainImage: FileList | string;
+  oldImages?: string;
   sale?: Sale | null;
 };
 
