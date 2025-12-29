@@ -20,6 +20,8 @@ export default function EditProduct() {
   useEffect(
     function fillFormInputs() {
       if (productToEdit) {
+        // Kod tipa ce biti productToEdit? Product ili ProductDTO?
+        // - productToEdit je product koji je stigao iz baze i bice ProductDTO
         reset(productToEdit);
       }
     },
@@ -46,25 +48,10 @@ export default function EditProduct() {
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
     for (const file of data.images) {
+      console.log("EVO GA FILE", file);
       formData.append("images", file);
     }
-
-    // Sta me muci, cemu zastoj?
-    // - kod tipa podatke ce biti data.images? bice niz objekata file
-
-    // Zasto uopste prevatram niz objekata tipa file u string?
-    // - Zato sto backend to ocekuje, ali ako prosledim string onda necu moci da citam vrednosti iz objekta
-
-    // Resenje:
-    // - Mora da se promeni tipizacija podatak za images
-
-    // Moguci problem
-    // Sta backend ocekuje
-    // - Multer ocekuje objekat sa property images koji sadrzi niz slika
-    // Da li ce multer to dobiti?
-    // -
-
-    console.log(data);
+    // formData.append("images", data.images[0]);
 
     updateProduct(formData);
   }
@@ -195,7 +182,11 @@ export default function EditProduct() {
                 <div className="group relative inline-block">
                   <img
                     className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
-                    src={productToEdit?.mainImage}
+                    src={
+                      typeof productToEdit?.mainImage === "string"
+                        ? productToEdit?.mainImage
+                        : undefined
+                    }
                   />
                   <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
                     <button
@@ -214,7 +205,7 @@ export default function EditProduct() {
               <label>Ostale Slike *</label>
               <input
                 type="file"
-                multiple
+                multiple={true}
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("images")}
               />
@@ -223,24 +214,25 @@ export default function EditProduct() {
               )}
               <div className="flex items-start justify-start gap-3">
                 {/* Problem je sto ts i dalje misli da ce images biti FileList a ne niz stringova */}
-                {productToEdit?.images.map((image) => {
-                  return (
-                    <div className="group relative inline-block">
-                      <img
-                        className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
-                        src={image}
-                      />
-                      <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
-                        <button
-                          type="button"
-                          className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800"
-                        >
-                          Obrisi
-                        </button>
+                {Array.isArray(productToEdit?.images) &&
+                  productToEdit?.images.map((image) => {
+                    return (
+                      <div className="group relative inline-block" key={image}>
+                        <img
+                          className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
+                          src={image}
+                        />
+                        <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
+                          <button
+                            type="button"
+                            className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800"
+                          >
+                            Obrisi
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           </div>

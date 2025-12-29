@@ -13,7 +13,7 @@ export type Product = {
   water: string;
   price: number;
   quantity: number;
-  images: FileList;
+  images: FileList | string[];
   mainImage: FileList | string;
   sale?: Sale | null;
 };
