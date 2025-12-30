@@ -31,6 +31,9 @@ productRouter.patch(
   "/:id",
   protect,
   restirctTo("admin"),
+  // Sta je ovde problem?
+  // - oldImages se dodaje na images, sto znaci da moze da se prevazidje max count
+  // - Umesto da je za images maxCount 5 sada ce biti 10
   upload.fields([
     { name: "mainImage", maxCount: 1 },
     { name: "images", maxCount: 5 },

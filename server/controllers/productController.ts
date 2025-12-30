@@ -47,6 +47,17 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   // - Imao bih req.files.oldImages koji bi bio niz objekata uploadanih slika (stringovi)
   // - Imao bih req.files.newImages koji bi bio niz objkeata novih slika (fajlova)
 
+  // TODO:
+  // - Proveri da li images + oldImages prelazi 5, ako prelazi baci korisniku gresku
+
+  if (!req.files || (req.files && Array.isArray(req.files)) || req.file) {
+    console.log("Proveri multer upload kod routera");
+    return next(new AppError("Greska na serveru...", 500));
+  }
+  // Problem
+  // - Sta ako se promeni samo mainImage a ne dira se images i oldImages hoce li oni biti prazni array-evi?
+
+  // ako ne postoji i jeste array
   if (
     req.files &&
     req.method === "POST" &&
@@ -58,11 +69,12 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
 
   // Ako je POST request onda mora da postoji mainImage
   let filesArray: FileCheck = [];
-  if (req.files && !Array.isArray(req.files) && req.files.images) {
+
+  if (req.files.images) {
     filesArray.push(...req.files.images);
   }
 
-  if (req.files && !Array.isArray(req.files) && req.files.mainImage) {
+  if (req.files.mainImage) {
     filesArray.push(...req.files.mainImage);
   }
 
@@ -104,10 +116,10 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   // - Koristiti pop samo ako je prosledjen mainImage
 
   // Kada se uploaduje samo mainImage ona skine ostale slike
-  if (req.files && !Array.isArray(req.files) && req.files.mainImage) {
+  if (req.files.mainImage) {
     req.body.mainImage = results.pop()?.secure_url;
   }
-  if (req.files && !Array.isArray(req.files) && req.files.images) {
+  if (req.files.images) {
     req.body.images = results.map((r) => r.secure_url);
   }
 
