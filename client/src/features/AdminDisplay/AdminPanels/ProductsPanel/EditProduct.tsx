@@ -21,8 +21,6 @@ export default function EditProduct() {
   useEffect(
     function fillFormInputs() {
       if (productToEdit) {
-        // Kod tipa ce biti productToEdit? Product ili ProductDTO?
-        // - productToEdit je product koji je stigao iz baze i bice ProductDTO
         reset(productToEdit);
       }
     },
@@ -41,8 +39,6 @@ export default function EditProduct() {
       return;
     }
 
-    // NEXT TO DO:
-    // Otici do backenda i dodati na fields Muletra .oldImages
     if (typeof data.mainImage[0] !== "string") {
       formData.append("mainImage", data.mainImage[0]);
     }
@@ -64,6 +60,9 @@ export default function EditProduct() {
       formData.append("images", file);
     }
 
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
     updateProduct(formData);
 
     // Treba da se doda .oldImages polje ovde

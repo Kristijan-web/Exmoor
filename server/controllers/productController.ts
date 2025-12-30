@@ -24,40 +24,11 @@ const deleteImageFromCloudinary = async function (public_id: string) {
 };
 
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
-  // Funkcija radi sve, i upload i update prima jednu i prima vise slika
-  // Cela ideja je da se req.file.mainImage nalazi na kraju niza filesArray
-
-  // Brisanje slike
-  // Kako korisnik brise sliku?
-  // - Tako sto na frontu klikne na sliku koju hoce da obrise
-
-  // Kako korisnik dodaje nove slike na postojece?
-  // Kada ode na upload image dugme onda tu ubace slike i one ce se dodati
-
-  // Resenja:
-
-  // 1. Kada se upload-uje slika mora da se ode do baze i na trenutni rezultat iz baze doda a ne da se sve overwrite-uje
-  // - Znaci ovde treba da imam pristupu images iz baze, i taj images array da se doda
-
-  // 2. Mada zar nije bolje da uzmem url-ove i sliku?
-  // - Na frontu za data.images bi trebao da mi bude objekat koji ce imati property-e oldImages i newImages, oldImages ce sadrzati url-ove vec uploadanih slika a newImages su nove slike
-  // (fajlovi)
-
-  // Kako bih to obradio na back-u?
-  // - Imao bih req.files.oldImages koji bi bio niz objekata uploadanih slika (stringovi)
-  // - Imao bih req.files.newImages koji bi bio niz objkeata novih slika (fajlova)
-
-  // TODO:
-  // - Proveri da li images + oldImages prelazi 5, ako prelazi baci korisniku gresku
-
   if (!req.files || (req.files && Array.isArray(req.files)) || req.file) {
     console.log("Proveri multer upload kod routera");
     return next(new AppError("Greska na serveru...", 500));
   }
-  // Problem
-  // - Sta ako se promeni samo mainImage a ne dira se images i oldImages hoce li oni biti prazni array-evi?
 
-  // ako ne postoji i jeste array
   if (
     req.files &&
     req.method === "POST" &&
@@ -110,17 +81,17 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
 
   const results = await Promise.all(uploadPromises);
 
-  // mora da se doda req.body.mainImage i req.body.images
-  // problem je kada se uradi samo izmena "ostalih slika" onda .pop mutira originalni niz i izmeni se glavna slika
-  // Koja su resenja?
-  // - Koristiti pop samo ako je prosledjen mainImage
-
-  // Kada se uploaduje samo mainImage ona skine ostale slike
   if (req.files.mainImage) {
     req.body.mainImage = results.pop()?.secure_url;
   }
   if (req.files.images) {
     req.body.images = results.map((r) => r.secure_url);
+  }
+
+  if (req.body.oldImages) {
+    req.body.oldImages.forEach((imagePath: string) => {
+      req.body.images.push(imagePath);
+    });
   }
 
   console.log("EVO req.body.images", req.body.images);
