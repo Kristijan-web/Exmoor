@@ -17,11 +17,15 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-const deleteImageFromCloudinary = async function (public_id: string) {
+export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
+  const { public_id } = req.params;
+  if (!public_id) {
+    return next(new AppError("PublicId nije poslat", 400));
+  }
   const options = { resource_type: "image" };
   const result = await cloudinary.uploader.destroy(public_id, options);
   console.log("Evo rezultata brisanja slike", result);
-};
+});
 
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
   if (!req.files || (req.files && Array.isArray(req.files)) || req.file) {
