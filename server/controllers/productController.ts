@@ -18,10 +18,12 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
 }
 
 export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
-  const { public_id } = req.params;
+  let { public_id } = req.params;
+  public_id = "users/" + public_id;
   if (!public_id) {
     return next(new AppError("PublicId nije poslat", 400));
   }
+  console.log("Evo publicid-a za brisanje", public_id);
   const options = { resource_type: "image" };
   const result = await cloudinary.uploader.destroy(public_id, options);
   console.log("Evo rezultata brisanja slike", result);
@@ -62,7 +64,6 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
     }
   });
 
-  req.body.image = [];
   const uploadPromises = filesArray.map((file, i) => {
     const publicId = `user-${req.user.id}-${Date.now()}-${i}`;
 
@@ -84,7 +85,6 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   });
 
   const results = await Promise.all(uploadPromises);
-
   if (req.files.mainImage) {
     req.body.mainImage = results.pop()?.secure_url;
   }
@@ -98,7 +98,6 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
     });
   }
 
-  console.log("EVO req.body.images", req.body.images);
   next();
 });
 
