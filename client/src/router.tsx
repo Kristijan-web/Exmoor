@@ -19,7 +19,7 @@ import NewPasswordPage from "./pages/NewPasswordPage";
 import PageNotFound from "./pages/PageNotFound";
 import DisplayProducts from "./features/AdminDisplay/AdminPanels/ProductsPanel/DisplayProducts";
 import AddProduct from "./features/AdminDisplay/AdminPanels/ProductsPanel/AddProduct";
-import EditProduct from "./features/AdminDisplay/AdminPanels/ProductsPanel/EditProduct";
+import EditProduct from "./features/AdminDisplay/AdminPanels/ProductsPanel/EditProduct/EditProduct";
 
 // Nakon logovanja/signup-a ne bi trebalo da moze ponovo da se pristupi tim stranicama
 const router = createBrowserRouter([

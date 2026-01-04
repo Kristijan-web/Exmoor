@@ -10,7 +10,7 @@ export default async function createProduct(product: FormData) {
   // U slucaju da se desi greska na serveru, bez obzira da li je operational ili programmatic server ce vratiti objekat.
   const response = await fetchData.json();
 
-  if (!fetchData.ok || fetchData.status !== 200) {
+  if (!fetchData.ok || fetchData.status !== 201) {
     throw response;
   }
 

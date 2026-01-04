@@ -15,7 +15,7 @@ export default function useCreateProduct() {
       if ("isOperational" in err && err.isOperational) {
         toast.error(err.message);
       } else {
-        toast.error("Something went wrong...");
+        toast.error("Something went wrong...EEEE");
       }
     },
   });

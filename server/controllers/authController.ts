@@ -99,7 +99,7 @@ const signup = catchAsync(async (req, res, next) => {
   setJWTInHttpOnlyCookie(jwtToken, res);
   user.password = undefined as any;
   user.__v = undefined as any;
-  sendResponse(res, user);
+  sendResponse(res, user, 201);
 });
 
 const login = catchAsync(async (req, res, next) => {
@@ -122,7 +122,7 @@ const login = catchAsync(async (req, res, next) => {
 
   const jwtToken = createJWT(user);
   setJWTInHttpOnlyCookie(jwtToken, res);
-  sendResponse(res, user);
+  sendResponse(res, user, 200);
 });
 
 const logout = catchAsync(async (req, res, next) => {
@@ -205,7 +205,7 @@ const newPassword = catchAsync(async (req, res, next) => {
   setJWTInHttpOnlyCookie(jwt, res);
   // mislim da nema potrebe da prosledim user-a u reponse, dovoljno je samo jwt i onda kada se uradi reidrect dohvatice se novi podaci
   user.password = undefined as any;
-  sendResponse(res, user);
+  sendResponse(res, user, 200);
 });
 
 const updatePassword = catchAsync(async (req, res, next) => {
@@ -228,7 +228,7 @@ const updatePassword = catchAsync(async (req, res, next) => {
 
   const jwt = createJWT(req.user);
   setJWTInHttpOnlyCookie(jwt, res);
-  sendResponse(res, req.user);
+  sendResponse(res, req.user, 200);
 });
 
 export {

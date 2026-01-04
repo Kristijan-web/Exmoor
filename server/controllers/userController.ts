@@ -66,7 +66,7 @@ const updateUser = catchAsync(async (req, res, next) => {
   if (!updatedDocument) {
     return next(new AppError(`Korisnik ne postoji`, 404));
   }
-  sendResponse(res, updatedDocument);
+  sendResponse(res, updatedDocument, 200);
 });
 
 const getMe = function (req: Request, res: Response, next: NextFunction) {

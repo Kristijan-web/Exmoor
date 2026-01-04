@@ -6,6 +6,7 @@ import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utills/catchAsync";
 import cloudinary from "../utills/cloudinary";
 import type { UploadApiResponse } from "cloudinary";
+import sendResponse from "../utills/sendResponse";
 
 // { [fieldname: string]: File[] }
 type FileCheck = Express.Multer.File[];
@@ -18,8 +19,13 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
 }
 
 export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
-  let { public_id } = req.params;
-  public_id = "users/" + public_id;
+  // Problems to fix:
+  // - Need to delete image path from database
+  // - When the image is deleted, cached version is still alive
+
+  // we take the part without the extension
+  const public_id = decodeURIComponent(req.params.public_id).split(".")[0];
+
   if (!public_id) {
     return next(new AppError("PublicId nije poslat", 400));
   }
@@ -27,6 +33,16 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   const options = { resource_type: "image" };
   const result = await cloudinary.uploader.destroy(public_id, options);
   console.log("Evo rezultata brisanja slike", result);
+  if (result.result === "not found") {
+    return next(
+      new AppError(
+        "Slika nije pronadjena, ako se greska nastavi molimo kontaktirajte developera",
+        400
+      )
+    );
+  }
+
+  sendResponse(res, result.result, 204);
 });
 
 const uploadToCloudinary = catchAsync(async (req, res, next) => {
@@ -70,7 +86,7 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
     return new Promise<UploadApiResponse>((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
         {
-          folder: "users",
+          folder: "products",
           public_id: publicId,
           overwrite: true,
         },
@@ -93,6 +109,10 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   }
 
   if (req.body.oldImages) {
+    if (req.body.oldImages && typeof req.body.oldImages === "string") {
+      // ukoliko je prosledjena jedna slika, ona je u string formatu, a ne u nizu, pa je ubacujemo u niz
+      req.body.oldImages = [req.body.oldImages];
+    }
     req.body.oldImages.forEach((imagePath: string) => {
       req.body.images.push(imagePath);
     });

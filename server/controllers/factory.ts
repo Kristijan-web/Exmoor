@@ -6,7 +6,7 @@ import sendResponse from "../utills/sendResponse";
 const getAll = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
     const documents = await Model.find();
-    sendResponse(res, documents);
+    sendResponse(res, documents, 200);
   });
 
 const getOne = <T>(Model: Model<T>) =>
@@ -16,14 +16,14 @@ const getOne = <T>(Model: Model<T>) =>
     if (!document) {
       return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
-    sendResponse(res, document);
+    sendResponse(res, document, 200);
   });
 
 const createOne = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
     const newDocument = await Model.create(req.body);
-    sendResponse(res, newDocument);
+    sendResponse(res, newDocument, 201);
   });
 // ovo je za admina
 const deleteOne = <T>(Model: Model<T>) =>
@@ -55,7 +55,7 @@ const updateOne = <T>(Model: Model<T>) =>
     if (!updatedDocument) {
       return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
-    sendResponse(res, updatedDocument);
+    sendResponse(res, updatedDocument, 200);
   });
 
 export { getAll, getOne, createOne, deleteOne, updateOne };
