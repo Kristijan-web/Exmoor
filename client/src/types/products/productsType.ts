@@ -13,7 +13,7 @@ export type Product = {
   water: string;
   price: number;
   quantity: number;
-  images: FileList | string;
+  images: FileList | string[]; // Ako saljem stare slike bazi onda ih saljem kao stringove, a ako su nove slike onda su one u FileList-i
   mainImage: FileList | string;
   oldImages?: string;
   sale?: Sale | null;

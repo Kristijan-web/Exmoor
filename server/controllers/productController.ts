@@ -109,15 +109,14 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   }
 
   if (req.body.oldImages) {
+    // ukoliko se prosledi samo 1 vrednost onda je ona u string formatu a ne u array-u
     if (req.body.oldImages && typeof req.body.oldImages === "string") {
-      // ukoliko je prosledjena jedna slika, ona je u string formatu, a ne u nizu, pa je ubacujemo u niz
       req.body.oldImages = [req.body.oldImages];
     }
     req.body.oldImages.forEach((imagePath: string) => {
       req.body.images.push(imagePath);
     });
   }
-
   next();
 });
 

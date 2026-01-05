@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { cache, useState } from "react";
 import useCatchAsync from "../../../../../utills/useCatchAsync";
 import { API_URL } from "../../../../../utills/constants";
 import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { Product } from "../../../../../types/products/productsType";
 
 type Props = {
   image: string;
@@ -9,6 +11,7 @@ type Props = {
 
 export default function EditProductImages({ image }: Props) {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const index = image.indexOf("products");
 
@@ -17,6 +20,7 @@ export default function EditProductImages({ image }: Props) {
   console.log("EVO PUBLIC_ID-a", public_id);
 
   async function handleImageDelete() {
+    // sends async reqest and deletes image from the react-query cache
     // Dodaj loader
     // Vidi da li cu da pravim posebnu componentu za slike
     return useCatchAsync(async (signal) => {
@@ -32,6 +36,24 @@ export default function EditProductImages({ image }: Props) {
         const response = await fetchData.json();
         throw response;
       }
+
+      queryClient.setQueryData(["products"], (currentData: Product[]) => {
+        return currentData.map((cacheProduct) => {
+          let newArray = [];
+
+          if (Array.isArray(cacheProduct.images)) {
+            newArray = cacheProduct.images.filter((cachedImage) => {
+              return cachedImage !== image;
+            });
+
+            return { ...cacheProduct, images: newArray };
+          } else {
+            console.log("Error, please contact the developer...");
+            return cacheProduct;
+          }
+        });
+        // Filtitram images
+      });
       toast.success("Slika uspesno obrisana");
     }, setIsDeleteLoading)();
 
@@ -60,6 +82,7 @@ export default function EditProductImages({ image }: Props) {
     // Kroz vreme nece biti cestog brisanja slika tako da opterecenje na bazu nece biti veliko, mada svakako necu opterecivati bazu
     // Resenje
     // - Koristi setQueryData da rucno izmenim cache
+    // - Zato sto svaki put kada se invalidira cache-a pravi se novi request ka bazi za sve proizvode
   }
 
   if (isDeleteLoading) return <p>Loading...</p>;
