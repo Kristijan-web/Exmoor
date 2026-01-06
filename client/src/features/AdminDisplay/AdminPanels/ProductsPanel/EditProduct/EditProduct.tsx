@@ -227,7 +227,11 @@ export default function EditProduct() {
                 {/* Problem je sto ts i dalje misli da ce images biti FileList a ne niz stringova */}
                 {Array.isArray(productToEdit?.images) &&
                   productToEdit?.images.map((image) => (
-                    <EditProductImages image={image} key={image} />
+                    <EditProductImages
+                      image={image}
+                      key={image}
+                      productId={productToEdit.id}
+                    />
                   ))}
               </div>
             </div>

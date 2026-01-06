@@ -1,4 +1,4 @@
-import { cache, useState } from "react";
+import { useState } from "react";
 import useCatchAsync from "../../../../../utills/useCatchAsync";
 import { API_URL } from "../../../../../utills/constants";
 import toast from "react-hot-toast";
@@ -7,9 +7,10 @@ import { Product } from "../../../../../types/products/productsType";
 
 type Props = {
   image: string;
+  productId: string;
 };
 
-export default function EditProductImages({ image }: Props) {
+export default function EditProductImages({ image, productId }: Props) {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const queryClient = useQueryClient();
 
@@ -27,9 +28,13 @@ export default function EditProductImages({ image }: Props) {
       const fetchData = await fetch(
         `${API_URL}/api/v1/products/images/${encodeURIComponent(public_id)}`,
         {
-          method: "DELETE",
+          method: "PATCH",
           credentials: "include",
           signal,
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ id: productId }),
         },
       );
       if (!fetchData.ok || fetchData.status !== 204) {

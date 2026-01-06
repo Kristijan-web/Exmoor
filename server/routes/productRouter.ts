@@ -49,7 +49,7 @@ productRouter.delete("/:id", protect, restirctTo("admin"), deleteProduct);
 // Sta mi je potrebno da se obrise slika?
 // - Njen publicId
 // Najbolje da posaljem taj publicId preko urla
-productRouter.delete(
+productRouter.patch(
   "/images/:public_id",
   protect,
   restirctTo("admin"),

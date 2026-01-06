@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import AppError from "./appError";
 
-type AppNext = (err?: AppError) => void;
+type AppNext = (err?: AppError | Error) => void;
 
 // RESENJE DONEKLE: TYPESCRIPT TYPES SE PONASAJU DRUGACIJE KADA SU U PITANJU FUNKCIJE, NE RADI OCEKIVANO KAO SA OBJECT/VALUES
 // - (Uz --strictFunctionTypes) parametri su kontravariantni: funkcija koju prosleđuješ sme da prima širi tip od onog koji se očekuje.

@@ -21,16 +21,19 @@ function parseProductBodyData(req: Request, res: Response, next: NextFunction) {
 export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   // Problems to fix:
   // - Need to delete image path from database
-  // - When the image is deleted, cached version is still alive
 
   // we take the part without the extension
-  const public_id = decodeURIComponent(req.params.public_id).split(".")[0];
+  const public_id = decodeURIComponent(req.params.public_id).split(".")[0]; // public_id has .jpg so we ake left part
+  console.log("evo body0-a", req.body);
+  const product_id = req.body.id;
 
   if (!public_id) {
-    return next(new AppError("PublicId nije poslat", 400));
+    return next(new Error("Nije prosledjen public_id"));
+  }
+  if (!product_id) {
   }
   console.log("Evo publicid-a za brisanje", public_id);
-  const options = { resource_type: "image" };
+  const options = { resource_type: "image", invalidate: true };
   const result = await cloudinary.uploader.destroy(public_id, options);
   console.log("Evo rezultata brisanja slike", result);
   if (result.result === "not found") {
@@ -40,6 +43,29 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
         400
       )
     );
+  }
+
+  if (result.result === "ok") {
+    // Kako cu znati da li brisem mainImage ili images?
+
+    const deletedProductFromDB = await Product.findByIdAndUpdate(
+      product_id,
+      {
+        $pull: {
+          images: { $regex: public_id },
+        },
+      },
+      { new: true, runValidators: true }
+    );
+    if (!deletedProductFromDB) {
+      console.log("ALOOOO");
+      return next(
+        new AppError(
+          "Provided image does not exist, please contact the developer",
+          404
+        )
+      );
+    }
   }
 
   sendResponse(res, result.result, 204);
