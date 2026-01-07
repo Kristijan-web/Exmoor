@@ -7,6 +7,9 @@ import useUpdateProduct from "../../../../../hooks/Products/useUpdateProduct";
 import { Product } from "../../../../../types/products/productsType";
 import toast from "react-hot-toast";
 import EditProductImages from "./EditProductImages";
+import useCatchAsync from "../../../../../utills/useCatchAsync";
+import { API_URL } from "../../../../../utills/constants";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function EditProduct() {
   // Uzimaju se svi proizvodi i filtrira se onaj koji  je izabran
@@ -16,8 +19,12 @@ export default function EditProduct() {
   const { errors } = formState;
   const { id } = useParams();
   const [showSale, setshowSale] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const productToEdit = products?.filter((product) => product.id === id)[0];
+
+  // sta ako neko uploaduje image u mainImage onda dolazi do bug-a ovde
 
   useEffect(
     function fillFormInputs() {
@@ -64,6 +71,75 @@ export default function EditProduct() {
     updateProduct(formData);
 
     // Treba da se doda .oldImages polje ovde
+  }
+
+  async function handleImageDelete(
+    typeOfImage: string,
+    product_id: string,
+    public_id: string,
+    loaderSetter: React.Dispatch<React.SetStateAction<boolean>>,
+  ) {
+    // sends async reqest and deletes image from the react-query cache
+    // Dodaj loader
+    // Vidi da li cu da pravim posebnu componentu za slike
+    return useCatchAsync(async (signal) => {
+      const fetchData = await fetch(
+        `${API_URL}/api/v1/products/images/${encodeURIComponent(public_id)}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          signal,
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ id: product_id, typeOfImage }),
+        },
+      );
+      if (!fetchData.ok || fetchData.status !== 204) {
+        const response = await fetchData.json();
+        throw response;
+      }
+      console.log("ALOOO");
+      queryClient.setQueryData(["products"], (currentData: Product[]) => {
+        // Problem je sto ovde radim nad nizom images a mainImage je objekat u mainProduct,funkcija mora da zna da li prima mainImage ili images
+
+        // Ako dobijam productid zasto ne filtriram currentData i izvucem taj objekat iz niza
+
+        // Zbog cega sad mora da refakturisem celu funkciju?
+        // Sta se promenilo?
+        // - Logika koja se koristila je potrebna na jos jednom mestu medjutim nije potpuno ista, i onda pokusavam da iskoristim sto vise mogu zajednickih stvari
+        // Zbog cega nisam odmah ovako odlucio?
+        // - Nisam razmisljao o tome dal ce sa slicna logika ponavljati na jos jednom mestu
+        console.log("ehej");
+        console.log("CURRENT DATA", currentData);
+        const cachedProduct = currentData.find((cacheProduct) => {
+          console.log("ALOOOOOOOOOO");
+          return cacheProduct.id === product_id;
+        });
+        // Koga ovde pokusavam da zastitim?
+        // - Sebe kao programera
+        if (!cachedProduct) {
+          console.log("NEMA GA U CACHE-u");
+          return toast.error(
+            "Izabrani proizvod ne postoji, molimo kontaktirajte developera",
+          );
+        }
+
+        if (typeOfImage === "images" && Array.isArray(cachedProduct.images)) {
+          const filteredImages = cachedProduct.images.filter((cachedImage) => {
+            return cachedImage.includes(public_id) === true;
+            // return cachedImage !== image;;
+          });
+          cachedProduct.images = filteredImages;
+        }
+
+        if (typeOfImage === "mainImage") {
+          cachedProduct.mainImage = "";
+        }
+        return currentData;
+      });
+      toast.success("Slika uspesno obrisana");
+    }, loaderSetter)();
   }
 
   return (
@@ -188,26 +264,45 @@ export default function EditProduct() {
               {errors?.mainImage?.message && (
                 <p className="text-red-500">{errors.mainImage.message}</p>
               )}
-              <div className="flex flex-col items-start justify-center">
-                <div className="group relative inline-block">
-                  <img
-                    className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
-                    src={
-                      typeof productToEdit?.mainImage === "string"
-                        ? productToEdit?.mainImage
-                        : undefined
-                    }
-                  />
-                  <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
-                    <button
-                      type="button"
-                      className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800"
-                    >
-                      Obrisi
-                    </button>
+              {isDeleteLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <div className="flex flex-col items-start justify-center">
+                  <div
+                    className="group relative inline-block"
+                    onClick={() => {
+                      if (typeof productToEdit?.mainImage === "string") {
+                        const index =
+                          productToEdit?.mainImage.indexOf("products");
+                        const public_id = productToEdit?.mainImage.slice(index);
+                        handleImageDelete(
+                          "mainImage",
+                          productToEdit.id,
+                          public_id,
+                          setIsDeleteLoading,
+                        );
+                      }
+                    }}
+                  >
+                    <img
+                      className="w-20 rounded-xs group-hover:opacity-90 group-hover:blur-xs"
+                      src={
+                        typeof productToEdit?.mainImage === "string"
+                          ? productToEdit?.mainImage
+                          : undefined
+                      }
+                    />
+                    <div className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] group-hover:block">
+                      <button
+                        type="button"
+                        className="cursor-pointer rounded-xs bg-red-600 p-1 text-white hover:bg-red-700 active:bg-red-800"
+                      >
+                        Obrisi
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* part 2 */}
@@ -230,7 +325,8 @@ export default function EditProduct() {
                     <EditProductImages
                       image={image}
                       key={image}
-                      productId={productToEdit.id}
+                      product_id={productToEdit.id}
+                      handleImageDelete={handleImageDelete}
                     />
                   ))}
               </div>

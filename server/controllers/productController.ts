@@ -24,18 +24,18 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
 
   // we take the part without the extension
   const public_id = decodeURIComponent(req.params.public_id).split(".")[0]; // public_id has .jpg so we ake left part
-  console.log("evo body0-a", req.body);
   const product_id = req.body.id;
+  const typeOfImage = req.body.type; // It can be "mainImage" or "images"
 
   if (!public_id) {
     return next(new Error("Nije prosledjen public_id"));
   }
   if (!product_id) {
+    return next(new Error("Nije prosledjen product_id"));
   }
-  console.log("Evo publicid-a za brisanje", public_id);
   const options = { resource_type: "image", invalidate: true };
   const result = await cloudinary.uploader.destroy(public_id, options);
-  console.log("Evo rezultata brisanja slike", result);
+
   if (result.result === "not found") {
     return next(
       new AppError(
@@ -47,12 +47,11 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
 
   if (result.result === "ok") {
     // Kako cu znati da li brisem mainImage ili images?
-
     const deletedProductFromDB = await Product.findByIdAndUpdate(
       product_id,
       {
         $pull: {
-          images: { $regex: public_id },
+          [typeOfImage]: { $regex: public_id },
         },
       },
       { new: true, runValidators: true }

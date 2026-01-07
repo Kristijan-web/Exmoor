@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../../../../ui/Loader";
 import useCreateProduct from "../../../../hooks/Products/useCreateProduct";
 import { Product } from "../../../../types/products/productsType";
@@ -7,12 +7,12 @@ import { Product } from "../../../../types/products/productsType";
 // Ako je showSale true onda polja nisu obavezna!!!
 
 export default function AddProduct() {
-  const { register, formState, handleSubmit } = useForm<Product>();
+  const { register, formState, handleSubmit, reset } = useForm<Product>();
   const { errors } = formState;
   const [showSale, setshowSale] = useState(false);
-  const { mutate: createProduct, isPending } = useCreateProduct();
+  const { mutateAsync: createProduct, isPending } = useCreateProduct();
 
-  function onSuccess(data: Product) {
+  async function onSuccess(data: Product) {
     const formData = new FormData();
     formData.append("mainImage", data.mainImage[0]);
     for (const file of data.images) {
@@ -26,8 +26,11 @@ export default function AddProduct() {
     formData.append("quantity", data.quantity.toString());
     formData.append("sale", JSON.stringify(data.sale));
 
-    createProduct(formData);
+    await createProduct(formData);
+
+    reset();
   }
+  useEffect;
 
   return (
     <section className="col-start-1 col-end-3 flex h-full items-center justify-center p-4 lg:col-start-2 lg:col-end-3">

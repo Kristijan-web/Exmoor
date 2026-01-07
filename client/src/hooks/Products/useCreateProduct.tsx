@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export default function useCreateProduct() {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutate, mutateAsync, isPending, isSuccess } = useMutation({
     mutationFn: (product: FormData) => createProduct(product),
     onSuccess: () => {
       // mora da se invadira query key
@@ -20,5 +20,5 @@ export default function useCreateProduct() {
     },
   });
 
-  return { mutate, isPending };
+  return { mutate, isPending, isSuccess, mutateAsync };
 }
