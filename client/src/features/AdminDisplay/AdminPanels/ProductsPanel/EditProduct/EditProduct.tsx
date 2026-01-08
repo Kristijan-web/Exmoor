@@ -99,46 +99,55 @@ export default function EditProduct() {
         const response = await fetchData.json();
         throw response;
       }
-      console.log("ALOOO");
       queryClient.setQueryData(["products"], (currentData: Product[]) => {
-        // Problem je sto ovde radim nad nizom images a mainImage je objekat u mainProduct,funkcija mora da zna da li prima mainImage ili images
+        return currentData.map((cachedProduct) => {
+          // mora da se prodje kroz cached product images
+          if (Array.isArray(cachedProduct.images)) {
+            const filteredImages = cachedProduct.images.filter((cacheImage) => {
+              return cacheImage.includes(public_id) === false;
+            });
+            return { ...cachedProduct, images: filteredImages };
+          }
 
-        // Ako dobijam productid zasto ne filtriram currentData i izvucem taj objekat iz niza
+          return cachedProduct;
+        });
 
-        // Zbog cega sad mora da refakturisem celu funkciju?
-        // Sta se promenilo?
-        // - Logika koja se koristila je potrebna na jos jednom mestu medjutim nije potpuno ista, i onda pokusavam da iskoristim sto vise mogu zajednickih stvari
-        // Zbog cega nisam odmah ovako odlucio?
-        // - Nisam razmisljao o tome dal ce sa slicna logika ponavljati na jos jednom mestu
-        console.log("ehej");
-        console.log("CURRENT DATA", currentData);
+        console.log("ispod je stari kod");
+
         const cachedProduct = currentData.find((cacheProduct) => {
-          console.log("ALOOOOOOOOOO");
           return cacheProduct.id === product_id;
         });
         // Koga ovde pokusavam da zastitim?
         // - Sebe kao programera
         if (!cachedProduct) {
           console.log("NEMA GA U CACHE-u");
-          return toast.error(
+          toast.error(
             "Izabrani proizvod ne postoji, molimo kontaktirajte developera",
           );
+          return currentData;
         }
-
+        let filteredImages: string[] = [];
         if (typeOfImage === "images" && Array.isArray(cachedProduct.images)) {
-          const filteredImages = cachedProduct.images.filter((cachedImage) => {
-            return cachedImage.includes(public_id) === true;
+          // Ispod je stari kod
+          filteredImages = cachedProduct.images.filter((cachedImage) => {
+            return cachedImage.includes(public_id) === false;
             // return cachedImage !== image;;
           });
           cachedProduct.images = filteredImages;
+          console.log("Evo filtered images-a", filteredImages);
+          console.log("evo currentData-a", currentData);
         }
 
         if (typeOfImage === "mainImage") {
           cachedProduct.mainImage = "";
         }
-        return currentData;
+        console.log("Dosao do ovog zadnjeg return-a");
+        return currentData.map((p) =>
+          p.id === product_id ? { ...p, images: filteredImages } : p,
+        );
       });
       toast.success("Slika uspesno obrisana");
+      console.log("evo ga current product", productToEdit);
     }, loaderSetter)();
   }
 
@@ -319,12 +328,11 @@ export default function EditProduct() {
               )}
               {/* flex items-start justify-start gap-3 */}
               <div className="grid grid-cols-4 items-start justify-start gap-3">
-                {/* Problem je sto ts i dalje misli da ce images biti FileList a ne niz stringova */}
                 {Array.isArray(productToEdit?.images) &&
-                  productToEdit?.images.map((image) => (
+                  productToEdit?.images.map((image, i) => (
                     <EditProductImages
                       image={image}
-                      key={image}
+                      key={i}
                       product_id={productToEdit.id}
                       handleImageDelete={handleImageDelete}
                     />

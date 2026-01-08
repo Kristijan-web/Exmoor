@@ -25,7 +25,11 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   // we take the part without the extension
   const public_id = decodeURIComponent(req.params.public_id).split(".")[0]; // public_id has .jpg so we ake left part
   const product_id = req.body.id;
-  const typeOfImage = req.body.type; // It can be "mainImage" or "images"
+  const typeOfImage = req.body.typeOfImage; // It can be "mainImage" or "images"
+
+  if (!typeOfImage) {
+    return next(new Error("Nije prosledjen typeOfImage"));
+  }
 
   if (!public_id) {
     return next(new Error("Nije prosledjen public_id"));

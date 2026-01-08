@@ -22,8 +22,6 @@ export default function EditProductImages({
 
   const public_id = image.slice(index);
 
-  console.log("EVO PUBLIC_ID-a", public_id);
-
   if (isDeleteLoading) return <p>Loading...</p>;
 
   return (
