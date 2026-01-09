@@ -100,51 +100,24 @@ export default function EditProduct() {
         throw response;
       }
       queryClient.setQueryData(["products"], (currentData: Product[]) => {
+        // PROBLEM:
+        // RUCNO MUTIRANJE Reference cache-a izaziva bug
         return currentData.map((cachedProduct) => {
           // mora da se prodje kroz cached product images
-          if (Array.isArray(cachedProduct.images)) {
+          if (typeOfImage === "images" && Array.isArray(cachedProduct.images)) {
             const filteredImages = cachedProduct.images.filter((cacheImage) => {
               return cacheImage.includes(public_id) === false;
             });
             return { ...cachedProduct, images: filteredImages };
           }
-
-          return cachedProduct;
+          if (typeOfImage === "mainImage" && typeof typeOfImage === "string") {
+            return {
+              ...cachedProduct,
+              mainImage:
+                cachedProduct.id === product_id ? "" : cachedProduct.mainImage,
+            };
+          }
         });
-
-        console.log("ispod je stari kod");
-
-        const cachedProduct = currentData.find((cacheProduct) => {
-          return cacheProduct.id === product_id;
-        });
-        // Koga ovde pokusavam da zastitim?
-        // - Sebe kao programera
-        if (!cachedProduct) {
-          console.log("NEMA GA U CACHE-u");
-          toast.error(
-            "Izabrani proizvod ne postoji, molimo kontaktirajte developera",
-          );
-          return currentData;
-        }
-        let filteredImages: string[] = [];
-        if (typeOfImage === "images" && Array.isArray(cachedProduct.images)) {
-          // Ispod je stari kod
-          filteredImages = cachedProduct.images.filter((cachedImage) => {
-            return cachedImage.includes(public_id) === false;
-            // return cachedImage !== image;;
-          });
-          cachedProduct.images = filteredImages;
-          console.log("Evo filtered images-a", filteredImages);
-          console.log("evo currentData-a", currentData);
-        }
-
-        if (typeOfImage === "mainImage") {
-          cachedProduct.mainImage = "";
-        }
-        console.log("Dosao do ovog zadnjeg return-a");
-        return currentData.map((p) =>
-          p.id === product_id ? { ...p, images: filteredImages } : p,
-        );
       });
       toast.success("Slika uspesno obrisana");
       console.log("evo ga current product", productToEdit);

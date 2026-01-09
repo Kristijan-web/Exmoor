@@ -23,7 +23,7 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   // - Need to delete image path from database
 
   // we take the part without the extension
-  const public_id = decodeURIComponent(req.params.public_id).split(".")[0]; // public_id has .jpg so we ake left part
+  const public_id = decodeURIComponent(req.params.public_id).split(".")[0]; // public_id has .jpg so we take left part
   const product_id = req.body.id;
   const typeOfImage = req.body.typeOfImage; // It can be "mainImage" or "images"
 
@@ -50,18 +50,33 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   }
 
   if (result.result === "ok") {
-    // Kako cu znati da li brisem mainImage ili images?
-    const deletedProductFromDB = await Product.findByIdAndUpdate(
-      product_id,
-      {
-        $pull: {
-          [typeOfImage]: { $regex: public_id },
+    // Greska je sto $pull ne moze da se primeni nad elementom koji nije niz
+    let deletedProductFromDB;
+    if (typeOfImage === "images") {
+      deletedProductFromDB = await Product.findByIdAndUpdate(
+        product_id,
+        {
+          $pull: {
+            images: { $regex: public_id },
+          },
         },
-      },
-      { new: true, runValidators: true }
-    );
+        { new: true, runValidators: true }
+      );
+    }
+
+    if (typeOfImage === "mainImage") {
+      deletedProductFromDB = await Product.findByIdAndUpdate(
+        product_id,
+        {
+          $unset: {
+            mainImage: "",
+          },
+        },
+        { new: true, runValidators: true }
+      );
+    }
+
     if (!deletedProductFromDB) {
-      console.log("ALOOOO");
       return next(
         new AppError(
           "Provided image does not exist, please contact the developer",
@@ -136,16 +151,31 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   if (req.files.images) {
     req.body.images = results.map((r) => r.secure_url);
   }
-
-  if (req.body.oldImages) {
+  console.log("EVO ga req.body", req.body);
+  // Ako je req.files file objekat a req.images niz stringo-ova onda ne sme da se radi upis u req.body.images
+  if (req.body.oldImages && typeof req.body.images[0] !== "string") {
+    console.log("ALOO UPAO OVDE");
+    console.log("Evo ga req.body.images", req.body.images);
     // ukoliko se prosledi samo 1 vrednost onda je ona u string formatu a ne u array-u
-    if (req.body.oldImages && typeof req.body.oldImages === "string") {
+    if (typeof req.body.oldImages === "string") {
       req.body.oldImages = [req.body.oldImages];
     }
     req.body.oldImages.forEach((imagePath: string) => {
+      // Unique contstraint u bazi sprecava upis vise istih slika
+      // Sta se desava kada se prosledi jedna slika za images
+      // 1. Rezultat novih slika iz "images" je upisan u req.body.images
+      // 2. Stare slike sa front-a su upisane u req.body.
+      // 3. i onda se izvrsi update koji ih sve zameni
+
+      // Kako onda dodavanje samo mainImage-a pravi problem?
+      // - Jer onda images niz string-ova slika a ne fajl slike/slika i onda dolazi do duplog upisivanja
+
+      // Kako ce to da resim?
+      // - Treba da zabranim ulaz u req.body.oldImages, jer ce onda req.body.images uzeti niz string-ova sa front-a
       req.body.images.push(imagePath);
     });
   }
+
   next();
 });
 
