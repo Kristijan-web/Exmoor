@@ -103,7 +103,12 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   ) {
     return next(new AppError("Glavna slika mora da postoji", 400));
   }
-
+  if (
+    Array.isArray(req.body.images) &&
+    typeof req.body.images[0] === "string"
+  ) {
+    req.body.images = [];
+  }
   // Ako je POST request onda mora da postoji mainImage
   let filesArray: FileCheck = [];
 
@@ -151,34 +156,22 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   if (req.files.images) {
     req.body.images = results.map((r) => r.secure_url);
   }
-  console.log("EVO ga req.body", req.body);
-  // Ako je req.files file objekat a req.images niz stringo-ova onda ne sme da se radi upis u req.body.images
-  if (req.body.oldImages && typeof req.body.images[0] !== "string") {
-    console.log("ALOO UPAO OVDE");
-    console.log("Evo ga req.body.images", req.body.images);
+
+  // Ako se prosledi slika req.body.images ce biti niz jednog string-a te nove slike
+  if (req.body.oldImages && Array.isArray(req.body.images)) {
     // ukoliko se prosledi samo 1 vrednost onda je ona u string formatu a ne u array-u
     if (typeof req.body.oldImages === "string") {
       req.body.oldImages = [req.body.oldImages];
     }
     req.body.oldImages.forEach((imagePath: string) => {
-      // Unique contstraint u bazi sprecava upis vise istih slika
-      // Sta se desava kada se prosledi jedna slika za images
-      // 1. Rezultat novih slika iz "images" je upisan u req.body.images
-      // 2. Stare slike sa front-a su upisane u req.body.
-      // 3. i onda se izvrsi update koji ih sve zameni
-
-      // Kako onda dodavanje samo mainImage-a pravi problem?
-      // - Jer onda images niz string-ova slika a ne fajl slike/slika i onda dolazi do duplog upisivanja
-
-      // Kako ce to da resim?
-      // - Treba da zabranim ulaz u req.body.oldImages, jer ce onda req.body.images uzeti niz string-ova sa front-a
       req.body.images.push(imagePath);
     });
   }
 
   next();
 });
-
+// Bug:
+// - Kada se posalje samo 1 "images" sa front-a, on ne bude u nizu nego cist string
 const upload = multer({
   storage: multer.memoryStorage(),
 });
