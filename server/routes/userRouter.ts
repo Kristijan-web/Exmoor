@@ -5,7 +5,7 @@ import {
   logout,
   newPassword,
   protect,
-  restirctTo,
+  restrictTo,
   signup,
   updatePassword,
 } from "../controllers/authController";
@@ -32,7 +32,7 @@ userRouter.patch(
   "/updatePassword",
   protect,
   filterUserBody,
-  restirctTo("user", "admin"),
+  restrictTo("user", "admin"),
   updatePassword
 );
 // Zasto koristim /me umesto getUser endpoint-a?
@@ -42,14 +42,14 @@ userRouter.patch(
 userRouter.get("/me", protect, getMe);
 
 // admin routes for CRUD
-userRouter.get("/", protect, restirctTo("admin"), getUsers);
-userRouter.get("/:id", protect, restirctTo("admin"), getUser);
-userRouter.post("/", protect, restirctTo("admin"), filterUserBody, createUser);
-userRouter.delete("/:id", protect, restirctTo("admin"), deleteUser);
+userRouter.get("/", protect, restrictTo("admin"), getUsers);
+userRouter.get("/:id", protect, restrictTo("admin"), getUser);
+userRouter.post("/", protect, restrictTo("admin"), filterUserBody, createUser);
+userRouter.delete("/:id", protect, restrictTo("admin"), deleteUser);
 userRouter.patch(
   "/",
   protect,
-  restirctTo("admin", "user"),
+  restrictTo("admin", "user"),
   filterUserBody,
   updateUser
 );

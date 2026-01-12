@@ -10,7 +10,7 @@ import {
   uploadToCloudinary,
   deleteImageFromCloudinary,
 } from "../controllers/productController";
-import { protect, restirctTo } from "../controllers/authController";
+import { protect, restrictTo } from "../controllers/authController";
 
 const productRouter = express.Router();
 
@@ -19,7 +19,7 @@ productRouter.get("/:id", getProduct);
 productRouter.post(
   "/",
   protect,
-  restirctTo("admin"),
+  restrictTo("admin"),
   upload.fields([
     { name: "mainImage", maxCount: 1 },
     { name: "images", maxCount: 5 },
@@ -31,7 +31,7 @@ productRouter.post(
 productRouter.patch(
   "/:id",
   protect,
-  restirctTo("admin"),
+  restrictTo("admin"),
   // Sta je ovde problem?
   // - oldImages se dodaje na images, sto znaci da moze da se prevazidje max count
   // - Umesto da je za images maxCount 5 sada ce biti 10
@@ -41,19 +41,36 @@ productRouter.patch(
   ]),
   parseProductBodyData,
   uploadToCloudinary,
+  deleteImageFromCloudinary,
   updateProduct
 );
-productRouter.delete("/:id", protect, restirctTo("admin"), deleteProduct);
+productRouter.delete("/:id", protect, restrictTo("admin"), deleteProduct);
+
+// Sta me muci?
+// - Muci me to sto delete operacija sa direktinim brisanjem slike i brisanjem preko update-a ne moze da se ponovo iskoriscava
+// - Ukoliko radim direkno brisanje slike to je obican api request i brisanje slike iz baze
+
+// Glavni problem:
+// - Ukoliko radim update samo mainImage-a onda uopste nema potrebe da pozivam uploadToCloudinary, on ovde ispada je opcioni middleware
+
+productRouter.delete(
+  "/images/:id", // this is product_id
+  protect,
+  restrictTo("admin"),
+  deleteImageFromCloudinary,
+  updateProduct
+);
 
 // Brisanje slike iz admin panela se radi tako sto se pogodi endpoint
 // Sta mi je potrebno da se obrise slika?
 // - Njen publicId
 // Najbolje da posaljem taj publicId preko urla
-productRouter.patch(
-  "/images/:public_id",
-  protect,
-  restirctTo("admin"),
-  deleteImageFromCloudinary
-);
+// productRouter.patch(
+//   "/images",
+//   protect,
+//   restrictTo("admin"),
+//   deleteImageFromCloudinary,
+//   updateProduct
+// );
 
 export default productRouter;

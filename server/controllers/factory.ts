@@ -45,7 +45,6 @@ const deleteOne = <T>(Model: Model<T>) =>
 const updateOne = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    console.log("evo id usera", id);
     // ne zaboravi da uradis filtraciju req.body, moze se poslati role: 'admin'
     const updatedDocument = await Model.findByIdAndUpdate(id, req.body, {
       new: true,
