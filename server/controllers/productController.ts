@@ -24,7 +24,7 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   // Kako cu uopste znati da li moram da brisem sliku ili je ona prosledjena da se doda na trenutno postojece slike
   // Ako moram da imam if za samo brisanje slike i onda poseban if za brisanje slike preko upodate-a, da li je onda ova funkcija reusable?
   // Resenje:
-  // - Umesto da deleteImageFromCLoudinary bude middleware bice funkcija koju ce da pozivaju middleware-i po potrebi
+  // - Umesto da deleteImageFromCloudinary bude middleware bice funkcija koju ce da pozivaju middleware-i po potrebi
   // Zasto ovako?
   // -  Kada se radi update slike ne mora uvek da znaci da ce se ona brisati, mozda se dodaje na trenutno postojece slike
   // -  U jednoj sitauciji znam da sigurno brisem sliku, u drugoj ne znam, i onda ne moze to biti istinski "zajednicki middleware"
@@ -44,12 +44,15 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   // - Da -> Onda nije zajednicka funkcija
   // - Ne -> Jeste zajednicka funkcija
 
-  const public_id = req.body.public_id;
+  const public_id = req.body.public_id; // id of image in the cloud
+  // treba typeofImage
+  const typeOfImage = req.body.typeOfImage; // mainImage | images
 
   // Ovaj middleware ne sme uvek da se izvrsi, samo ako je prosledjen public_id
   if (!public_id) {
     return next();
   }
+
   if (!req.body.oldImages) {
     return next(new Error("Mora da se proslede stare slike"));
   }
@@ -70,11 +73,19 @@ export const deleteImageFromCloudinary = catchAsync(async (req, res, next) => {
   // Mora da se udje u trenutke slike i obrise prosledjna slika
   // meni su stare slike u req.body.oldImages i samo udjem tu i obrisem ih sa filter i onda delim req.body.images = req.body.oldImages
 
+  // A gde ja ovde imam logiku za mainImage
+
   // proveri kako izgleda public_id
-  req.body.images = req.body.oldImages.filter(
-    (imagePath: string) => !imagePath.includes(public_id)
-  );
-  console.log("EVO ga req.body.images novi za update", req.body.images);
+  if (typeOfImage === "images") {
+    req.body.images = req.body.oldImages.filter(
+      (imagePath: string) => !imagePath.includes(public_id)
+    );
+    console.log("EVO ga req.body.images novi za update", req.body.images);
+  }
+  if (typeOfImage === "mainImage") {
+    req.body.mainImage = null;
+  }
+
   next();
 });
 
@@ -91,7 +102,8 @@ const uploadToCloudinary = catchAsync(async (req, res, next) => {
   // Sta kada klijent prvi put prosledjuje mainImage, jer tada nece biti mainImage-a u bazi?
   // - Imacu obicnu proveru koja proverava da li je baza nesto vratila
   if (!req.files || (req.files && Array.isArray(req.files)) || req.file) {
-    // Zbogg cega sam promenio odluku?
+    console.log("OVDE treba da upadnem");
+    // Zbog cega sam promenio odluku?
     // Zbog cega sam presao sa bacanja error-a na samo prelazak na sledeci middleware??
     // - Zbog novog edge-case-a koji je nastao
     // - Posto moze samo da se prosledi slika za brisanje onda nema potrebe da se poziva ovaj middleware, i zbog novog edge-case-a ovo je postao opcioni middleware

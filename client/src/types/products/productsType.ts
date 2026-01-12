@@ -14,7 +14,7 @@ export type Product = {
   price: number;
   quantity: number;
   images: FileList | string[]; // Ako saljem stare slike bazi onda ih saljem kao stringove, a ako su nove slike onda su one u FileList-i
-  mainImage: FileList | string;
+  mainImage: FileList | string | null;
   oldImages?: string;
   sale?: Sale | null;
 };

@@ -47,7 +47,7 @@ export default function EditProduct() {
       return;
     }
 
-    if (typeof data.mainImage[0] !== "string") {
+    if (data.mainImage && typeof data.mainImage[0] !== "string") {
       formData.append("mainImage", data.mainImage[0]);
     }
 
@@ -118,7 +118,9 @@ export default function EditProduct() {
             return {
               ...cachedProduct,
               mainImage:
-                cachedProduct.id === product_id ? "" : cachedProduct.mainImage,
+                cachedProduct.id === product_id
+                  ? null
+                  : cachedProduct.mainImage,
             };
           }
         });
