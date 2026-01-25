@@ -110,12 +110,13 @@ export default function Filters() {
               </Checkbox>
               <span className="text-main-color-shade/70">15</span>
             </div> */}
-            <div className="flex items-center justify-between">
-              {/* <Checkbox>
+            {/* // */}
+            {/* <div className="flex items-center justify-between">
+              <Checkbox>
                 <span>Ženski</span>
-              </Checkbox> */}
+              </Checkbox>
               <span className="text-main-color-shade/70">3</span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div>
@@ -123,22 +124,12 @@ export default function Filters() {
           <div className="flex flex-col gap-3">
             {waterTypesFrontend.map((waterTypesDB) => (
               <div className="flex items-center justify-between">
-                <Checkbox checkBoxObject={waterTypesDB} />
+                <Checkbox
+                  setURLFilter={setURLFilter}
+                  checkBoxObject={waterTypesDB}
+                />
               </div>
             ))}
-            {/* <div className="flex items-center justify-between">
-              <Checkbox>
-                <span>Toaletna voda</span>
-              </Checkbox>
-
-              <span className="text-main-color-shade/70">18</span>
-            </div> */}
-            {/* <div className="flex items-center justify-between">
-              <Checkbox>
-                <span>Parfemska voda</span>
-              </Checkbox>
-              <span className="text-main-color-shade/70">9</span>
-            </div> */}
           </div>
         </div>
 

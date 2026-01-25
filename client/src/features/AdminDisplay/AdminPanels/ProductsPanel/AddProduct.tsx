@@ -82,14 +82,9 @@ export default function AddProduct() {
               <label htmlFor="naziv" className="font-semibold">
                 Brend *
               </label>
-              {/* <input
-                id="brend"
-                type="text"
-                placeholder="npr. Zara, Davidoff"
-                className="rounded-md border border-gray-300 px-3 py-2"
+              <select
                 {...register("brand", { required: "Ovo polje je obavezno" })}
-              /> */}
-              <select>
+              >
                 <option>Izaberite brend</option>
                 {brands?.map((brandDB) => {
                   console.log("EVO BRAND_A", brandDB);
