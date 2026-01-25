@@ -9,7 +9,7 @@ import { WaterTypesTypeDB } from "../../../../../types/waterTypesType";
 
 export default function Filters() {
   const [showFilters, setShowFilters] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const location = useLocation();
   const [brands, setBrands] = useState<brandDB[]>([]);
   const [waterTypes, setWaterTypes] = useState<WaterTypesTypeDB[]>([]);
