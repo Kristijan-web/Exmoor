@@ -119,6 +119,8 @@ export default function AddProduct() {
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="water_type">Vrsta vode *</label>
+              {/* // OVAJ SELECT ISPOD MORA DA SE OBRISE i DA SE UPISE ID u value a
+              ne "parfem", "toaltna" itd... */}
               <select
                 id="water_type"
                 className="rounded-md border border-gray-300 px-3 py-2"

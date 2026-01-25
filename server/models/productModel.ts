@@ -50,7 +50,7 @@ const productSchema = new mongoose.Schema(
       required: [true, "Pol je obavezan"],
       enum: ["Muški", "Ženski"],
     },
-    waterType: {
+    water: {
       type: mongoose.Schema.ObjectId,
       ref: "WaterType",
       required: [true, "waterType je obavezno polje"],
