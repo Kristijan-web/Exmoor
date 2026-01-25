@@ -1,4 +1,4 @@
-import { Product } from "../../../../../types/products/productsType";
+import { Product } from "../../../../../types/productsType";
 // import { API_URL } from "../../../../../utills/constants";
 
 type Props = {
@@ -12,9 +12,7 @@ export default function ProductItem({ product }: Props) {
   const discountedPrice = sale_discount
     ? price - Math.round((price * sale_discount) / 100)
     : null;
-  if (sale_discount) {
-    console.log(discountedPrice);
-  }
+
   return (
     <div className="shadow-my-shadow relative flex w-full flex-col items-center justify-between gap-3 overflow-hidden rounded-sm p-10">
       {sale_discount && (

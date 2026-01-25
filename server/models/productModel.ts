@@ -4,6 +4,20 @@ import mongoose from "mongoose";
 
 // Znaci uopste ne drzim istroiju popusta?
 // - Kada se zavrsi sale_end onda taj proizvod sa njegovim "sales" ide u posebni tabelu sales_history (koristi se biblioteka node-cron)
+
+// Treba da se uradi referenca na brand polje
+// - Polje brand moze sadrzati samo polje iz brand kolekcije
+
+// 1. Ko je parent a ko child kolekcija?
+// Da li brand ima smisla bez proizvoda -> Da
+// Da li proizvod ima smisla bez brand-a -> Ne
+
+// Brand je parent
+// Child je proizvod
+
+// Koji odnos imaju?
+// Jedan brand moze da pripada vise proizvoda dok jedan proizvod moze da pripada jednom brand-u -> 1:M (one to many)
+
 const saleSchema = new mongoose.Schema({
   discount: {
     type: Number,
@@ -27,18 +41,19 @@ const productSchema = new mongoose.Schema(
       unique: true,
     },
     brand: {
-      type: String,
-      required: [true, "Brend je obavezan"],
+      type: mongoose.Schema.ObjectId,
+      ref: "Brand",
+      required: [true, "Brand moze da postoji"],
     },
     gender: {
       type: String,
       required: [true, "Pol je obavezan"],
       enum: ["Muški", "Ženski"],
     },
-    water: {
-      type: String,
-      required: [true, "Vrsta vode je obavezna"],
-      enum: ["Parfem", "Toaletna", "Kolonjska"],
+    waterType: {
+      type: mongoose.Schema.ObjectId,
+      ref: "WaterType",
+      required: [true, "waterType je obavezno polje"],
     },
     price: {
       type: Number,
@@ -70,7 +85,7 @@ const productSchema = new mongoose.Schema(
         return ret;
       },
     },
-  }
+  },
 );
 
 const Product = mongoose.model("Product", productSchema);

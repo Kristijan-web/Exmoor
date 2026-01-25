@@ -3,7 +3,7 @@
     "outDir": "dist",
     "allowJs": true
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "utills/APIFilters.ts"],
   "extends": "@tsconfig/node22/tsconfig.json",
   "exclude": ["node_modules"]
 }

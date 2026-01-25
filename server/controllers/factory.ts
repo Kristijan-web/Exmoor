@@ -2,10 +2,17 @@ import { Model } from "mongoose";
 import catchAsync from "../utills/catchAsync";
 import AppError from "../utills/appError";
 import sendResponse from "../utills/sendResponse";
+import APIFilters from "../utills/APIFilters";
 
 const getAll = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
-    const documents = await Model.find();
+    const features = new APIFilters(Model.find(), req.query)
+      .filter()
+      .sort()
+      .pagination();
+
+    const documents = await features.query;
+
     sendResponse(res, documents, 200);
   });
 
@@ -23,6 +30,12 @@ const createOne = <T>(Model: Model<T>) =>
   catchAsync(async (req, res, next) => {
     // ne zaboravi da filtriras body jer neko moze da uradi user: "admin"
     const newDocument = await Model.create(req.body);
+    console.log("Upao u createOne");
+    if (!newDocument) {
+      return next(
+        new AppError(`Kreiranje nije uspelo za ${Model.modelName}`, 400),
+      );
+    }
     sendResponse(res, newDocument, 201);
   });
 // ovo je za admina
@@ -32,7 +45,6 @@ const deleteOne = <T>(Model: Model<T>) =>
     const deletedDocument = await Model.findByIdAndDelete(id);
 
     if (!deletedDocument) {
-      console.log("UPAO OVDE EE");
       return next(new AppError(`${Model.modelName} ne postoji`, 404));
     }
 

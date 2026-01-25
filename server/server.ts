@@ -16,6 +16,7 @@ const CONNECTION_STRING = process.env.CONNECTION_STRING.replace(
   process.env.DB_PASSWORD
 );
 
+// Kada se ovde desi greska treba da se pozove funkcija koja ce da ugasi server
 mongoose.connect(CONNECTION_STRING).then(() => {
   console.log("Db connection succesful");
 });

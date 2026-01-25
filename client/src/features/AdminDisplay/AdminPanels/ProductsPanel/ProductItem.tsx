@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import useDeleteProduct from "../../../../hooks/Products/useDeteleProduct";
-import type { Product, Sale } from "../../../../types/products/productsType";
+import type { Product, Sale } from "../../../../types/productsType";
 
 type Props = {
   p: Product;

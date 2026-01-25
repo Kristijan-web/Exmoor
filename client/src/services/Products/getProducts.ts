@@ -1,10 +1,11 @@
 import toast from "react-hot-toast";
 import { API_URL } from "../../utills/constants";
-import { Product } from "../../types/products/productsType";
-
-async function getProducts(): Promise<Product[] | null> {
+import { Product } from "../../types/productsType";
+// tip je objekat iz url-a
+async function getProducts(queryParams: object): Promise<Product[] | null> {
+  console.log("evo ga queryParam", queryParams);
   try {
-    const fetchData = await fetch(`${API_URL}/api/v1/products`);
+    const fetchData = await fetch(`${API_URL}/api/v1/products?${queryParams}`);
 
     if (!fetchData.ok) {
       toast.error("Dohvatanje proizvoda nije uspelo, osvezite stranicu");

@@ -2,7 +2,9 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Loader from "../../../../ui/Loader";
 import useCreateProduct from "../../../../hooks/Products/useCreateProduct";
-import { Product } from "../../../../types/products/productsType";
+import { Product } from "../../../../types/productsType";
+import { API_URL } from "../../../../utills/constants";
+import { brandDB } from "../../../../types/brandsType";
 
 // Ako je showSale true onda polja nisu obavezna!!!
 
@@ -11,6 +13,9 @@ export default function AddProduct() {
   const { errors } = formState;
   const [showSale, setshowSale] = useState(false);
   const { mutateAsync: createProduct, isPending } = useCreateProduct();
+  const [brands, setBrands] = useState<brandDB[]>([]);
+
+  console.log("Evo brand-ova");
 
   async function onSuccess(data: Product) {
     const formData = new FormData();
@@ -30,7 +35,23 @@ export default function AddProduct() {
 
     reset();
   }
-  useEffect;
+
+  useEffect(() => {
+    async function getBrands() {
+      console.log("UPAO OVDE");
+      const fetchData = await fetch(`${API_URL}/api/v1/brands`);
+      const response = await fetchData.json();
+      if (!fetchData.ok || fetchData.status !== 200) {
+        throw response;
+      }
+      setBrands(response.data);
+    }
+    getBrands();
+  }, []);
+
+  // Zasto je brands pravio gresku u dependency array-u
+  // - Zato sto je objekat i svaki put kada stigne promeni referencu
+  // - Na primer kada dohvatimo brands oni se promene i dobiju novu referencu sto trigeurje re-render, oni stignu ali opet sa novom referencom i opet se trigeruje re-render
 
   return (
     <section className="col-start-1 col-end-3 flex h-full items-center justify-center p-4 lg:col-start-2 lg:col-end-3">
@@ -61,13 +82,20 @@ export default function AddProduct() {
               <label htmlFor="naziv" className="font-semibold">
                 Brend *
               </label>
-              <input
+              {/* <input
                 id="brend"
                 type="text"
                 placeholder="npr. Zara, Davidoff"
                 className="rounded-md border border-gray-300 px-3 py-2"
                 {...register("brand", { required: "Ovo polje je obavezno" })}
-              />
+              /> */}
+              <select>
+                <option>Izaberite brend</option>
+                {brands?.map((brandDB) => {
+                  console.log("EVO BRAND_A", brandDB);
+                  return <option key={brandDB.id}>{brandDB.name}</option>;
+                })}
+              </select>
               {errors?.brand?.message && (
                 <p className="text-red-500">{errors.brand.message}</p>
               )}

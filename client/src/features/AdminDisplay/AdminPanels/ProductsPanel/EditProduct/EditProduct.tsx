@@ -4,7 +4,7 @@ import Loader from "../../../../../ui/Loader";
 import useGetProducts from "../../../../../hooks/Products/useGetProducts";
 import { useParams } from "react-router-dom";
 import useUpdateProduct from "../../../../../hooks/Products/useUpdateProduct";
-import { Product } from "../../../../../types/products/productsType";
+import { Product } from "../../../../../types/productsType";
 import toast from "react-hot-toast";
 import EditProductImages from "./EditProductImages";
 import useCatchAsync from "../../../../../utills/useCatchAsync";
