@@ -47,7 +47,7 @@ export default function EditProduct() {
       return;
     }
 
-    if (typeof data.mainImage[0] !== "string") {
+    if (data.mainImage && typeof data.mainImage[0] !== "string") {
       formData.append("mainImage", data.mainImage[0]);
     }
 
@@ -84,7 +84,7 @@ export default function EditProduct() {
     // Vidi da li cu da pravim posebnu componentu za slike
     return useCatchAsync(async (signal) => {
       const fetchData = await fetch(
-        `${API_URL}/api/v1/products/images/${encodeURIComponent(public_id)}`,
+        `${API_URL}/api/v1/products/${product_id}`,
         {
           method: "PATCH",
           credentials: "include",
@@ -92,10 +92,14 @@ export default function EditProduct() {
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify({ id: product_id, typeOfImage }),
+          body: JSON.stringify({
+            typeOfImage,
+            public_id,
+            oldImages: productToEdit?.images,
+          }),
         },
       );
-      if (!fetchData.ok || fetchData.status !== 204) {
+      if (!fetchData.ok || fetchData.status !== 200) {
         const response = await fetchData.json();
         throw response;
       }
@@ -114,7 +118,9 @@ export default function EditProduct() {
             return {
               ...cachedProduct,
               mainImage:
-                cachedProduct.id === product_id ? "" : cachedProduct.mainImage,
+                cachedProduct.id === product_id
+                  ? null
+                  : cachedProduct.mainImage,
             };
           }
         });
@@ -256,7 +262,10 @@ export default function EditProduct() {
                       if (typeof productToEdit?.mainImage === "string") {
                         const index =
                           productToEdit?.mainImage.indexOf("products");
-                        const public_id = productToEdit?.mainImage.slice(index);
+                        const public_id = productToEdit?.mainImage
+                          .slice(index)
+                          .split(".")[0];
+                        // mozer biti problem sto ce public_id sadrzati ekstenziju .jpg
                         handleImageDelete(
                           "mainImage",
                           productToEdit.id,

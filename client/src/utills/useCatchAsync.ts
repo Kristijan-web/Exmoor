@@ -13,6 +13,8 @@ const useCatchAsync = function <T>(
     }
     fn(signal, e)
       .catch((err) => {
+        // Kako je moguce da je success response upao u Error?
+        // Ja ovde ne znam koja funkcija je bacila error
         console.log("Error u useCatchAsync", err);
         if (err.name === "AbortError") {
           return toast.error(

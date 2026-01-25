@@ -20,7 +20,7 @@ export default function EditProductImages({
 
   const index = image.indexOf("products");
 
-  const public_id = image.slice(index);
+  const public_id = image.slice(index).split(".")[0];
 
   if (isDeleteLoading) return <p>Loading...</p>;
 

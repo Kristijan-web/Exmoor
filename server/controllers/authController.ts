@@ -41,7 +41,7 @@ function setJWTInHttpOnlyCookie(jwtToken: string, res: Response) {
   res.cookie("jwt", jwtToken, cookieOptions);
 }
 
-const restirctTo =
+const restrictTo =
   (...roles: string[]) =>
   (req: Request, res: Response, next: NextFunction) => {
     if (!roles.includes(req.user.role)) {
@@ -51,6 +51,7 @@ const restirctTo =
   };
 
 const protect = catchAsync(async (req, res, next) => {
+  console.log("HELLO");
   // - Provera da li je korisnik ulogovan (Da li postoji JWT token)
   // - Validacija JWT tokena
   // - Provera da li je korisniku u medjuvremenu obrisan nalog
@@ -239,5 +240,5 @@ export {
   forgotPassword,
   newPassword,
   updatePassword,
-  restirctTo,
+  restrictTo,
 };

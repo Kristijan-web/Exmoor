@@ -21,9 +21,9 @@ app.use(
 
 app.set("query parser", "extended");
 app.use("/public", express.static(path.join(__dirname, "public")));
-
 app.use(express.json({ limit: "10kb" }));
 app.use(cookieParser());
+
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/brands", brandRouter);
