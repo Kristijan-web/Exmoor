@@ -5,6 +5,7 @@ import useCreateProduct from "../../../../hooks/Products/useCreateProduct";
 import { Product } from "../../../../types/productsType";
 import { API_URL } from "../../../../utills/constants";
 import { brandDB } from "../../../../types/brandsType";
+import { WaterTypesTypeDB } from "../../../../types/waterTypesType";
 
 // Ako je showSale true onda polja nisu obavezna!!!
 
@@ -14,8 +15,7 @@ export default function AddProduct() {
   const [showSale, setshowSale] = useState(false);
   const { mutateAsync: createProduct, isPending } = useCreateProduct();
   const [brands, setBrands] = useState<brandDB[]>([]);
-
-  console.log("Evo brand-ova");
+  const [waterTypes, setWaterTypes] = useState<WaterTypesTypeDB[]>([]);
 
   async function onSuccess(data: Product) {
     const formData = new FormData();
@@ -38,7 +38,6 @@ export default function AddProduct() {
 
   useEffect(() => {
     async function getBrands() {
-      console.log("UPAO OVDE");
       const fetchData = await fetch(`${API_URL}/api/v1/brands`);
       const response = await fetchData.json();
       if (!fetchData.ok || fetchData.status !== 200) {
@@ -47,6 +46,16 @@ export default function AddProduct() {
       setBrands(response.data);
     }
     getBrands();
+    async function getWaterTypes() {
+      const fetchData = await fetch(`${API_URL}/api/v1/waterTypes`);
+      const response = await fetchData.json();
+      if (!fetchData.ok || fetchData.status !== 200) {
+        throw response;
+      }
+
+      setWaterTypes(response.data);
+    }
+    getWaterTypes();
   }, []);
 
   // Zasto je brands pravio gresku u dependency array-u
@@ -87,8 +96,11 @@ export default function AddProduct() {
               >
                 <option>Izaberite brend</option>
                 {brands?.map((brandDB) => {
-                  console.log("EVO BRAND_A", brandDB);
-                  return <option key={brandDB.id}>{brandDB.name}</option>;
+                  return (
+                    <option key={brandDB.id} value={brandDB.id}>
+                      {brandDB.name}
+                    </option>
+                  );
                 })}
               </select>
               {errors?.brand?.message && (
@@ -133,10 +145,12 @@ export default function AddProduct() {
                   },
                 })}
               >
-                <option value="default">Izaberi...</option>
-                <option value="Parfem">Parfemska voda</option>
-                <option value="Toaletna">Toaletna voda</option>
-                <option value="Kolonjska">Kolonjska voda</option>
+                <option>Izaberi...</option>
+                {waterTypes.map((waterTypeDB) => (
+                  <option key={waterTypeDB.id} value={waterTypeDB.id}>
+                    {waterTypeDB.type}
+                  </option>
+                ))}
               </select>
               {errors?.water?.message && (
                 <p className="text-red-500">{errors.water.message}</p>
